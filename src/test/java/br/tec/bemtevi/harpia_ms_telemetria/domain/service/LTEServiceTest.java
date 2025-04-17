@@ -27,7 +27,7 @@ class LTEServiceTest {
         List<LTE> lteListAntesDoOnEvent = (List<LTE>) ListManager.getListFromRepositoryInMemory("lteList", lteRepository);
         assertTrue(lteListAntesDoOnEvent.isEmpty());
 
-        LTE lte = new LTE(null, "name", 0.0, "nmcarrier", "nminternalstate", "nmsimcardstate", "nmstatus", null);
+        LTE lte = new LTE(null, "name", 0.0, "nmcarrier", "nminternalstate", "nmsimcardstate", "nmstatus");
         lteService.onEvent(lte);
 
         assertFalse(lteListAntesDoOnEvent.isEmpty());

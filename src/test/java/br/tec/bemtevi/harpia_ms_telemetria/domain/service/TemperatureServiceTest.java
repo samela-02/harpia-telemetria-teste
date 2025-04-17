@@ -28,7 +28,7 @@ class TemperatureServiceTest {
                 .getListFromRepositoryInMemory("temperatureList", temperatureRepository);
         assertTrue(temperatureListAntesDoOnEvent.isEmpty());
 
-        Temperature temperature = new Temperature(null, "nome", 0.0, null);
+        Temperature temperature = new Temperature(null, "nome", 0.0);
         temperatureService.onEvent(temperature);
 
         assertFalse(temperatureListAntesDoOnEvent.isEmpty());

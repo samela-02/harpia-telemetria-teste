@@ -14,11 +14,10 @@ public class Temperature {
     @DBRef
     private Equipamento equipamento;
 
-    public Temperature(String cdTemperature, String nmTemperature, Double vlTemperature, Equipamento equipamento) {
+    public Temperature(String cdTemperature, String nmTemperature, Double vlTemperature) {
         this.cdTemperature = cdTemperature;
         this.nmTemperature = nmTemperature;
         this.vlTemperature = vlTemperature;
-        this.equipamento = equipamento;
     }
 
     public String getCdTemperature() {
@@ -35,5 +34,9 @@ public class Temperature {
 
     public Equipamento getEquipamento() {
         return equipamento;
+    }
+
+    public void associarEquipamento(Equipamento equipamento) {
+        this.equipamento = equipamento;
     }
 }

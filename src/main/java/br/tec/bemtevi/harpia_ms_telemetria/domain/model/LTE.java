@@ -24,8 +24,7 @@ public class LTE {
                String nmCarrier,
                String nmInternetState,
                String nmSimCardState,
-               String nmStatus,
-               Equipamento equipamento) {
+               String nmStatus) {
         this.cdLTE = cdLTE;
         this.nmLTE = nmLTE;
         this.vlSignalStrength = vlSignalStrength;
@@ -33,7 +32,6 @@ public class LTE {
         this.nmInternetState = nmInternetState;
         this.nmSimCardState = nmSimCardState;
         this.nmStatus = nmStatus;
-        this.equipamento = equipamento;
     }
 
     public String getCdLTE() {
@@ -66,5 +64,9 @@ public class LTE {
 
     public Equipamento getEquipamento() {
         return equipamento;
+    }
+
+    public void associarEquipamento(Equipamento equipamento) {
+        this.equipamento = equipamento;
     }
 }

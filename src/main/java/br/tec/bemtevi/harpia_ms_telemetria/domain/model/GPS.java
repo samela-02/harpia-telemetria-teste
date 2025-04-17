@@ -16,13 +16,12 @@ public class GPS {
     @DBRef
     private Equipamento equipamento;
 
-    public GPS(String cdGPS, String nmGPS, Double vlLatitude, Double vlLongitude, Double vlTrueCourse, Equipamento equipamento) {
+    public GPS(String cdGPS, String nmGPS, Double vlLatitude, Double vlLongitude, Double vlTrueCourse) {
         this.cdGPS = cdGPS;
         this.nmGPS = nmGPS;
         this.vlLatitude = vlLatitude;
         this.vlLongitude = vlLongitude;
         this.vlTrueCourse = vlTrueCourse;
-        this.equipamento = equipamento;
     }
 
     public String getCdGPS() {
@@ -47,5 +46,9 @@ public class GPS {
 
     public Equipamento getEquipamento() {
         return equipamento;
+    }
+
+    public void associarEquipamento(Equipamento equipamento) {
+        this.equipamento = equipamento;
     }
 }

@@ -27,7 +27,7 @@ class GPSServiceTest {
         List<GPS> gpsListAntesDoOnEvent = (List<GPS>) ListManager.getListFromRepositoryInMemory("gpsList", gpsRepository);
         assertTrue(gpsListAntesDoOnEvent.isEmpty());
 
-        GPS gps = new GPS(null, "GPS1", 0.0, 0.0, 0.0, null);
+        GPS gps = new GPS(null, "GPS1", 0.0, 0.0, 0.0);
         gpsService.onEvent(gps);
 
         assertFalse(gpsListAntesDoOnEvent.isEmpty());

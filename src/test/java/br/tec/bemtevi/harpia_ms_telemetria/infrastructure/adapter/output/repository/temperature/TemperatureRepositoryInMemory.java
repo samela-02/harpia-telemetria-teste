@@ -17,7 +17,8 @@ public class TemperatureRepositoryInMemory implements TemperatureRepository {
     @Override
     public void save(Temperature temperature) {
         UUID uuid = UUID.randomUUID();
-        Temperature novo = new Temperature(uuid.toString(), "nome", 0.0, null);
+        Temperature novo = new Temperature(uuid.toString(), "nome", 0.0);
+        novo.associarEquipamento(temperature.getEquipamento());
         temperatureList.add(novo);
     }
 }
