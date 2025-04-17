@@ -24,7 +24,7 @@ class LTEServiceTest {
     @SuppressWarnings("unchecked")
     @Test
     void DadoLTE_QuandoOnEventForChamado_EntaoOLTEDeveSerSalvo() {
-        List<LTE> lteListAntesDoOnEvent = (List<LTE>) ListManager.getListFromRepository("lteList", lteRepository);
+        List<LTE> lteListAntesDoOnEvent = (List<LTE>) ListManager.getListFromRepositoryInMemory("lteList", lteRepository);
         assertTrue(lteListAntesDoOnEvent.isEmpty());
 
         LTE lte = new LTE(null, "name", 0.0, "nmcarrier", "nminternalstate", "nmsimcardstate", "nmstatus", null);

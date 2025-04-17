@@ -25,7 +25,7 @@ class TemperatureServiceTest {
     @Test
     void DadoTemperature_QuandoOnEventForChamado_EntaoATemperatureDeveSerSalva() {
         List<Temperature> temperatureListAntesDoOnEvent = (List<Temperature>) ListManager
-                .getListFromRepository("temperatureList", temperatureRepository);
+                .getListFromRepositoryInMemory("temperatureList", temperatureRepository);
         assertTrue(temperatureListAntesDoOnEvent.isEmpty());
 
         Temperature temperature = new Temperature(null, "nome", 0.0, null);

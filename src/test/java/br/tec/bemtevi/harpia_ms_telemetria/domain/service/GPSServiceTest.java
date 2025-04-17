@@ -24,7 +24,7 @@ class GPSServiceTest {
     @SuppressWarnings("unchecked")
     @Test
     void DadoGPS_QuandoOnEventForChamado_EntaoOGPSDeveSerSalvo() {
-        List<GPS> gpsListAntesDoOnEvent = (List<GPS>) ListManager.getListFromRepository("gpsList", gpsRepository);
+        List<GPS> gpsListAntesDoOnEvent = (List<GPS>) ListManager.getListFromRepositoryInMemory("gpsList", gpsRepository);
         assertTrue(gpsListAntesDoOnEvent.isEmpty());
 
         GPS gps = new GPS(null, "GPS1", 0.0, 0.0, 0.0, null);
