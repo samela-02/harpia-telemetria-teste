@@ -8,31 +8,31 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class LTE {
     @Id
     private String cdLTE;
-    private String name;
-    private Double signalStrength;
-    private String carrier;
-    private String internetState;
-    private String simCardState;
-    private String status;
+    private String nmLTE;
+    private Double vlSignalStrength;
+    private String nmCarrier;
+    private String nmInternetState;
+    private String nmSimCardState;
+    private String nmStatus;
 
     @DBRef
     private Equipamento equipamento;
 
     public LTE(String cdLTE,
-               String name,
-               Double signalStrength,
-               String carrier,
-               String internetState,
-               String simCardState,
-               String status,
+               String nmLTE,
+               Double vlSignalStrength,
+               String nmCarrier,
+               String nmInternetState,
+               String nmSimCardState,
+               String nmStatus,
                Equipamento equipamento) {
         this.cdLTE = cdLTE;
-        this.name = name;
-        this.signalStrength = signalStrength;
-        this.carrier = carrier;
-        this.internetState = internetState;
-        this.simCardState = simCardState;
-        this.status = status;
+        this.nmLTE = nmLTE;
+        this.vlSignalStrength = vlSignalStrength;
+        this.nmCarrier = nmCarrier;
+        this.nmInternetState = nmInternetState;
+        this.nmSimCardState = nmSimCardState;
+        this.nmStatus = nmStatus;
         this.equipamento = equipamento;
     }
 
@@ -40,28 +40,28 @@ public class LTE {
         return cdLTE;
     }
 
-    public String getName() {
-        return name;
+    public String getNmLTE() {
+        return nmLTE;
     }
 
-    public Double getSignalStrength() {
-        return signalStrength;
+    public Double getVlSignalStrength() {
+        return vlSignalStrength;
     }
 
-    public String getCarrier() {
-        return carrier;
+    public String getNmCarrier() {
+        return nmCarrier;
     }
 
-    public String getInternetState() {
-        return internetState;
+    public String getNmInternetState() {
+        return nmInternetState;
     }
 
-    public String getSimCardState() {
-        return simCardState;
+    public String getNmSimCardState() {
+        return nmSimCardState;
     }
 
-    public String getStatus() {
-        return status;
+    public String getNmStatus() {
+        return nmStatus;
     }
 
     public Equipamento getEquipamento() {

@@ -8,20 +8,20 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class GPS {
     @Id
     private String cdGPS;
-    private String name;
-    private Double latitude;
-    private Double longitude;
-    private Double trueCourse;
+    private String nmGPS;
+    private Double vlLatitude;
+    private Double vlLongitude;
+    private Double vlTrueCourse;
 
     @DBRef
     private Equipamento equipamento;
 
-    public GPS(String cdGPS, String name, Double latitude, Double longitude, Double trueCourse, Equipamento equipamento) {
+    public GPS(String cdGPS, String nmGPS, Double vlLatitude, Double vlLongitude, Double vlTrueCourse, Equipamento equipamento) {
         this.cdGPS = cdGPS;
-        this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.trueCourse = trueCourse;
+        this.nmGPS = nmGPS;
+        this.vlLatitude = vlLatitude;
+        this.vlLongitude = vlLongitude;
+        this.vlTrueCourse = vlTrueCourse;
         this.equipamento = equipamento;
     }
 
@@ -29,20 +29,20 @@ public class GPS {
         return cdGPS;
     }
 
-    public String getName() {
-        return name;
+    public String getNmGPS() {
+        return nmGPS;
     }
 
-    public Double getLatitude() {
-        return latitude;
+    public Double getVlLatitude() {
+        return vlLatitude;
     }
 
-    public Double getLongitude() {
-        return longitude;
+    public Double getVlLongitude() {
+        return vlLongitude;
     }
 
-    public Double getTrueCourse() {
-        return trueCourse;
+    public Double getVlTrueCourse() {
+        return vlTrueCourse;
     }
 
     public Equipamento getEquipamento() {

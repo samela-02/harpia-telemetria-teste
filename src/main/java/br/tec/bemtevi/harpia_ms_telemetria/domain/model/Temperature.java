@@ -8,16 +8,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Temperature {
     @Id
     private String cdTemperature;
-    private String name;
-    private Double value;
+    private String nmTemperature;
+    private Double vlTemperature;
 
     @DBRef
     private Equipamento equipamento;
 
-    public Temperature(String cdTemperature, String name, Double value, Equipamento equipamento) {
+    public Temperature(String cdTemperature, String nmTemperature, Double vlTemperature, Equipamento equipamento) {
         this.cdTemperature = cdTemperature;
-        this.name = name;
-        this.value = value;
+        this.nmTemperature = nmTemperature;
+        this.vlTemperature = vlTemperature;
         this.equipamento = equipamento;
     }
 
@@ -25,12 +25,12 @@ public class Temperature {
         return cdTemperature;
     }
 
-    public String getName() {
-        return name;
+    public String getNmTemperature() {
+        return nmTemperature;
     }
 
-    public Double getValue() {
-        return value;
+    public Double getVlTemperature() {
+        return vlTemperature;
     }
 
     public Equipamento getEquipamento() {
