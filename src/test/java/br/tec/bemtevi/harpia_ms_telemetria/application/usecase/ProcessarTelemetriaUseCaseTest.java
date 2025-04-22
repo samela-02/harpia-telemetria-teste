@@ -44,9 +44,9 @@ class ProcessarTelemetriaUseCaseTest {
         assertTrue(lteList.isEmpty());
         assertTrue(temperatureList.isEmpty());
 
-        LTE lte = new LTE(null, "nome", 0.0, "carrier", "nminternetstate", "nmsimcardstate", "nmstatus");
-        GPS gps = new GPS(null, "nome", 0.0, 0.0, 0.0);
-        Temperature temperature = new Temperature(null, "nome", 0.0);
+        LTE lte = new LTE(null, "nome", 0.0, "carrier", "nminternetstate", "nmsimcardstate", "nmstatus", null, null);
+        GPS gps = new GPS(null, "nome", 0.0, 0.0, 0.0, null, null);
+        Temperature temperature = new Temperature(null, "nome", 0.0, null, null);
         Sensors sensors = new Sensors("BTV", "H1234", List.of(lte), List.of(gps), List.of(temperature));
         processarTelemetriaUseCase.execute(sensors);
 

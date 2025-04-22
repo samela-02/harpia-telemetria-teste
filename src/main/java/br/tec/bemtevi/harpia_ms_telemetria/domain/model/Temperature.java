@@ -17,10 +17,16 @@ public class Temperature {
     @DBRef
     private Instituicao instituicao;
 
-    public Temperature(String cdTemperature, String nmTemperature, Double vlTemperature) {
+    public Temperature(String cdTemperature,
+                       String nmTemperature,
+                       Double vlTemperature,
+                       Equipamento equipamento,
+                       Instituicao instituicao) {
         this.cdTemperature = cdTemperature;
         this.nmTemperature = nmTemperature;
         this.vlTemperature = vlTemperature;
+        this.equipamento = equipamento;
+        this.instituicao = instituicao;
     }
 
     public String getCdTemperature() {

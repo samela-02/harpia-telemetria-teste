@@ -27,7 +27,9 @@ public class GPSRepositoryInMemory implements GPSRepository {
                 gps.getNmGPS(),
                 gps.getVlLatitude(),
                 gps.getVlLongitude(),
-                gps.getVlTrueCourse()
+                gps.getVlTrueCourse(),
+                null,
+                null
         );
         novo.setEquipamento(gps.getEquipamento());
         gpsList.add(novo);

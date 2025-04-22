@@ -19,12 +19,20 @@ public class GPS {
     @DBRef
     private Instituicao instituicao;
 
-    public GPS(String cdGPS, String nmGPS, Double vlLatitude, Double vlLongitude, Double vlTrueCourse) {
+    public GPS(String cdGPS,
+               String nmGPS,
+               Double vlLatitude,
+               Double vlLongitude,
+               Double vlTrueCourse,
+               Equipamento equipamento,
+               Instituicao instituicao) {
         this.cdGPS = cdGPS;
         this.nmGPS = nmGPS;
         this.vlLatitude = vlLatitude;
         this.vlLongitude = vlLongitude;
         this.vlTrueCourse = vlTrueCourse;
+        this.equipamento = equipamento;
+        this.instituicao = instituicao;
     }
 
     public String getCdGPS() {
