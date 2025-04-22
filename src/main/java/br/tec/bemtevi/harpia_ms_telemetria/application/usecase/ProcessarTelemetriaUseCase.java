@@ -14,7 +14,8 @@ import static java.util.Arrays.stream;
 @Service
 public class ProcessarTelemetriaUseCase {
     private static final String[] CAMPOS_IGNORADOS_DO_SENSORS = {
-            "idInstituicao"
+            "idInstituicao",
+            "idEquipamento"
     };
 
     private final SensorObserverFactory sensorObserverFactory;

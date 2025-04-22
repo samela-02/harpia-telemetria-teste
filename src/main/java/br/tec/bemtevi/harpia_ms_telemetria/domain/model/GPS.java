@@ -48,7 +48,7 @@ public class GPS {
         return equipamento;
     }
 
-    public void associarEquipamento(Equipamento equipamento) {
+    public void setEquipamento(Equipamento equipamento) {
         this.equipamento = equipamento;
     }
 }
