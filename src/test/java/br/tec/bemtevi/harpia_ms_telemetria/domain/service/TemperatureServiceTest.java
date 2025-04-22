@@ -29,7 +29,7 @@ class TemperatureServiceTest {
         assertTrue(temperatureListAntesDoOnEvent.isEmpty());
 
         Temperature temperature = new Temperature(null, "nome", 0.0);
-        temperatureService.onEvent(temperature);
+        temperatureService.onEvent(List.of(temperature));
 
         assertFalse(temperatureListAntesDoOnEvent.isEmpty());
         assertEquals(1, temperatureListAntesDoOnEvent.size());

@@ -4,6 +4,8 @@ import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Temperature;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.TemperatureRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class TemperatureRepositoryImpl implements TemperatureRepository {
     private final TemperatureRepositoryMongo temperatureRepositoryMongo;
@@ -13,7 +15,7 @@ public class TemperatureRepositoryImpl implements TemperatureRepository {
     }
 
     @Override
-    public void save(Temperature temperature) {
-        temperatureRepositoryMongo.save(temperature);
+    public void saveAll(List<Temperature> temperatureList) {
+        temperatureRepositoryMongo.saveAll(temperatureList);
     }
 }
