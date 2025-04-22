@@ -1,4 +1,4 @@
-package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input;
+package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.mensageria;
 
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.observer.TelemetriaObserver;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
