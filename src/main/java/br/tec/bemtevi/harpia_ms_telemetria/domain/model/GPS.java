@@ -16,6 +16,9 @@ public class GPS {
     @DBRef
     private Equipamento equipamento;
 
+    @DBRef
+    private Instituicao instituicao;
+
     public GPS(String cdGPS, String nmGPS, Double vlLatitude, Double vlLongitude, Double vlTrueCourse) {
         this.cdGPS = cdGPS;
         this.nmGPS = nmGPS;
@@ -50,5 +53,9 @@ public class GPS {
 
     public void setEquipamento(Equipamento equipamento) {
         this.equipamento = equipamento;
+    }
+
+    public void setInstituicao(Instituicao instituicao) {
+        this.instituicao = instituicao;
     }
 }

@@ -15,8 +15,7 @@ public class HarpiaAntiCorruptionLayer {
         List<LTE> lteList = harpiaLteToLteDomain(harpiaTelemetryMessage);
         List<GPS> gpsList = harpiaGpsToGpsDomain(harpiaTelemetryMessage);
         List<Temperature> temperatureList = harpiaTemperatureToTemperatureDomain(harpiaTelemetryMessage);
-        // TODO passar o idInstituicao quando o harpia enviar
-        return new Sensors(null, harpiaTelemetryMessage.getSerial(), lteList, gpsList, temperatureList);
+        return new Sensors(harpiaTelemetryMessage.getInstitutionId(), harpiaTelemetryMessage.getSerial(), lteList, gpsList, temperatureList);
     }
 
     private List<LTE> harpiaLteToLteDomain(HarpiaTelemetryMessage harpiaTelemetryMessage) {

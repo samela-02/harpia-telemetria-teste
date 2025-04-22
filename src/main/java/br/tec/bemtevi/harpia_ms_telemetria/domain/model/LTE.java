@@ -18,6 +18,9 @@ public class LTE {
     @DBRef
     private Equipamento equipamento;
 
+    @DBRef
+    private Instituicao instituicao;
+
     public LTE(String cdLTE,
                String nmLTE,
                Double vlSignalStrength,
@@ -68,5 +71,9 @@ public class LTE {
 
     public void setEquipamento(Equipamento equipamento) {
         this.equipamento = equipamento;
+    }
+
+    public void setInstituicao(Instituicao instituicao) {
+        this.instituicao = instituicao;
     }
 }

@@ -14,6 +14,9 @@ public class Temperature {
     @DBRef
     private Equipamento equipamento;
 
+    @DBRef
+    private Instituicao instituicao;
+
     public Temperature(String cdTemperature, String nmTemperature, Double vlTemperature) {
         this.cdTemperature = cdTemperature;
         this.nmTemperature = nmTemperature;
@@ -38,5 +41,9 @@ public class Temperature {
 
     public void setEquipamento(Equipamento equipamento) {
         this.equipamento = equipamento;
+    }
+
+    public void setInstituicao(Instituicao instituicao) {
+        this.instituicao = instituicao;
     }
 }
