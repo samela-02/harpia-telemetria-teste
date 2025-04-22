@@ -2,6 +2,8 @@ package br.tec.bemtevi.harpia_ms_telemetria.domain.repository;
 
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.LTE;
 
+import java.util.List;
+
 public interface LTERepository {
-    void save(LTE lte);
+    void saveAll(List<LTE> lteList);
 }

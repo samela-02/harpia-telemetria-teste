@@ -4,6 +4,8 @@ import br.tec.bemtevi.harpia_ms_telemetria.domain.model.LTE;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.LTERepository;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class LTERepositoryImpl implements LTERepository {
     private final LTERepositoryMongo lteRepositoryMongo;
@@ -13,7 +15,7 @@ public class LTERepositoryImpl implements LTERepository {
     }
 
     @Override
-    public void save(LTE lte) {
-        lteRepositoryMongo.save(lte);
+    public void saveAll(List<LTE> lteList) {
+        lteRepositoryMongo.saveAll(lteList);
     }
 }

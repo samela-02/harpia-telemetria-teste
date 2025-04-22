@@ -28,7 +28,7 @@ class LTEServiceTest {
         assertTrue(lteListAntesDoOnEvent.isEmpty());
 
         LTE lte = new LTE(null, "name", 0.0, "nmcarrier", "nminternalstate", "nmsimcardstate", "nmstatus");
-        lteService.onEvent(lte);
+        lteService.onEvent(List.of(lte));
 
         assertFalse(lteListAntesDoOnEvent.isEmpty());
         assertEquals(1, lteListAntesDoOnEvent.size());

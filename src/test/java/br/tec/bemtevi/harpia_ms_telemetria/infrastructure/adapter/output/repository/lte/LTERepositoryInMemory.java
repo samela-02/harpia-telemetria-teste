@@ -15,7 +15,13 @@ public class LTERepositoryInMemory implements LTERepository {
     }
 
     @Override
-    public void save(LTE lte) {
+    public void saveAll(List<LTE> lteList) {
+        lteList
+                .stream()
+                .forEach(this::save);
+    }
+
+    private void save(LTE lte) {
         UUID uuid = UUID.randomUUID();
         LTE novo = new LTE(uuid.toString(),
                 "name",
