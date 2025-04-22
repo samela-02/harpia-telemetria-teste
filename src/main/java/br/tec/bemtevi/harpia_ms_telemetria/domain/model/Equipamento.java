@@ -3,7 +3,7 @@ package br.tec.bemtevi.harpia_ms_telemetria.domain.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+@Document(collection = "arg_equipamento")
 public class Equipamento {
     @Id
     private String idEquipamento;

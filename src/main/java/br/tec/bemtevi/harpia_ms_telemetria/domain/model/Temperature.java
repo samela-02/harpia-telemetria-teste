@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+@Document(collection = "arg_temperature")
 public class Temperature {
     @Id
     private String cdTemperature;
@@ -37,6 +37,10 @@ public class Temperature {
 
     public Equipamento getEquipamento() {
         return equipamento;
+    }
+
+    public Instituicao getInstituicao() {
+        return instituicao;
     }
 
     public void setEquipamento(Equipamento equipamento) {

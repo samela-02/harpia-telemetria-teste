@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+@Document(collection = "arg_gps")
 public class GPS {
     @Id
     private String cdGPS;
@@ -49,6 +49,10 @@ public class GPS {
 
     public Equipamento getEquipamento() {
         return equipamento;
+    }
+
+    public Instituicao getInstituicao() {
+        return instituicao;
     }
 
     public void setEquipamento(Equipamento equipamento) {
