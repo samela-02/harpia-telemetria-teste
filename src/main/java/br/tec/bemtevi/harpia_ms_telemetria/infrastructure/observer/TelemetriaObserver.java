@@ -41,28 +41,10 @@ public class TelemetriaObserver implements Observer {
                 .fromSnakeCaseBytes(mensagem, HarpiaTelemetryMessage.class);
         Sensors sensors = harpiaAntiCorruptionLayer.fromHarpiaTelemetryMessage(harpiaTelemetryMessage);
         Instituicao instituicao = instituicaoStorage.getInstance(sensors.getIdInstituicao());
-        associarSensoresAInstituicao(sensors, instituicao);
+        sensors.associarInstituicao(instituicao);
         Equipamento equipamento = equipamentoStorage.getInstance(sensors.getIdEquipamento());
-        associarSensoresAoEquipamento(sensors, equipamento);
+        sensors.associarEquipamento(equipamento);
         processarTelemetriaUseCase.execute(sensors);
         log.info("Mensagem processada com sucesso.");
-    }
-
-    private void associarSensoresAInstituicao(Sensors sensors, Instituicao instituicao) {
-        for (GPS gps : sensors.getGps())
-            gps.setInstituicao(instituicao);
-        for (LTE lte : sensors.getLte())
-            lte.setInstituicao(instituicao);
-        for (Temperature temperature : sensors.getTemperature())
-            temperature.setInstituicao(instituicao);
-    }
-
-    private void associarSensoresAoEquipamento(Sensors sensors, Equipamento equipamento) {
-        for (GPS gps : sensors.getGps())
-            gps.setEquipamento(equipamento);
-        for (LTE lte : sensors.getLte())
-            lte.setEquipamento(equipamento);
-        for (Temperature temperature : sensors.getTemperature())
-            temperature.setEquipamento(equipamento);
     }
 }

@@ -36,4 +36,22 @@ public class Sensors {
     public List<Temperature> getTemperature() {
         return temperature;
     }
+
+    public void associarInstituicao(Instituicao instituicao) {
+        for (GPS gps : this.gps)
+            gps.setInstituicao(instituicao);
+        for (LTE lte : this.lte)
+            lte.setInstituicao(instituicao);
+        for (Temperature temperature : this.temperature)
+            temperature.setInstituicao(instituicao);
+    }
+
+    public void associarEquipamento(Equipamento equipamento) {
+        for (GPS gps : this.gps)
+            gps.setEquipamento(equipamento);
+        for (LTE lte : this.lte)
+            lte.setEquipamento(equipamento);
+        for (Temperature temperature : this.temperature)
+            temperature.setEquipamento(equipamento);
+    }
 }
