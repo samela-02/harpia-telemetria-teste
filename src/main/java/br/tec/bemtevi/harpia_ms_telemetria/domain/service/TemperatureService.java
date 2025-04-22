@@ -1,13 +1,11 @@
 package br.tec.bemtevi.harpia_ms_telemetria.domain.service;
 
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Temperature;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.TemperatureObserver;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.TemperatureRepository;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
-public class TemperatureService implements TemperatureObserver {
+public class TemperatureService implements Observer {
     private final TemperatureRepository temperatureRepository;
 
     public TemperatureService(TemperatureRepository temperatureRepository) {
@@ -16,7 +14,8 @@ public class TemperatureService implements TemperatureObserver {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void onEvent(Temperature temperature) {
+    public void onEvent(Object object) {
+        Temperature temperature = (Temperature) object;
         temperatureRepository.save(temperature);
     }
 }
