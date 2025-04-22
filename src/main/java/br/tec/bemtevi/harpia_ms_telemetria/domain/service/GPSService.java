@@ -1,13 +1,11 @@
 package br.tec.bemtevi.harpia_ms_telemetria.domain.service;
 
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPS;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.GPSObserver;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.GPSRepository;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
-public class GPSService implements GPSObserver {
+public class GPSService implements Observer {
     private final GPSRepository gpsRepository;
 
     public GPSService(GPSRepository gpsRepository) {
@@ -16,7 +14,8 @@ public class GPSService implements GPSObserver {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void onEvent(GPS gps) {
+    public void onEvent(Object object) {
+        GPS gps = (GPS) object;
         gpsRepository.save(gps);
     }
 }

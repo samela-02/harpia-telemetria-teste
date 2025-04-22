@@ -1,23 +1,11 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.usecase;
 
-import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.GPSObserver;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.LTEObserver;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.TemperatureObserver;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.EquipamentoRepository;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.GPSRepository;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.LTERepository;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.TemperatureRepository;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.service.GPSService;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.service.LTEService;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.service.TemperatureService;
-import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.repository.equipamento.EquipamentoRepositoryInMemory;
-import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.repository.gps.GPSRepositoryInMemory;
-import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.repository.lte.LTERepositoryInMemory;
-import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.repository.temperature.TemperatureRepositoryInMemory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 class ProcessarTelemetriaUseCaseTest {
     private ProcessarTelemetriaUseCase processarTelemetriaUseCase;
@@ -28,18 +16,18 @@ class ProcessarTelemetriaUseCaseTest {
 
     @BeforeEach
     void setUp() {
-        gpsRepository = new GPSRepositoryInMemory();
-        GPSObserver gpsObserver = new GPSService(gpsRepository);
-        lteRepository = new LTERepositoryInMemory();
-        LTEObserver lteObserver = new LTEService(lteRepository);
-        temperatureRepository = new TemperatureRepositoryInMemory();
-        TemperatureObserver temperatureObserver = new TemperatureService(temperatureRepository);
-
-        equipamentoRepository = new EquipamentoRepositoryInMemory();
-        processarTelemetriaUseCase = new ProcessarTelemetriaUseCase(equipamentoRepository,
-                List.of(gpsObserver),
-                List.of(lteObserver),
-                List.of(temperatureObserver));
+//        gpsRepository = new GPSRepositoryInMemory();
+//        GPSObserver gpsObserver = new GPSService(gpsRepository);
+//        lteRepository = new LTERepositoryInMemory();
+//        LTEObserver lteObserver = new LTEService(lteRepository);
+//        temperatureRepository = new TemperatureRepositoryInMemory();
+//        TemperatureObserver temperatureObserver = new TemperatureService(temperatureRepository);
+//
+//        equipamentoRepository = new EquipamentoRepositoryInMemory();
+//        processarTelemetriaUseCase = new ProcessarTelemetriaUseCase(equipamentoRepository,
+//                List.of(gpsObserver),
+//                List.of(lteObserver),
+//                List.of(temperatureObserver));
     }
 
     @SuppressWarnings("unchecked")

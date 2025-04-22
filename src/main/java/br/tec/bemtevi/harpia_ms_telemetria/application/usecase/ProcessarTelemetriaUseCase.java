@@ -1,7 +1,6 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.usecase;
 
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.GPSObserver;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.LTEObserver;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.TemperatureObserver;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.EquipamentoRepository;
@@ -13,16 +12,13 @@ import java.util.List;
 @Service
 public class ProcessarTelemetriaUseCase {
     private final EquipamentoRepository equipamentoRepository;
-    private final List<GPSObserver> gpsObserverList;
     private final List<LTEObserver> lteObserverList;
     private final List<TemperatureObserver> temperatureObserverList;
 
     public ProcessarTelemetriaUseCase(EquipamentoRepository equipamentoRepository,
-                                      List<GPSObserver> gpsObserverList,
                                       List<LTEObserver> lteObserverList,
                                       List<TemperatureObserver> temperatureObserverList) {
         this.equipamentoRepository = equipamentoRepository;
-        this.gpsObserverList = gpsObserverList;
         this.lteObserverList = lteObserverList;
         this.temperatureObserverList = temperatureObserverList;
     }
