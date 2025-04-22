@@ -15,7 +15,13 @@ public class GPSRepositoryInMemory implements GPSRepository {
     }
 
     @Override
-    public void save(GPS gps) {
+    public void saveAll(List<GPS> gpsList) {
+         gpsList
+                 .stream()
+                 .forEach(this::save);
+    }
+
+    private void save(GPS gps) {
         UUID uuid = UUID.randomUUID();
         GPS novo = new GPS(uuid.toString(),
                 gps.getNmGPS(),

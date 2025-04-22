@@ -28,7 +28,7 @@ class GPSServiceTest {
         assertTrue(gpsListAntesDoOnEvent.isEmpty());
 
         GPS gps = new GPS(null, "GPS1", 0.0, 0.0, 0.0);
-        gpsService.onEvent(gps);
+        gpsService.onEvent(List.of(gps));
 
         assertFalse(gpsListAntesDoOnEvent.isEmpty());
         assertEquals(1, gpsListAntesDoOnEvent.size());

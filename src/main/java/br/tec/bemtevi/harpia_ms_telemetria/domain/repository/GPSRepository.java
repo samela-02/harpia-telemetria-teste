@@ -2,6 +2,8 @@ package br.tec.bemtevi.harpia_ms_telemetria.domain.repository;
 
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPS;
 
+import java.util.List;
+
 public interface GPSRepository {
-    void save(GPS gps);
+    void saveAll(List<GPS> gpsList);
 }

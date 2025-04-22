@@ -5,6 +5,8 @@ import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.GPSRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public class GPSService implements Observer {
     private final GPSRepository gpsRepository;
 
@@ -12,10 +14,11 @@ public class GPSService implements Observer {
         this.gpsRepository = gpsRepository;
     }
 
+    @SuppressWarnings("unchecked")
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void onEvent(Object object) {
-        GPS gps = (GPS) object;
-        gpsRepository.save(gps);
+        List<GPS> gpsList = (List<GPS>) object;
+        gpsRepository.saveAll(gpsList);
     }
 }

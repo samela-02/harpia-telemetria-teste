@@ -4,6 +4,8 @@ import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPS;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.GPSRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class GPSRepositoryImpl implements GPSRepository {
     private final GPSRepositoryMongo gpsRepositoryMongo;
@@ -13,7 +15,7 @@ public class GPSRepositoryImpl implements GPSRepository {
     }
 
     @Override
-    public void save(GPS gps) {
-        gpsRepositoryMongo.save(gps);
+    public void saveAll(List<GPS> gpsList) {
+        gpsRepositoryMongo.saveAll(gpsList);
     }
 }
