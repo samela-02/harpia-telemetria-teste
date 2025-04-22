@@ -48,13 +48,13 @@ class ProcessarTelemetriaUseCaseTest {
         GPS gps = new GPS(null, "nome", 0.0, 0.0, 0.0);
         Temperature temperature = new Temperature(null, "nome", 0.0);
         Sensors sensors = new Sensors("BTV", List.of(lte), List.of(gps), List.of(temperature));
-//        processarTelemetriaUseCase.execute(sensors);
+        processarTelemetriaUseCase.execute(sensors);
 
-//        assertFalse(gpsList.isEmpty());
-//        assertFalse(lteList.isEmpty());
-//        assertFalse(temperatureList.isEmpty());
-//        assertEquals(1, gpsList.size());
-//        assertEquals(1, lteList.size());
-//        assertEquals(1, temperatureList.size());
+        assertFalse(gpsList.isEmpty());
+        assertFalse(lteList.isEmpty());
+        assertFalse(temperatureList.isEmpty());
+        assertEquals(1, gpsList.size());
+        assertEquals(1, lteList.size());
+        assertEquals(1, temperatureList.size());
     }
 }
