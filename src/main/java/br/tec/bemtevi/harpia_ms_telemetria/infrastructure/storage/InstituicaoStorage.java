@@ -9,8 +9,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class InstituicaoStorage {
-    private final Map<String, Instituicao> instituicaoMap;
     private final CriarInstituicaoUseCase criarInstituicaoUseCase;
+    private final Map<String, Instituicao> instituicaoMap;
 
     public InstituicaoStorage(CriarInstituicaoUseCase criarInstituicaoUseCase) {
         this.criarInstituicaoUseCase = criarInstituicaoUseCase;
@@ -19,15 +19,13 @@ public class InstituicaoStorage {
 
     public Instituicao getInstance(String idInstituicao) {
         Instituicao instituicao = instituicaoMap.get(idInstituicao);
-        if (instituicao == null) {
+        if (instituicao == null)
             return criarInstituicao(idInstituicao);
-        }
         return instituicao;
     }
 
     private Instituicao criarInstituicao(String idInstituicao) {
-        Instituicao instituicao;
-        instituicao = criarInstituicaoUseCase.execute(idInstituicao);
+        Instituicao instituicao = criarInstituicaoUseCase.execute(idInstituicao);
         instituicaoMap.put(idInstituicao, instituicao);
         return instituicao;
     }

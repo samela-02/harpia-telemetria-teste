@@ -1,12 +1,12 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.observer;
 
-import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.CriarEquipamentoUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.ProcessarTelemetriaUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.*;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.HarpiaTelemetryMessage;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.anticorruptionlayer.HarpiaAntiCorruptionLayer;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.SerializationFacade;
+import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.storage.EquipamentoStorage;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.storage.InstituicaoStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,18 +18,18 @@ public class TelemetriaObserver implements Observer {
     private final SerializationFacade serializationFacade;
     private final HarpiaAntiCorruptionLayer harpiaAntiCorruptionLayer;
     private final InstituicaoStorage instituicaoStorage;
-    private final CriarEquipamentoUseCase criarEquipamentoUseCase;
+    private final EquipamentoStorage equipamentoStorage;
     private final ProcessarTelemetriaUseCase processarTelemetriaUseCase;
 
     public TelemetriaObserver(SerializationFacade serializationFacade,
                               HarpiaAntiCorruptionLayer harpiaAntiCorruptionLayer,
                               InstituicaoStorage instituicaoStorage,
-                              CriarEquipamentoUseCase criarEquipamentoUseCase,
+                              EquipamentoStorage equipamentoStorage,
                               ProcessarTelemetriaUseCase processarTelemetriaUseCase) {
         this.serializationFacade = serializationFacade;
         this.harpiaAntiCorruptionLayer = harpiaAntiCorruptionLayer;
         this.instituicaoStorage = instituicaoStorage;
-        this.criarEquipamentoUseCase = criarEquipamentoUseCase;
+        this.equipamentoStorage = equipamentoStorage;
         this.processarTelemetriaUseCase = processarTelemetriaUseCase;
     }
 
@@ -42,7 +42,7 @@ public class TelemetriaObserver implements Observer {
         Sensors sensors = harpiaAntiCorruptionLayer.fromHarpiaTelemetryMessage(harpiaTelemetryMessage);
         Instituicao instituicao = instituicaoStorage.getInstance(sensors.getIdInstituicao());
         associarSensoresAInstituicao(sensors, instituicao);
-        Equipamento equipamento = criarEquipamentoUseCase.execute(sensors.getIdEquipamento());
+        Equipamento equipamento = equipamentoStorage.getInstance(sensors.getIdEquipamento());
         associarSensoresAoEquipamento(sensors, equipamento);
         processarTelemetriaUseCase.execute(sensors);
         log.info("Mensagem processada com sucesso.");
