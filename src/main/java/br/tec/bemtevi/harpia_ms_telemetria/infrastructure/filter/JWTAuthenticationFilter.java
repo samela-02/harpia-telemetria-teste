@@ -1,67 +1,62 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.filter;
 
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Usuario;
-import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.ResponseData;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.HttpFacade;
-import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.SerializationFacade;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.impl.http.HttpMethod;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.impl.http.HttpRequestContainer;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.impl.http.HttpResponseContainer;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilter;
+import org.springframework.web.server.WebFilterChain;
+import reactor.core.publisher.Mono;
 
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Component
-public class JWTAuthenticationFilter extends OncePerRequestFilter {
+public class JWTAuthenticationFilter implements WebFilter {
     private static final String USER_INFO_ENDPOINT = "/api/v1/usuarios/user-info";
     private static final String ROLE_PREFIX = "ROLE_";
+    private static final Logger log = LoggerFactory.getLogger(JWTAuthenticationFilter.class);
 
     private final HttpFacade httpFacade;
-    private final SerializationFacade serializationFacade;
     private final String ccoUrl;
 
     public JWTAuthenticationFilter(HttpFacade httpFacade,
-                                   SerializationFacade serializationFacade,
                                    @Value("${cco.url}") String ccoUrl) {
         this.httpFacade = httpFacade;
-        this.serializationFacade = serializationFacade;
         this.ccoUrl = ccoUrl;
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
-        String bearerToken = getBearerToken(request);
-        Usuario usuario = getUserInfoByBearerToken(bearerToken);
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                new UsernamePasswordAuthenticationToken(usuario.getNmUsuario(),
-                        null,
-                        List.of(new SimpleGrantedAuthority(ROLE_PREFIX + usuario.getRole())));
-        SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-        filterChain.doFilter(request, response);
+    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+        try {
+            String bearerToken = getBearerToken(exchange.getRequest().getHeaders());
+            validarToken(bearerToken);
+        } catch (IllegalArgumentException e) {
+            log.warn("Request com token inválido recebido.");
+            ServerHttpResponse serverHttpResponse = exchange.getResponse();
+            serverHttpResponse.setStatusCode(HttpStatus.FORBIDDEN);
+            return serverHttpResponse.setComplete();
+        }
+        return chain.filter(exchange);
     }
 
-    private String getBearerToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
+
+    private String getBearerToken(HttpHeaders httpHeaders) {
+        String bearerToken = httpHeaders.getFirst("Authorization");
         if (bearerToken == null || bearerToken.isBlank())
             throw new IllegalArgumentException("Token não fornecido.");
         return bearerToken;
     }
 
-    private Usuario getUserInfoByBearerToken(String bearerToken) {
+    private void validarToken(String bearerToken) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", bearerToken);
         HttpRequestContainer httpRequestContainer = new HttpRequestContainer
@@ -73,10 +68,5 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             throw new IllegalArgumentException("Token inválido.");
         if (httpResponseContainer.getStatusCode() != 200)
             throw new RuntimeException("Erro ao fazer requisição no CCO.");
-        ResponseData<Usuario> usuarioResponseData = serializationFacade
-                .fromCamelCaseStringParameterized(httpResponseContainer.getResponseBody(),
-                        ResponseData.class,
-                        Usuario.class);
-        return usuarioResponseData.getData();
     }
 }
