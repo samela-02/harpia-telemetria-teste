@@ -36,7 +36,7 @@ class PropagarGPSUseCaseTest {
         assertEquals(equipamento.getIdEquipamento(), gpsTracker.getIdEquipamento());
         assertEquals(instituicao.getIdInstituicao(), gpsTracker.getIdInstituicao());
         assertEquals(1, gpsTrackerList.size());
-        List<GPSSSEResponse> gpssseResponseList = gpsTracker.getGpssseResponseList();
+        List<GPSSSEResponse> gpssseResponseList = gpsTracker.getSensores();
         assertFalse(gpssseResponseList.isEmpty());
         GPSSSEResponse gpssseResponse = gpssseResponseList.stream().findFirst().get();
         assertEquals(gps.getNmGPS(), gpssseResponse.getNmGPS());

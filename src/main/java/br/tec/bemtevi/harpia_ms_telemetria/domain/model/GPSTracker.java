@@ -5,12 +5,12 @@ import java.util.List;
 public final class GPSTracker {
     private final String idInstituicao;
     private final String idEquipamento;
-    private final List<GPSSSEResponse> gpssseResponseList;
+    private final List<GPSSSEResponse> sensores;
 
-    public GPSTracker(String idInstituicao, String idEquipamento, List<GPSSSEResponse> gpssseResponseList) {
+    public GPSTracker(String idInstituicao, String idEquipamento, List<GPSSSEResponse> sensores) {
         this.idInstituicao = idInstituicao;
         this.idEquipamento = idEquipamento;
-        this.gpssseResponseList = List.copyOf(gpssseResponseList);
+        this.sensores = List.copyOf(sensores);
     }
 
     public String getIdInstituicao() {
@@ -21,7 +21,7 @@ public final class GPSTracker {
         return idEquipamento;
     }
 
-    public List<GPSSSEResponse> getGpssseResponseList() {
-        return gpssseResponseList;
+    public List<GPSSSEResponse> getSensores() {
+        return sensores;
     }
 }
