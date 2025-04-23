@@ -1,6 +1,6 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.usecase;
 
-import br.tec.bemtevi.harpia_ms_telemetria.domain.factory.SensorObserverFactory;
+import br.tec.bemtevi.harpia_ms_telemetria.application.factory.SensorObserverFactory;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
 import org.springframework.stereotype.Service;
