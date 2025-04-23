@@ -1,4 +1,4 @@
-package br.tec.bemtevi.harpia_ms_telemetria.domain.service;
+package br.tec.bemtevi.harpia_ms_telemetria.application.usecase;
 
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPS;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;

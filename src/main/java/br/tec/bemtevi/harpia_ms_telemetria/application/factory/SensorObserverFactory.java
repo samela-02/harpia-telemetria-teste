@@ -4,9 +4,9 @@ import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.GPSRepository;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.LTERepository;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.TemperatureRepository;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.service.SalvarGPSUseCase;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.service.SalvarLTEUseCase;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.service.SalvarTemperatureUseCase;
+import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.SalvarGPSUseCase;
+import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.SalvarLTEUseCase;
+import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.SalvarTemperatureUseCase;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
