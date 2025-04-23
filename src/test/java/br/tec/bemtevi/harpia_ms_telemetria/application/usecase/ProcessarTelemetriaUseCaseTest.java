@@ -1,20 +1,20 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.usecase;
 
 import br.tec.bemtevi.harpia_ms_telemetria.application.factory.SensorObserverFactory;
+import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.gps.PropagarGPSUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.gps.SalvarGPSUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.lte.SalvarLTEUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.telemetria.ProcessarTelemetriaUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.temperature.SalvarTemperatureUseCase;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPS;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.LTE;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Temperature;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.*;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.GPSRepository;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.LTERepository;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.TemperatureRepository;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.sse.SSE;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.repository.gps.GPSRepositoryInMemory;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.repository.lte.LTERepositoryInMemory;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.repository.temperature.TemperatureRepositoryInMemory;
+import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.sse.GPSSSERepositoryInMemory;
 import br.tec.bemtevi.harpia_ms_telemetria.testutils.ListManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,16 +28,20 @@ class ProcessarTelemetriaUseCaseTest {
     private GPSRepository gpsRepository;
     private LTERepository lteRepository;
     private TemperatureRepository temperatureRepository;
+    private SSE sse;
 
     @BeforeEach
     void setUp() {
         gpsRepository = new GPSRepositoryInMemory();
+        sse = new GPSSSERepositoryInMemory();
         lteRepository = new LTERepositoryInMemory();
         temperatureRepository = new TemperatureRepositoryInMemory();
         SalvarGPSUseCase salvarGPSUseCase = new SalvarGPSUseCase(gpsRepository);
+        PropagarGPSUseCase propagarGPSUseCase = new PropagarGPSUseCase(sse);
         SalvarLTEUseCase salvarLTEUseCase = new SalvarLTEUseCase(lteRepository);
         SalvarTemperatureUseCase salvarTemperatureUseCase = new SalvarTemperatureUseCase(temperatureRepository);
         SensorObserverFactory sensorObserverFactory = new SensorObserverFactory(salvarGPSUseCase,
+                propagarGPSUseCase,
                 salvarLTEUseCase,
                 salvarTemperatureUseCase);
         processarTelemetriaUseCase = new ProcessarTelemetriaUseCase(sensorObserverFactory);
@@ -47,19 +51,24 @@ class ProcessarTelemetriaUseCaseTest {
     @Test
     void DadoTelemetryDto_QuandoExecuteForChamado_EntaoUmEquipamentoDeveSerSalvoETodosOsObserversDevemSerNotificados() {
         List<GPS> gpsList = (List<GPS>) ListManager.getListFromRepositoryInMemory("gpsList", gpsRepository);
+        List<GPSTracker> gpsTrackerList = (List<GPSTracker>) ListManager.getListFromRepositoryInMemory("gpsTrackerList", sse);
         List<LTE> lteList = (List<LTE>) ListManager.getListFromRepositoryInMemory("lteList", lteRepository);
         List<Temperature> temperatureList = (List<Temperature>) ListManager.getListFromRepositoryInMemory("temperatureList", temperatureRepository);
         assertTrue(gpsList.isEmpty());
+        assertTrue(gpsTrackerList.isEmpty());
         assertTrue(lteList.isEmpty());
         assertTrue(temperatureList.isEmpty());
 
-        LTE lte = new LTE(null, "nome", 0.0, "carrier", "nminternetstate", "nmsimcardstate", "nmstatus", null, null);
-        GPS gps = new GPS(null, "nome", 0.0, 0.0, 0.0, null, null);
-        Temperature temperature = new Temperature(null, "nome", 0.0, null, null);
+        Equipamento equipamento = new Equipamento("H-1234");
+        Instituicao instituicao = new Instituicao("BTV");
+        LTE lte = new LTE(null, "nome", 0.0, "carrier", "nminternetstate", "nmsimcardstate", "nmstatus", equipamento, instituicao);
+        GPS gps = new GPS(null, "nome", 0.0, 0.0, 0.0, equipamento, instituicao);
+        Temperature temperature = new Temperature(null, "nome", 0.0, equipamento, instituicao);
         Sensors sensors = new Sensors("BTV", "H1234", List.of(lte), List.of(gps), List.of(temperature));
         processarTelemetriaUseCase.execute(sensors);
 
         assertFalse(gpsList.isEmpty());
+        assertFalse(gpsTrackerList.isEmpty());
         assertFalse(lteList.isEmpty());
         assertFalse(temperatureList.isEmpty());
         assertEquals(1, gpsList.size());

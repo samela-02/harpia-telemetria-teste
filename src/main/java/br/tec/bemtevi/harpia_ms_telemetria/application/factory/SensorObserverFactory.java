@@ -1,5 +1,6 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.factory;
 
+import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.gps.PropagarGPSUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.gps.SalvarGPSUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.lte.SalvarLTEUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.temperature.SalvarTemperatureUseCase;
@@ -15,11 +16,12 @@ public class SensorObserverFactory {
     private final Map<String, Set<Observer>> observersMap;
 
     public SensorObserverFactory(SalvarGPSUseCase salvarGPSUseCase,
+                                 PropagarGPSUseCase propagarGPSUseCase,
                                  SalvarLTEUseCase salvarLTEUseCase,
                                  SalvarTemperatureUseCase salvarTemperatureUseCase) {
         observersMap = new HashMap<>();
 
-        Set<Observer> gpsObservers = Set.of(salvarGPSUseCase);
+        Set<Observer> gpsObservers = Set.of(salvarGPSUseCase, propagarGPSUseCase);
         Set<Observer> lteObservers = Set.of(salvarLTEUseCase);
         Set<Observer> temperatureObservers = Set.of(salvarTemperatureUseCase);
 
