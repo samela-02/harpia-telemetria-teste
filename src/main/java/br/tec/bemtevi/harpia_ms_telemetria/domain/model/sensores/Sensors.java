@@ -1,4 +1,8 @@
-package br.tec.bemtevi.harpia_ms_telemetria.domain.model;
+package br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores;
+
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.gps.GPS;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.lte.LTE;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.temperature.Temperature;
 
 import java.util.List;
 

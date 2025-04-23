@@ -1,6 +1,6 @@
 package br.tec.bemtevi.harpia_ms_telemetria.domain.repository;
 
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Temperature;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.temperature.Temperature;
 
 import java.util.List;
 

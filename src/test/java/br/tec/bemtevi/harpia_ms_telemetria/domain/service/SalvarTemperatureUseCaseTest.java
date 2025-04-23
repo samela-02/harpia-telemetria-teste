@@ -1,7 +1,7 @@
 package br.tec.bemtevi.harpia_ms_telemetria.domain.service;
 
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.temperature.SalvarTemperatureUseCase;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Temperature;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.temperature.Temperature;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.TemperatureRepository;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.repository.temperature.TemperatureRepositoryInMemory;
 import br.tec.bemtevi.harpia_ms_telemetria.testutils.ListManager;

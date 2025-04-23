@@ -1,7 +1,7 @@
 package br.tec.bemtevi.harpia_ms_telemetria.domain.service;
 
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.gps.SalvarGPSUseCase;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPS;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.gps.GPS;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.GPSRepository;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.repository.gps.GPSRepositoryInMemory;
 import br.tec.bemtevi.harpia_ms_telemetria.testutils.ListManager;

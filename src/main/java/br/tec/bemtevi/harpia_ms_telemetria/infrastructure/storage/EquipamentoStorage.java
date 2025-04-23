@@ -1,7 +1,7 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.storage;
 
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.equipamento.CriarEquipamentoUseCase;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Equipamento;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.equipamento.Equipamento;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
