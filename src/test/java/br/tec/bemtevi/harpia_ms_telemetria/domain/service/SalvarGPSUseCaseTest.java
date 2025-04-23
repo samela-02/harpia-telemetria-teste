@@ -11,14 +11,14 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GPSServiceTest {
-    private GPSService gpsService;
+class SalvarGPSUseCaseTest {
+    private SalvarGPSUseCase salvarGpsUseCase;
     private GPSRepository gpsRepository;
 
     @BeforeEach
     void setUp() {
         gpsRepository = new GPSRepositoryInMemory();
-        gpsService = new GPSService(gpsRepository);
+        salvarGpsUseCase = new SalvarGPSUseCase(gpsRepository);
     }
 
     @SuppressWarnings("unchecked")
@@ -28,7 +28,7 @@ class GPSServiceTest {
         assertTrue(gpsListAntesDoOnEvent.isEmpty());
 
         GPS gps = new GPS(null, "GPS1", 0.0, 0.0, 0.0, null, null);
-        gpsService.onEvent(List.of(gps));
+        salvarGpsUseCase.onEvent(List.of(gps));
 
         assertFalse(gpsListAntesDoOnEvent.isEmpty());
         assertEquals(1, gpsListAntesDoOnEvent.size());

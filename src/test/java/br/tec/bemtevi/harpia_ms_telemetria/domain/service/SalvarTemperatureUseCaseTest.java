@@ -11,14 +11,14 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TemperatureServiceTest {
-    private TemperatureService temperatureService;
+class SalvarTemperatureUseCaseTest {
+    private SalvarTemperatureUseCase salvarTemperatureUseCase;
     private TemperatureRepository temperatureRepository;
 
     @BeforeEach
     void setUp() {
         temperatureRepository = new TemperatureRepositoryInMemory();
-        temperatureService = new TemperatureService(temperatureRepository);
+        salvarTemperatureUseCase = new SalvarTemperatureUseCase(temperatureRepository);
     }
 
     @SuppressWarnings("unchecked")
@@ -29,7 +29,7 @@ class TemperatureServiceTest {
         assertTrue(temperatureListAntesDoOnEvent.isEmpty());
 
         Temperature temperature = new Temperature(null, "nome", 0.0, null, null);
-        temperatureService.onEvent(List.of(temperature));
+        salvarTemperatureUseCase.onEvent(List.of(temperature));
 
         assertFalse(temperatureListAntesDoOnEvent.isEmpty());
         assertEquals(1, temperatureListAntesDoOnEvent.size());

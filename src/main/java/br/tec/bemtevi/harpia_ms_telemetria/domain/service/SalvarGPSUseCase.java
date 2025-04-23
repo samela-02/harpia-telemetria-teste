@@ -3,14 +3,16 @@ package br.tec.bemtevi.harpia_ms_telemetria.domain.service;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPS;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.GPSRepository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public class GPSService implements Observer {
+@Service
+public class SalvarGPSUseCase implements Observer {
     private final GPSRepository gpsRepository;
 
-    public GPSService(GPSRepository gpsRepository) {
+    public SalvarGPSUseCase(GPSRepository gpsRepository) {
         this.gpsRepository = gpsRepository;
     }
 

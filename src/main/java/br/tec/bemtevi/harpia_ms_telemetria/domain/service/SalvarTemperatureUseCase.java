@@ -3,14 +3,16 @@ package br.tec.bemtevi.harpia_ms_telemetria.domain.service;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Temperature;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.TemperatureRepository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public class TemperatureService implements Observer {
+@Service
+public class SalvarTemperatureUseCase implements Observer {
     private final TemperatureRepository temperatureRepository;
 
-    public TemperatureService(TemperatureRepository temperatureRepository) {
+    public SalvarTemperatureUseCase(TemperatureRepository temperatureRepository) {
         this.temperatureRepository = temperatureRepository;
     }
 
