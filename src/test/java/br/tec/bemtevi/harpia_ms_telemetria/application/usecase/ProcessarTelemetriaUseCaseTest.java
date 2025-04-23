@@ -30,7 +30,12 @@ class ProcessarTelemetriaUseCaseTest {
         gpsRepository = new GPSRepositoryInMemory();
         lteRepository = new LTERepositoryInMemory();
         temperatureRepository = new TemperatureRepositoryInMemory();
-        SensorObserverFactory sensorObserverFactory = new SensorObserverFactory(gpsRepository, lteRepository, temperatureRepository);
+        SalvarGPSUseCase salvarGPSUseCase = new SalvarGPSUseCase(gpsRepository);
+        SalvarLTEUseCase salvarLTEUseCase = new SalvarLTEUseCase(lteRepository);
+        SalvarTemperatureUseCase salvarTemperatureUseCase = new SalvarTemperatureUseCase(temperatureRepository);
+        SensorObserverFactory sensorObserverFactory = new SensorObserverFactory(salvarGPSUseCase,
+                salvarLTEUseCase,
+                salvarTemperatureUseCase);
         processarTelemetriaUseCase = new ProcessarTelemetriaUseCase(sensorObserverFactory);
     }
 

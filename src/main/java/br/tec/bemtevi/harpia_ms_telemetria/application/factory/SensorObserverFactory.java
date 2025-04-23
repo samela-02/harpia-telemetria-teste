@@ -1,12 +1,9 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.factory;
 
-import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.GPSRepository;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.LTERepository;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.TemperatureRepository;
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.SalvarGPSUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.SalvarLTEUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.SalvarTemperatureUseCase;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -17,14 +14,14 @@ import java.util.Set;
 public class SensorObserverFactory {
     private final Map<String, Set<Observer>> observersMap;
 
-    public SensorObserverFactory(GPSRepository gpsRepository,
-                                 LTERepository lteRepository,
-                                 TemperatureRepository temperatureRepository) {
+    public SensorObserverFactory(SalvarGPSUseCase salvarGPSUseCase,
+                                 SalvarLTEUseCase salvarLTEUseCase,
+                                 SalvarTemperatureUseCase salvarTemperatureUseCase) {
         observersMap = new HashMap<>();
 
-        Set<Observer> gpsObservers = Set.of(new SalvarGPSUseCase(gpsRepository));
-        Set<Observer> lteObservers = Set.of(new SalvarLTEUseCase(lteRepository));
-        Set<Observer> temperatureObservers = Set.of(new SalvarTemperatureUseCase(temperatureRepository));
+        Set<Observer> gpsObservers = Set.of(salvarGPSUseCase);
+        Set<Observer> lteObservers = Set.of(salvarLTEUseCase);
+        Set<Observer> temperatureObservers = Set.of(salvarTemperatureUseCase);
 
         observersMap.put("GPS", gpsObservers);
         observersMap.put("LTE", lteObservers);
