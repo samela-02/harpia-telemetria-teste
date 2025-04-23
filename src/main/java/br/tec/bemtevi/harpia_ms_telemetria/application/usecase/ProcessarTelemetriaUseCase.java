@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Set;
 
 import static java.util.Arrays.stream;
 
@@ -54,7 +55,7 @@ public class ProcessarTelemetriaUseCase {
 
     private void processarSensores(String sensorFieldName, Sensors sensors) {
         Object campo = getCampo(sensorFieldName, sensors);
-        List<Observer> observers = sensorObserverFactory.getObservers(sensorFieldName.toUpperCase());
+        Set<Observer> observers = sensorObserverFactory.getObservers(sensorFieldName.toUpperCase());
         observers
                 .parallelStream()
                 .forEach(observer -> observer.onEvent(campo));
