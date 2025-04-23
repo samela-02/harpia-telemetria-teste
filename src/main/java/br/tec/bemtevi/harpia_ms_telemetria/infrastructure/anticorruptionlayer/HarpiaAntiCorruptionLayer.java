@@ -1,7 +1,7 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.anticorruptionlayer;
 
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.*;
-import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.HarpiaTelemetryMessage;
+import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.harpia.HarpiaTelemetryMessage;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.storage.EquipamentoStorage;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.storage.InstituicaoStorage;
 import org.springframework.stereotype.Component;

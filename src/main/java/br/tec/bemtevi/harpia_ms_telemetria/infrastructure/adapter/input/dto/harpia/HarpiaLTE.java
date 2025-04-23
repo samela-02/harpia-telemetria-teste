@@ -1,4 +1,4 @@
-package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto;
+package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.harpia;
 
 public class HarpiaLTE {
     private String id;

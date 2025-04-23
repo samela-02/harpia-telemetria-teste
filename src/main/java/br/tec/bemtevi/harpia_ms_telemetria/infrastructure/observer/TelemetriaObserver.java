@@ -3,7 +3,7 @@ package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.observer;
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.ProcessarTelemetriaUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
-import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.HarpiaTelemetryMessage;
+import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.harpia.HarpiaTelemetryMessage;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.anticorruptionlayer.HarpiaAntiCorruptionLayer;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.SerializationFacade;
 import org.slf4j.Logger;
