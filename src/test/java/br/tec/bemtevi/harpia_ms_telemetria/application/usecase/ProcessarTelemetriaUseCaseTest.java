@@ -1,6 +1,10 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.usecase;
 
 import br.tec.bemtevi.harpia_ms_telemetria.application.factory.SensorObserverFactory;
+import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.gps.SalvarGPSUseCase;
+import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.lte.SalvarLTEUseCase;
+import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.telemetria.ProcessarTelemetriaUseCase;
+import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.temperature.SalvarTemperatureUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPS;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.LTE;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;

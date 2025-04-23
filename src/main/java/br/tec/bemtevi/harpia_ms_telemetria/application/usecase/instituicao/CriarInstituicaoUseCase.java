@@ -1,4 +1,4 @@
-package br.tec.bemtevi.harpia_ms_telemetria.application.usecase;
+package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.instituicao;
 
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Instituicao;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.InstituicaoRepository;

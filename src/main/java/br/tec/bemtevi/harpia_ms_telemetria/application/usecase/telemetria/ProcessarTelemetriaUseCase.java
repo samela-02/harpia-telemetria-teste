@@ -1,4 +1,4 @@
-package br.tec.bemtevi.harpia_ms_telemetria.application.usecase;
+package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.telemetria;
 
 import br.tec.bemtevi.harpia_ms_telemetria.application.factory.SensorObserverFactory;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;

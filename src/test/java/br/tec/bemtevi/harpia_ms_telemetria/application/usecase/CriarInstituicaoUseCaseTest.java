@@ -1,5 +1,6 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.usecase;
 
+import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.instituicao.CriarInstituicaoUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Instituicao;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.InstituicaoRepository;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.repository.instituicao.InstituicaoRepositoryInMemory;

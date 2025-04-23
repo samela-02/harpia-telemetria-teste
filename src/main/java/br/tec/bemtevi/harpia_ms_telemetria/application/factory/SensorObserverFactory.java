@@ -1,8 +1,8 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.factory;
 
-import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.SalvarGPSUseCase;
-import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.SalvarLTEUseCase;
-import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.SalvarTemperatureUseCase;
+import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.gps.SalvarGPSUseCase;
+import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.lte.SalvarLTEUseCase;
+import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.temperature.SalvarTemperatureUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
 import org.springframework.stereotype.Component;
 
