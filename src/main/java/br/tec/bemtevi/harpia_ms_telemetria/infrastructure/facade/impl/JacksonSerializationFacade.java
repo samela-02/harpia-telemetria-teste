@@ -3,6 +3,7 @@ package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.impl;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.SerializationFacade;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +35,18 @@ public class JacksonSerializationFacade implements SerializationFacade {
             return objectMapperCamelCase.readValue(object, classType);
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Não foi possível converter a string em objeto.", e);
+        }
+    }
+
+    @Override
+    public <T, S> T fromCamelCaseStringParameterized(String object, Class<T> classType, Class<S> parameterizedClass) {
+        try {
+            JavaType javaType = TypeFactory
+                    .defaultInstance()
+                    .constructParametricType(classType, parameterizedClass);
+            return objectMapperCamelCase.readValue(object, javaType);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Não foi possível converter a string em objeto parametrizado.", e);
         }
     }
 
