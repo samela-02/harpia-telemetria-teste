@@ -1,15 +1,17 @@
 package br.tec.bemtevi.harpia_ms_telemetria.domain.model;
 
+import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.Role;
+
 public class Usuario {
     private Long cdUsuario;
     private String nmUsuario;
     private String idInstituicao;
-    private String role;
+    private Role role;
 
     public Usuario() {
     }
 
-    public Usuario(Long cdUsuario, String nmUsuario, String idInstituicao, String role) {
+    public Usuario(Long cdUsuario, String nmUsuario, String idInstituicao, Role role) {
         this.cdUsuario = cdUsuario;
         this.nmUsuario = nmUsuario;
         this.idInstituicao = idInstituicao;
@@ -28,7 +30,7 @@ public class Usuario {
         return idInstituicao;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 }

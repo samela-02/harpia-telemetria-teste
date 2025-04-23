@@ -1,6 +1,9 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.sse;
 
+import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.Role;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPSTracker;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Usuario;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.service.UsuarioService;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.sse.SSE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +18,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class GPSSSE implements SSE {
     private static final Logger log = LoggerFactory.getLogger(GPSSSE.class);
 
+    private final UsuarioService usuarioService;
     private final Map<String, SseEmitter> sseEmitterMap;
 
-    public GPSSSE() {
+    public GPSSSE(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
         sseEmitterMap = new ConcurrentHashMap<>();
     }
 
@@ -31,7 +36,6 @@ public class GPSSSE implements SSE {
                     .data(gpsTracker)
                     .id(gpsTracker.getIdEquipamento())
                     .name("GPS");
-            // TODO garantir que o usuário logado esteja recebendo eventos da sua instituição caso não seja admin
             SseEmitter sseEmitter = findEmitterByIdInstituicao(gpsTracker.getIdInstituicao());
             sseEmitter.send(event);
         } catch (IOException e) {
@@ -40,6 +44,7 @@ public class GPSSSE implements SSE {
     }
 
     public SseEmitter findGPSData(String idInstituicao) {
+        idInstituicao = ajustarIdInstituicaoBaseadoNoUsuarioLogado(idInstituicao);
         return findEmitterByIdInstituicao(idInstituicao);
     }
 
@@ -50,5 +55,12 @@ public class GPSSSE implements SSE {
             sseEmitterMap.put(idInstituicao, sseEmitter);
         }
         return sseEmitter;
+    }
+
+    private String ajustarIdInstituicaoBaseadoNoUsuarioLogado(String idInstituicao) {
+        Usuario usuario = usuarioService.findUsuarioLogado();
+        if (usuario.getRole().equals(Role.ADMINISTRADOR))
+            return idInstituicao;
+        return usuario.getIdInstituicao();
     }
 }

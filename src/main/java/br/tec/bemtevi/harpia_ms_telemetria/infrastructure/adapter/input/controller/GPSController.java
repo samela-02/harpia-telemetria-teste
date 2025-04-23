@@ -1,6 +1,7 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.controller;
 
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.sse.GPSSSE;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +17,7 @@ public class GPSController {
         this.gpssse = gpssse;
     }
 
+    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'COORDENADOR_OPERACAO', 'OPERADOR_CENTRAL')")
     @GetMapping
     public SseEmitter findGpsData(@RequestParam String idInstituicao) {
         return gpssse.findGPSData(idInstituicao);
