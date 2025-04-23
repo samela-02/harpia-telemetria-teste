@@ -1,7 +1,5 @@
-package br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.gps;
+package br.tec.bemtevi.harpia_ms_telemetria.domain.model;
 
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.equipamento.Equipamento;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.instituicao.Instituicao;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;

@@ -1,6 +1,6 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.filter;
 
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.usuario.Usuario;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Usuario;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.ResponseData;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.HttpFacade;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.SerializationFacade;

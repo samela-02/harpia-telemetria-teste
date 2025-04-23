@@ -1,4 +1,4 @@
-package br.tec.bemtevi.harpia_ms_telemetria.domain.model.instituicao;
+package br.tec.bemtevi.harpia_ms_telemetria.domain.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

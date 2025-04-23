@@ -1,7 +1,7 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.storage;
 
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.instituicao.CriarInstituicaoUseCase;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.instituicao.Instituicao;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Instituicao;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;

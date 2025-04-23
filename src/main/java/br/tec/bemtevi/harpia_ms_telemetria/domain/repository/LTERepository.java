@@ -1,6 +1,6 @@
 package br.tec.bemtevi.harpia_ms_telemetria.domain.repository;
 
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.lte.LTE;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.LTE;
 
 import java.util.List;
 

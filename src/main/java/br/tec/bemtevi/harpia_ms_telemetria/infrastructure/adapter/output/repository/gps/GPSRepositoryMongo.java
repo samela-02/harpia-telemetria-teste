@@ -1,6 +1,6 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.repository.gps;
 
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.gps.GPS;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPS;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

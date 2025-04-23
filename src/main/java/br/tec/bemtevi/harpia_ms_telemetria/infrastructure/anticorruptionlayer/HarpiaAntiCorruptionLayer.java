@@ -1,11 +1,11 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.anticorruptionlayer;
 
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.equipamento.Equipamento;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.instituicao.Instituicao;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.gps.GPS;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.lte.LTE;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.Sensors;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.temperature.Temperature;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Equipamento;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Instituicao;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPS;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.LTE;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Temperature;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.harpia.HarpiaTelemetryMessage;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.storage.EquipamentoStorage;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.storage.InstituicaoStorage;

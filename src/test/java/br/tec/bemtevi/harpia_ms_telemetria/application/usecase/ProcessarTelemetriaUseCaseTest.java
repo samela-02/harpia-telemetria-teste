@@ -5,10 +5,10 @@ import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.gps.SalvarGPSUseC
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.lte.SalvarLTEUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.telemetria.ProcessarTelemetriaUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.temperature.SalvarTemperatureUseCase;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.gps.GPS;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.lte.LTE;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.Sensors;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.temperature.Temperature;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPS;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.LTE;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Temperature;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.GPSRepository;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.LTERepository;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.TemperatureRepository;

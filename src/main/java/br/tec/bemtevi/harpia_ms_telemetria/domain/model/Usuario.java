@@ -1,4 +1,4 @@
-package br.tec.bemtevi.harpia_ms_telemetria.domain.model.usuario;
+package br.tec.bemtevi.harpia_ms_telemetria.domain.model;
 
 public class Usuario {
     private Long cdUsuario;
