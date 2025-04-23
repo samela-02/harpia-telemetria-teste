@@ -1,16 +1,19 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.sse;
 
 import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.Role;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.gateway.CCOGateway;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPSTracker;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Usuario;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.service.UsuarioService;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.sse.SSE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Sinks;
+import reactor.util.retry.Retry;
 
-import java.io.IOException;
+import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -18,49 +21,62 @@ import java.util.concurrent.ConcurrentHashMap;
 public class GPSSSE implements SSE {
     private static final Logger log = LoggerFactory.getLogger(GPSSSE.class);
 
-    private final UsuarioService usuarioService;
-    private final Map<String, SseEmitter> sseEmitterMap;
+    private final CCOGateway ccoGateway;
+    private final Map<String, Sinks.Many<ServerSentEvent<GPSTracker>>> sinkMap;
 
-    public GPSSSE(UsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
-        sseEmitterMap = new ConcurrentHashMap<>();
+    public GPSSSE(CCOGateway ccoGateway) {
+        this.ccoGateway = ccoGateway;
+        sinkMap = new ConcurrentHashMap<>();
     }
 
     @Override
     public void emit(Object object) {
-        try {
-            GPSTracker gpsTracker = (GPSTracker) object;
-            log.info("Emitindo evento de gps que pertence ao Harpia {}.", gpsTracker.getIdEquipamento());
-            SseEmitter.SseEventBuilder event = SseEmitter
-                    .event()
-                    .data(gpsTracker)
-                    .id(gpsTracker.getIdEquipamento())
-                    .name("GPS");
-            SseEmitter sseEmitter = findEmitterByIdInstituicao(gpsTracker.getIdInstituicao());
-            sseEmitter.send(event);
-        } catch (IOException e) {
-            throw new RuntimeException("Não foi possível emitir o evento.", e);
-        }
+        GPSTracker gpsTracker = (GPSTracker) object;
+        log.info("Emitindo evento de gps que pertence ao Harpia {}.", gpsTracker.getIdEquipamento());
+        ServerSentEvent<GPSTracker> event = ServerSentEvent
+                .builder(gpsTracker)
+                .event("GPS")
+                .build();
+        Sinks.Many<ServerSentEvent<GPSTracker>> gpsTrackerSink = findSinkByIdInstituicao(gpsTracker.getIdInstituicao());
+        gpsTrackerSink.tryEmitNext(event);
     }
 
-    public SseEmitter findGPSData(String idInstituicao) {
-        idInstituicao = ajustarIdInstituicaoBaseadoNoUsuarioLogado(idInstituicao);
-        return findEmitterByIdInstituicao(idInstituicao);
+    public Flux<ServerSentEvent<GPSTracker>> findGPSData(String idInstituicao, String bearerToken) {
+        Usuario usuario = findUsuarioLogado(bearerToken);
+        validarPermissoes(usuario);
+        idInstituicao = ajustarIdInstituicaoBaseadoNoUsuarioLogado(idInstituicao, usuario);
+        Sinks.Many<ServerSentEvent<GPSTracker>> sink = findSinkByIdInstituicao(idInstituicao);
+        return sink
+                .asFlux()
+                .doOnSubscribe(subscription -> log.info("Novo cliente conectado: {}.", subscription))
+                .doOnCancel(() -> log.info("Cliente desconectado."))
+                .doOnError(error -> log.error("Erro ao retornar evento.", error))
+                .retryWhen(Retry.backoff(3, Duration.ofMillis(200)));
     }
 
-    private SseEmitter findEmitterByIdInstituicao(String idInstituicao) {
-        SseEmitter sseEmitter = sseEmitterMap.get(idInstituicao);
-        if (sseEmitter == null) {
-            sseEmitter = new SseEmitter(-1L);
-            sseEmitterMap.put(idInstituicao, sseEmitter);
-        }
-        return sseEmitter;
+    private Usuario findUsuarioLogado(String bearerToken) {
+        return ccoGateway.findUserInfo(bearerToken);
     }
 
-    private String ajustarIdInstituicaoBaseadoNoUsuarioLogado(String idInstituicao) {
-        Usuario usuario = usuarioService.findUsuarioLogado();
+    private void validarPermissoes(Usuario usuario) {
+        if (!(usuario.getRole().equals(Role.ADMINISTRADOR) ||
+                usuario.getRole().equals(Role.COORDENADOR_OPERACAO) ||
+                usuario.getRole().equals(Role.OPERADOR_CENTRAL)))
+            throw new IllegalStateException("O usuário não tem permissões para buscar dados de gps.");
+    }
+
+    private String ajustarIdInstituicaoBaseadoNoUsuarioLogado(String idInstituicao, Usuario usuario) {
         if (usuario.getRole().equals(Role.ADMINISTRADOR))
             return idInstituicao;
         return usuario.getIdInstituicao();
+    }
+
+    private Sinks.Many<ServerSentEvent<GPSTracker>> findSinkByIdInstituicao(String idInstituicao) {
+        Sinks.Many<ServerSentEvent<GPSTracker>> sink = sinkMap.get(idInstituicao);
+        if (sink == null) {
+            sink = Sinks.many().multicast().onBackpressureBuffer();
+            sinkMap.put(idInstituicao, sink);
+        }
+        return sink;
     }
 }
