@@ -1,4 +1,4 @@
-package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.gateway;
+package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.gateway;
 
 import br.tec.bemtevi.harpia_ms_telemetria.domain.gateway.CCOGateway;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Usuario;
