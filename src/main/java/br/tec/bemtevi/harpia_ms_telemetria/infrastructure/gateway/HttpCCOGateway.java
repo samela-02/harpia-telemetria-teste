@@ -16,18 +16,19 @@ import java.util.Map;
 
 @Component
 public class HttpCCOGateway implements CCOGateway {
-    private static final String USER_INFO_ENDPOINT = "/api/v1/usuarios/user-info";
-
     private final HttpFacade httpFacade;
     private final SerializationFacade serializationFacade;
-    private final String ccoUrl;
+    private final String authorizationServerUrl;
+    private final String authorizationServerUserInfoEndpoint;
 
     public HttpCCOGateway(HttpFacade httpFacade,
                           SerializationFacade serializationFacade,
-                          @Value("${cco.url}") String ccoUrl) {
+                          @Value("${authorization-server.url}") String authorizationServerUrl,
+                          @Value("${authorization-server.user-info-endpoint}") String authorizationServerUserInfoEndpoint) {
         this.httpFacade = httpFacade;
         this.serializationFacade = serializationFacade;
-        this.ccoUrl = ccoUrl;
+        this.authorizationServerUrl = authorizationServerUrl;
+        this.authorizationServerUserInfoEndpoint = authorizationServerUserInfoEndpoint;
     }
 
     @Override
@@ -35,7 +36,7 @@ public class HttpCCOGateway implements CCOGateway {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", bearerToken);
         HttpRequestContainer httpRequestContainer = new HttpRequestContainer
-                .Builder(HttpMethod.GET, ccoUrl + USER_INFO_ENDPOINT)
+                .Builder(HttpMethod.GET, authorizationServerUrl + authorizationServerUserInfoEndpoint)
                 .comHeaders(headers)
                 .build();
         HttpResponseContainer httpResponseContainer = httpFacade.send(httpRequestContainer);
