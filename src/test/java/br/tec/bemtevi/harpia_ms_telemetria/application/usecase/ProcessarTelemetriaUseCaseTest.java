@@ -19,6 +19,7 @@ import br.tec.bemtevi.harpia_ms_telemetria.testutils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -59,11 +60,12 @@ class ProcessarTelemetriaUseCaseTest {
         assertTrue(lteList.isEmpty());
         assertTrue(temperatureList.isEmpty());
 
+        LocalDateTime dtCriacao = LocalDateTime.now();
         Equipamento equipamento = new Equipamento("H-1234");
         Instituicao instituicao = new Instituicao("BTV");
-        LTE lte = new LTE(null, "nome", 0.0, "carrier", "nminternetstate", "nmsimcardstate", "nmstatus", equipamento, instituicao);
-        GPS gps = new GPS(null, "nome", 0.0, 0.0, 0.0, equipamento, instituicao);
-        Temperature temperature = new Temperature(null, "nome", 0.0, equipamento, instituicao);
+        LTE lte = new LTE(null, "nome", 0.0, "carrier", "nminternetstate", "nmsimcardstate", "nmstatus", dtCriacao, equipamento, instituicao);
+        GPS gps = new GPS(null, "nome", 0.0, 0.0, 0.0, dtCriacao, equipamento, instituicao);
+        Temperature temperature = new Temperature(null, "nome", 0.0, dtCriacao, equipamento, instituicao);
         Sensors sensors = new Sensors("BTV", "H1234", List.of(lte), List.of(gps), List.of(temperature));
         processarTelemetriaUseCase.execute(sensors);
 
@@ -88,10 +90,11 @@ class ProcessarTelemetriaUseCaseTest {
         assertTrue(lteList.isEmpty());
         assertTrue(temperatureList.isEmpty());
 
+        LocalDateTime dtCriacao = LocalDateTime.now();
         Equipamento equipamento = new Equipamento("H-1234");
         Instituicao instituicao = new Instituicao("BTV");
-        LTE lte = new LTE(null, "nome", 0.0, "carrier", "nminternetstate", "nmsimcardstate", "nmstatus", equipamento, instituicao);
-        GPS gps = new GPS(null, "nome", 0.0, 0.0, 0.0, equipamento, instituicao);
+        LTE lte = new LTE(null, "nome", 0.0, "carrier", "nminternetstate", "nmsimcardstate", "nmstatus", dtCriacao, equipamento, instituicao);
+        GPS gps = new GPS(null, "nome", 0.0, 0.0, 0.0, dtCriacao, equipamento, instituicao);
         Sensors sensors = new Sensors("BTV", "H1234", List.of(lte), List.of(gps), null);
         processarTelemetriaUseCase.execute(sensors);
 

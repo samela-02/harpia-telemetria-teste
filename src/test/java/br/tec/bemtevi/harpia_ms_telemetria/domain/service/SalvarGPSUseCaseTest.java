@@ -8,6 +8,7 @@ import br.tec.bemtevi.harpia_ms_telemetria.testutils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,7 +29,7 @@ class SalvarGPSUseCaseTest {
         List<GPS> gpsListAntesDoOnEvent = (List<GPS>) TestUtils.getFieldFromClass("gpsList", gpsRepository);
         assertTrue(gpsListAntesDoOnEvent.isEmpty());
 
-        GPS gps = new GPS(null, "GPS1", 0.0, 0.0, 0.0, null, null);
+        GPS gps = new GPS(null, "GPS1", 0.0, 0.0, 0.0, LocalDateTime.now(), null, null);
         salvarGpsUseCase.onEvent(List.of(gps));
 
         assertFalse(gpsListAntesDoOnEvent.isEmpty());

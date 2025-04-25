@@ -7,6 +7,7 @@ import br.tec.bemtevi.harpia_ms_telemetria.testutils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,7 +27,7 @@ class PropagarGPSUseCaseTest {
     void DadoGPSListComObjetos_QuandoOnEventForChamado_EntaoOEventoDeveSerDisparado() {
         Equipamento equipamento = new Equipamento("H-1234");
         Instituicao instituicao = new Instituicao("BTV");
-        GPS gps = new GPS(null, "nome", 0.0, 0.0, 0.0, equipamento, instituicao);
+        GPS gps = new GPS(null, "nome", 0.0, 0.0, 0.0, LocalDateTime.now(), equipamento, instituicao);
 
         propagarGPSUseCase.onEvent(List.of(gps));
 

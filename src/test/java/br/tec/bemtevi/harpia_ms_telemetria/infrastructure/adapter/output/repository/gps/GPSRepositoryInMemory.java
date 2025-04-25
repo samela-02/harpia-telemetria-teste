@@ -28,6 +28,7 @@ public class GPSRepositoryInMemory implements GPSRepository {
                 gps.getVlLatitude(),
                 gps.getVlLongitude(),
                 gps.getVlTrueCourse(),
+                gps.getDtCriacao(),
                 null,
                 null
         );

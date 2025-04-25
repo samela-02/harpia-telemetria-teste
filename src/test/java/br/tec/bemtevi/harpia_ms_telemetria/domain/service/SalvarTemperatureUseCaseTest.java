@@ -8,6 +8,7 @@ import br.tec.bemtevi.harpia_ms_telemetria.testutils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,7 +30,7 @@ class SalvarTemperatureUseCaseTest {
                 .getFieldFromClass("temperatureList", temperatureRepository);
         assertTrue(temperatureListAntesDoOnEvent.isEmpty());
 
-        Temperature temperature = new Temperature(null, "nome", 0.0, null, null);
+        Temperature temperature = new Temperature(null, "nome", 0.0, LocalDateTime.now(), null, null);
         salvarTemperatureUseCase.onEvent(List.of(temperature));
 
         assertFalse(temperatureListAntesDoOnEvent.isEmpty());

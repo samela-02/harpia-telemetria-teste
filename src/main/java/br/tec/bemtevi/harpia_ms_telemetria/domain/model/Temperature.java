@@ -4,12 +4,15 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
+
 @Document(collection = "arg_temperature")
 public class Temperature {
     @Id
     private String cdTemperature;
     private String nmTemperature;
     private Double vlTemperature;
+    private LocalDateTime dtCriacao;
 
     @DBRef
     private Equipamento equipamento;
@@ -20,11 +23,13 @@ public class Temperature {
     public Temperature(String cdTemperature,
                        String nmTemperature,
                        Double vlTemperature,
+                       LocalDateTime dtCriacao,
                        Equipamento equipamento,
                        Instituicao instituicao) {
         this.cdTemperature = cdTemperature;
         this.nmTemperature = nmTemperature;
         this.vlTemperature = vlTemperature;
+        this.dtCriacao = dtCriacao;
         this.equipamento = equipamento;
         this.instituicao = instituicao;
     }
@@ -47,6 +52,10 @@ public class Temperature {
 
     public Instituicao getInstituicao() {
         return instituicao;
+    }
+
+    public LocalDateTime getDtCriacao() {
+        return dtCriacao;
     }
 
     public void setEquipamento(Equipamento equipamento) {

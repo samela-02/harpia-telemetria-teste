@@ -4,6 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
+
 @Document(collection = "arg_lte")
 public class LTE {
     @Id
@@ -14,6 +16,7 @@ public class LTE {
     private String nmInternetState;
     private String nmSimCardState;
     private String nmStatus;
+    private LocalDateTime dtCriacao;
 
     @DBRef
     private Equipamento equipamento;
@@ -28,6 +31,7 @@ public class LTE {
                String nmInternetState,
                String nmSimCardState,
                String nmStatus,
+               LocalDateTime dtCriacao,
                Equipamento equipamento,
                Instituicao instituicao) {
         this.cdLTE = cdLTE;
@@ -37,6 +41,7 @@ public class LTE {
         this.nmInternetState = nmInternetState;
         this.nmSimCardState = nmSimCardState;
         this.nmStatus = nmStatus;
+        this.dtCriacao = dtCriacao;
         this.equipamento = equipamento;
         this.instituicao = instituicao;
     }
@@ -75,6 +80,10 @@ public class LTE {
 
     public Instituicao getInstituicao() {
         return instituicao;
+    }
+
+    public LocalDateTime getDtCriacao() {
+        return dtCriacao;
     }
 
     public void setEquipamento(Equipamento equipamento) {

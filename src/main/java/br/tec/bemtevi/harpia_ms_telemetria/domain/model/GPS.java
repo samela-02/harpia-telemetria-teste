@@ -4,6 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
+
 @Document(collection = "arg_gps")
 public class GPS {
     @Id
@@ -12,6 +14,7 @@ public class GPS {
     private Double vlLatitude;
     private Double vlLongitude;
     private Double vlTrueCourse;
+    private LocalDateTime dtCriacao;
 
     @DBRef
     private Equipamento equipamento;
@@ -24,6 +27,7 @@ public class GPS {
                Double vlLatitude,
                Double vlLongitude,
                Double vlTrueCourse,
+               LocalDateTime dtCriacao,
                Equipamento equipamento,
                Instituicao instituicao) {
         this.cdGPS = cdGPS;
@@ -31,6 +35,7 @@ public class GPS {
         this.vlLatitude = vlLatitude;
         this.vlLongitude = vlLongitude;
         this.vlTrueCourse = vlTrueCourse;
+        this.dtCriacao = dtCriacao;
         this.equipamento = equipamento;
         this.instituicao = instituicao;
     }
@@ -53,6 +58,10 @@ public class GPS {
 
     public Double getVlTrueCourse() {
         return vlTrueCourse;
+    }
+
+    public LocalDateTime getDtCriacao() {
+        return dtCriacao;
     }
 
     public Equipamento getEquipamento() {

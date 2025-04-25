@@ -8,6 +8,7 @@ import br.tec.bemtevi.harpia_ms_telemetria.testutils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,7 +29,7 @@ class SalvarLTEUseCaseTest {
         List<LTE> lteListAntesDoOnEvent = (List<LTE>) TestUtils.getFieldFromClass("lteList", lteRepository);
         assertTrue(lteListAntesDoOnEvent.isEmpty());
 
-        LTE lte = new LTE(null, "name", 0.0, "nmcarrier", "nminternalstate", "nmsimcardstate", "nmstatus", null, null);
+        LTE lte = new LTE(null, "name", 0.0, "nmcarrier", "nminternalstate", "nmsimcardstate", "nmstatus", LocalDateTime.now(), null, null);
         salvarLteUseCase.onEvent(List.of(lte));
 
         assertFalse(lteListAntesDoOnEvent.isEmpty());
