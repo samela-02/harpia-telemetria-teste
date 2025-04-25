@@ -49,7 +49,7 @@ class ProcessarTelemetriaUseCaseTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    void DadoTelemetryDto_QuandoExecuteForChamado_EntaoUmEquipamentoDeveSerSalvoETodosOsObserversDevemSerNotificados() {
+    void DadoSensors_QuandoExecuteForChamado_TodosOsObserversDevemSerNotificados() {
         List<GPS> gpsList = (List<GPS>) TestUtils.getFieldFromClass("gpsList", gpsRepository);
         List<GPSTracker> gpsTrackerList = (List<GPSTracker>) TestUtils.getFieldFromClass("gpsTrackerList", sse);
         List<LTE> lteList = (List<LTE>) TestUtils.getFieldFromClass("lteList", lteRepository);
@@ -74,5 +74,32 @@ class ProcessarTelemetriaUseCaseTest {
         assertEquals(1, gpsList.size());
         assertEquals(1, lteList.size());
         assertEquals(1, temperatureList.size());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    void DadoSensorsSemSensoresDeTemperatura_QuandoExecuteForChamado_EntaoOObserverDeTemperatureNaoDeveSerNotificado() {
+        List<GPS> gpsList = (List<GPS>) TestUtils.getFieldFromClass("gpsList", gpsRepository);
+        List<GPSTracker> gpsTrackerList = (List<GPSTracker>) TestUtils.getFieldFromClass("gpsTrackerList", sse);
+        List<LTE> lteList = (List<LTE>) TestUtils.getFieldFromClass("lteList", lteRepository);
+        List<Temperature> temperatureList = (List<Temperature>) TestUtils.getFieldFromClass("temperatureList", temperatureRepository);
+        assertTrue(gpsList.isEmpty());
+        assertTrue(gpsTrackerList.isEmpty());
+        assertTrue(lteList.isEmpty());
+        assertTrue(temperatureList.isEmpty());
+
+        Equipamento equipamento = new Equipamento("H-1234");
+        Instituicao instituicao = new Instituicao("BTV");
+        LTE lte = new LTE(null, "nome", 0.0, "carrier", "nminternetstate", "nmsimcardstate", "nmstatus", equipamento, instituicao);
+        GPS gps = new GPS(null, "nome", 0.0, 0.0, 0.0, equipamento, instituicao);
+        Sensors sensors = new Sensors("BTV", "H1234", List.of(lte), List.of(gps), null);
+        processarTelemetriaUseCase.execute(sensors);
+
+        assertFalse(gpsList.isEmpty());
+        assertFalse(gpsTrackerList.isEmpty());
+        assertFalse(lteList.isEmpty());
+        assertEquals(1, gpsList.size());
+        assertEquals(1, lteList.size());
+        assertTrue(temperatureList.isEmpty());
     }
 }

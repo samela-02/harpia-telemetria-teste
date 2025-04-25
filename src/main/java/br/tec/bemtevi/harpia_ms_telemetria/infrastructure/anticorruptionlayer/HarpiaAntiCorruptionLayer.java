@@ -39,6 +39,8 @@ public class HarpiaAntiCorruptionLayer {
     private List<LTE> harpiaLteToLteDomain(HarpiaTelemetryMessage harpiaTelemetryMessage,
                                            Equipamento equipamento,
                                            Instituicao instituicao) {
+        if (harpiaTelemetryMessage.getSensors().getLte() == null)
+            return null;
         return harpiaTelemetryMessage
                 .getSensors()
                 .getLte()
@@ -58,6 +60,8 @@ public class HarpiaAntiCorruptionLayer {
     private List<GPS> harpiaGpsToGpsDomain(HarpiaTelemetryMessage harpiaTelemetryMessage,
                                            Equipamento equipamento,
                                            Instituicao instituicao) {
+        if (harpiaTelemetryMessage.getSensors().getGps() == null)
+            return null;
         return harpiaTelemetryMessage
                 .getSensors()
                 .getGps()
@@ -75,6 +79,8 @@ public class HarpiaAntiCorruptionLayer {
     private List<Temperature> harpiaTemperatureToTemperatureDomain(HarpiaTelemetryMessage harpiaTelemetryMessage,
                                                                    Equipamento equipamento,
                                                                    Instituicao instituicao) {
+        if (harpiaTelemetryMessage.getSensors().getTemperature() == null)
+            return null;
         return harpiaTelemetryMessage
                 .getSensors()
                 .getTemperature()

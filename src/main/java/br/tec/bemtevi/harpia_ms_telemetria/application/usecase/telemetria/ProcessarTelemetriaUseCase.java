@@ -55,10 +55,12 @@ public class ProcessarTelemetriaUseCase {
 
     private void processarSensores(String sensorFieldName, Sensors sensors) {
         Object campo = getCampo(sensorFieldName, sensors);
-        Set<Observer> observers = sensorObserverFactory.getObservers(sensorFieldName.toUpperCase());
-        observers
-                .parallelStream()
-                .forEach(observer -> observer.onEvent(campo));
+        if (campo != null) {
+            Set<Observer> observers = sensorObserverFactory.getObservers(sensorFieldName.toUpperCase());
+            observers
+                    .parallelStream()
+                    .forEach(observer -> observer.onEvent(campo));
+        }
     }
 
     private Object getCampo(String sensorFieldName, Sensors sensors) {
