@@ -4,7 +4,7 @@ import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.gps.SalvarGPSUseC
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPS;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.GPSRepository;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.repository.gps.GPSRepositoryInMemory;
-import br.tec.bemtevi.harpia_ms_telemetria.testutils.ListManager;
+import br.tec.bemtevi.harpia_ms_telemetria.testutils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +25,7 @@ class SalvarGPSUseCaseTest {
     @SuppressWarnings("unchecked")
     @Test
     void DadoGPS_QuandoOnEventForChamado_EntaoOGPSDeveSerSalvo() {
-        List<GPS> gpsListAntesDoOnEvent = (List<GPS>) ListManager.getListFromRepositoryInMemory("gpsList", gpsRepository);
+        List<GPS> gpsListAntesDoOnEvent = (List<GPS>) TestUtils.getFieldFromClass("gpsList", gpsRepository);
         assertTrue(gpsListAntesDoOnEvent.isEmpty());
 
         GPS gps = new GPS(null, "GPS1", 0.0, 0.0, 0.0, null, null);

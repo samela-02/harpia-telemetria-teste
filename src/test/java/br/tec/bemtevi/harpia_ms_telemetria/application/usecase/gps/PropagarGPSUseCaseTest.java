@@ -3,7 +3,7 @@ package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.gps;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.*;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.sse.SSE;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.sse.GPSSSERepositoryInMemory;
-import br.tec.bemtevi.harpia_ms_telemetria.testutils.ListManager;
+import br.tec.bemtevi.harpia_ms_telemetria.testutils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +30,7 @@ class PropagarGPSUseCaseTest {
 
         propagarGPSUseCase.onEvent(List.of(gps));
 
-        List<GPSTracker> gpsTrackerList = (List<GPSTracker>) ListManager.getListFromRepositoryInMemory("gpsTrackerList", sse);
+        List<GPSTracker> gpsTrackerList = (List<GPSTracker>) TestUtils.getFieldFromClass("gpsTrackerList", sse);
         assertFalse(gpsTrackerList.isEmpty());
         GPSTracker gpsTracker = gpsTrackerList.stream().findFirst().get();
         assertEquals(equipamento.getIdEquipamento(), gpsTracker.getIdEquipamento());
@@ -48,7 +48,7 @@ class PropagarGPSUseCaseTest {
     void DadoGPSListVazia_QuandoOnEventForChamado_EntaoOEventoNaoDeveSerDisparado() {
         propagarGPSUseCase.onEvent(List.of());
 
-        List<GPSTracker> gpsTrackerList = (List<GPSTracker>) ListManager.getListFromRepositoryInMemory("gpsTrackerList", sse);
+        List<GPSTracker> gpsTrackerList = (List<GPSTracker>) TestUtils.getFieldFromClass("gpsTrackerList", sse);
         assertTrue(gpsTrackerList.isEmpty());
     }
 }

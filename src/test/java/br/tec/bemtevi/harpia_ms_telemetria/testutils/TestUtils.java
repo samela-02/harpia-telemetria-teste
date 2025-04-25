@@ -2,8 +2,8 @@ package br.tec.bemtevi.harpia_ms_telemetria.testutils;
 
 import java.lang.reflect.Field;
 
-public class ListManager {
-    public static Object getListFromRepositoryInMemory(String fieldName, Object repository) {
+public class TestUtils {
+    public static Object getFieldFromClass(String fieldName, Object repository) {
         try {
             Field field = repository
                     .getClass()

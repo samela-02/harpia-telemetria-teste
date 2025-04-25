@@ -15,7 +15,7 @@ import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.reposit
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.repository.lte.LTERepositoryInMemory;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.repository.temperature.TemperatureRepositoryInMemory;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.sse.GPSSSERepositoryInMemory;
-import br.tec.bemtevi.harpia_ms_telemetria.testutils.ListManager;
+import br.tec.bemtevi.harpia_ms_telemetria.testutils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -50,10 +50,10 @@ class ProcessarTelemetriaUseCaseTest {
     @SuppressWarnings("unchecked")
     @Test
     void DadoTelemetryDto_QuandoExecuteForChamado_EntaoUmEquipamentoDeveSerSalvoETodosOsObserversDevemSerNotificados() {
-        List<GPS> gpsList = (List<GPS>) ListManager.getListFromRepositoryInMemory("gpsList", gpsRepository);
-        List<GPSTracker> gpsTrackerList = (List<GPSTracker>) ListManager.getListFromRepositoryInMemory("gpsTrackerList", sse);
-        List<LTE> lteList = (List<LTE>) ListManager.getListFromRepositoryInMemory("lteList", lteRepository);
-        List<Temperature> temperatureList = (List<Temperature>) ListManager.getListFromRepositoryInMemory("temperatureList", temperatureRepository);
+        List<GPS> gpsList = (List<GPS>) TestUtils.getFieldFromClass("gpsList", gpsRepository);
+        List<GPSTracker> gpsTrackerList = (List<GPSTracker>) TestUtils.getFieldFromClass("gpsTrackerList", sse);
+        List<LTE> lteList = (List<LTE>) TestUtils.getFieldFromClass("lteList", lteRepository);
+        List<Temperature> temperatureList = (List<Temperature>) TestUtils.getFieldFromClass("temperatureList", temperatureRepository);
         assertTrue(gpsList.isEmpty());
         assertTrue(gpsTrackerList.isEmpty());
         assertTrue(lteList.isEmpty());

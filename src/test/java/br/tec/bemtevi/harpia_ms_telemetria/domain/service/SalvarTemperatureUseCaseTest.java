@@ -4,7 +4,7 @@ import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.temperature.Salva
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Temperature;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.TemperatureRepository;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.repository.temperature.TemperatureRepositoryInMemory;
-import br.tec.bemtevi.harpia_ms_telemetria.testutils.ListManager;
+import br.tec.bemtevi.harpia_ms_telemetria.testutils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,8 +25,8 @@ class SalvarTemperatureUseCaseTest {
     @SuppressWarnings("unchecked")
     @Test
     void DadoTemperature_QuandoOnEventForChamado_EntaoATemperatureDeveSerSalva() {
-        List<Temperature> temperatureListAntesDoOnEvent = (List<Temperature>) ListManager
-                .getListFromRepositoryInMemory("temperatureList", temperatureRepository);
+        List<Temperature> temperatureListAntesDoOnEvent = (List<Temperature>) TestUtils
+                .getFieldFromClass("temperatureList", temperatureRepository);
         assertTrue(temperatureListAntesDoOnEvent.isEmpty());
 
         Temperature temperature = new Temperature(null, "nome", 0.0, null, null);

@@ -4,7 +4,7 @@ import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.equipamento.Criar
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Equipamento;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.EquipamentoRepository;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.repository.equipamento.EquipamentoRepositoryInMemory;
-import br.tec.bemtevi.harpia_ms_telemetria.testutils.ListManager;
+import br.tec.bemtevi.harpia_ms_telemetria.testutils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +31,7 @@ class CriarEquipamentoUseCaseTest {
         Equipamento response = criarEquipamentoUseCase.execute(idEquipamento);
 
         assertEquals(idEquipamento, response.getIdEquipamento());
-        List<Equipamento> equipamentoList = (List<Equipamento>) ListManager.getListFromRepositoryInMemory("equipamentos", equipamentoRepository);
+        List<Equipamento> equipamentoList = (List<Equipamento>) TestUtils.getFieldFromClass("equipamentos", equipamentoRepository);
         assertFalse(equipamentoList.isEmpty());
         Equipamento equipamento = equipamentoList.stream().findFirst().get();
         assertEquals(response.getIdEquipamento(), equipamento.getIdEquipamento());
