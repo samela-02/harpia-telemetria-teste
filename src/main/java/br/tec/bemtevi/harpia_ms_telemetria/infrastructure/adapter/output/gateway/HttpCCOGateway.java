@@ -3,11 +3,11 @@ package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.gatewa
 import br.tec.bemtevi.harpia_ms_telemetria.domain.gateway.CCOGateway;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Usuario;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.ResponseData;
-import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.HttpFacade;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.facade.http.HttpFacade;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.SerializationFacade;
-import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.impl.http.HttpMethod;
-import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.impl.http.HttpRequestContainer;
-import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.impl.http.HttpResponseContainer;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.facade.http.HttpMethod;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.facade.http.HttpRequestContainer;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.facade.http.HttpResponseContainer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

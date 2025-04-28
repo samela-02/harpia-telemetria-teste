@@ -1,6 +1,8 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.impl.http;
 
-import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.HttpFacade;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.facade.http.HttpFacade;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.facade.http.HttpRequestContainer;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.facade.http.HttpResponseContainer;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
