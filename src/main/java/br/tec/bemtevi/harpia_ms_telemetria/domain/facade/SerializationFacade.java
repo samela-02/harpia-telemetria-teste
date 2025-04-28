@@ -1,4 +1,4 @@
-package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade;
+package br.tec.bemtevi.harpia_ms_telemetria.domain.facade;
 
 public interface SerializationFacade {
     <T> T fromCamelCaseString(String object, Class<T> classType);

@@ -1,6 +1,6 @@
-package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.impl;
+package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade;
 
-import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.SerializationFacade;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.facade.SerializationFacade;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.type.TypeFactory;

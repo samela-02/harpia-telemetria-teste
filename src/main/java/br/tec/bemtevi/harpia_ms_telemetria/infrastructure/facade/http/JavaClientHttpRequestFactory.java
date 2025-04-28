@@ -1,4 +1,4 @@
-package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.impl.http;
+package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.http;
 
 import br.tec.bemtevi.harpia_ms_telemetria.domain.facade.http.HttpRequestContainer;
 import org.springframework.http.MediaType;
