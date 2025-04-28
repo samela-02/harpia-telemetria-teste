@@ -1,6 +1,6 @@
-package br.tec.bemtevi.harpia_ms_telemetria.domain.service;
+package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.gps;
 
-import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.gps.SalvarGPSUseCase;
+import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.SensorMediator;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPS;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.GPSRepository;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.repository.gps.GPSRepositoryInMemory;
@@ -20,7 +20,8 @@ class SalvarGPSUseCaseTest {
     @BeforeEach
     void setUp() {
         gpsRepository = new GPSRepositoryInMemory();
-        salvarGpsUseCase = new SalvarGPSUseCase(gpsRepository);
+        SensorMediator sensorMediator = new SensorMediator();
+        salvarGpsUseCase = new SalvarGPSUseCase(gpsRepository, sensorMediator);
     }
 
     @SuppressWarnings("unchecked")

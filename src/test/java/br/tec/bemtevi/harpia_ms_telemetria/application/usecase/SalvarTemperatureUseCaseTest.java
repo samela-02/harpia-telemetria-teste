@@ -1,5 +1,6 @@
-package br.tec.bemtevi.harpia_ms_telemetria.domain.service;
+package br.tec.bemtevi.harpia_ms_telemetria.application.usecase;
 
+import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.SensorMediator;
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.temperature.SalvarTemperatureUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Temperature;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.TemperatureRepository;
@@ -20,7 +21,8 @@ class SalvarTemperatureUseCaseTest {
     @BeforeEach
     void setUp() {
         temperatureRepository = new TemperatureRepositoryInMemory();
-        salvarTemperatureUseCase = new SalvarTemperatureUseCase(temperatureRepository);
+        SensorMediator sensorMediator = new SensorMediator();
+        salvarTemperatureUseCase = new SalvarTemperatureUseCase(temperatureRepository, sensorMediator);
     }
 
     @SuppressWarnings("unchecked")

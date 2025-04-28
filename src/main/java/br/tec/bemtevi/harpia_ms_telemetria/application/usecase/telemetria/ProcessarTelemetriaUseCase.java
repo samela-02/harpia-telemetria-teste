@@ -1,6 +1,7 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.telemetria;
 
-import br.tec.bemtevi.harpia_ms_telemetria.application.factory.SensorObserverFactory;
+import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.SensorMediator;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoSensor;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
 import org.springframework.stereotype.Service;
@@ -19,10 +20,10 @@ public class ProcessarTelemetriaUseCase {
             "idEquipamento"
     };
 
-    private final SensorObserverFactory sensorObserverFactory;
+    private final SensorMediator sensorMediator;
 
-    public ProcessarTelemetriaUseCase(SensorObserverFactory sensorObserverFactory) {
-        this.sensorObserverFactory = sensorObserverFactory;
+    public ProcessarTelemetriaUseCase(SensorMediator sensorMediator) {
+        this.sensorMediator = sensorMediator;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -56,10 +57,8 @@ public class ProcessarTelemetriaUseCase {
     private void processarSensores(String sensorFieldName, Sensors sensors) {
         Object campo = getCampo(sensorFieldName, sensors);
         if (campo != null) {
-            Set<Observer> observers = sensorObserverFactory.getObservers(sensorFieldName.toUpperCase());
-            observers
-                    .parallelStream()
-                    .forEach(observer -> observer.onEvent(campo));
+            TipoSensor tipoSensor = TipoSensor.fromString(sensorFieldName.toUpperCase());
+            sensorMediator.emitirEvento(tipoSensor, campo);
         }
     }
 
