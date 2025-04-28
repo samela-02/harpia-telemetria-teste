@@ -5,12 +5,21 @@ import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.InstituicaoReposito
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class InstituicaoRepositoryInMemory implements InstituicaoRepository {
     private final List<Instituicao> instituicaoList;
 
     public InstituicaoRepositoryInMemory() {
         instituicaoList = new ArrayList<>();
+    }
+
+    @Override
+    public Optional<Instituicao> findInstituicaoByIdInstituicao(String idInstituicao) {
+        return instituicaoList
+                .stream()
+                .filter(instituicao -> instituicao.getIdInstituicao().equals(idInstituicao))
+                .findFirst();
     }
 
     @Override
