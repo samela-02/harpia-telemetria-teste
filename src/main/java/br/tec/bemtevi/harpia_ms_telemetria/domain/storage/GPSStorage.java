@@ -1,5 +1,5 @@
 package br.tec.bemtevi.harpia_ms_telemetria.domain.storage;
 
 public interface GPSStorage {
-    Object findGpsData(String idInstituicao);
+    Object findGpsStream(String idInstituicao);
 }

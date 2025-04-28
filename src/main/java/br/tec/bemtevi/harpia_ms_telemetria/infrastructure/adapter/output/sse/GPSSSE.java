@@ -37,7 +37,7 @@ public class GPSSSE implements SSE, GPSStorage {
     }
 
     @Override
-    public Object findGpsData(String idInstituicao) {
+    public Object findGpsStream(String idInstituicao) {
         Sinks.Many<ServerSentEvent<GPSTracker>> sink = findSinkByIdInstituicao(idInstituicao);
         return sink
                 .asFlux()

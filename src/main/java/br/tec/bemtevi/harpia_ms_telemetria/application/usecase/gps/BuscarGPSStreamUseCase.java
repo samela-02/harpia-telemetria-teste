@@ -21,7 +21,7 @@ public class BuscarGPSStreamUseCase {
         Usuario usuario = findUsuarioLogado(bearerToken);
         validarPermissoes(usuario);
         idInstituicao = ajustarIdInstituicaoBaseadoNoUsuarioLogado(idInstituicao, usuario);
-        return gpsStorage.findGpsData(idInstituicao);
+        return gpsStorage.findGpsStream(idInstituicao);
     }
 
     private Usuario findUsuarioLogado(String bearerToken) {
