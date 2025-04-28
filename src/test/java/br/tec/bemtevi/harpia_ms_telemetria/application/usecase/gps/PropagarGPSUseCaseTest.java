@@ -25,7 +25,7 @@ class PropagarGPSUseCaseTest {
     @SuppressWarnings("unchecked")
     @Test
     void DadoGPSListComObjetos_QuandoOnEventForChamado_EntaoOEventoDeveSerDisparado() {
-        Equipamento equipamento = new Equipamento("H-1234");
+        Equipamento equipamento = new Equipamento(null, 1L, 1L, "H-1234", "H-1234", "H-1234", 1, null);
         Instituicao instituicao = new Instituicao("BTV");
         GPS gps = new GPS(null, "nome", 0.0, 0.0, 0.0, LocalDateTime.now(), equipamento, instituicao);
 

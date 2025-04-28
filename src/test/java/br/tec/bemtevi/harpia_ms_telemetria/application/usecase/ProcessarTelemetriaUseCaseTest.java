@@ -61,7 +61,7 @@ class ProcessarTelemetriaUseCaseTest {
         assertTrue(temperatureList.isEmpty());
 
         LocalDateTime dtCriacao = LocalDateTime.now();
-        Equipamento equipamento = new Equipamento("H-1234");
+        Equipamento equipamento = new Equipamento(null, 1L, 1L, "H-1234", "H-1234", "H-1234", 1, null);
         Instituicao instituicao = new Instituicao("BTV");
         LTE lte = new LTE(null, "nome", 0.0, "carrier", "nminternetstate", "nmsimcardstate", "nmstatus", dtCriacao, equipamento, instituicao);
         GPS gps = new GPS(null, "nome", 0.0, 0.0, 0.0, dtCriacao, equipamento, instituicao);
@@ -91,7 +91,7 @@ class ProcessarTelemetriaUseCaseTest {
         assertTrue(temperatureList.isEmpty());
 
         LocalDateTime dtCriacao = LocalDateTime.now();
-        Equipamento equipamento = new Equipamento("H-1234");
+        Equipamento equipamento = new Equipamento(null, 1L, 1L, "H-1234", "H-1234", "H-1234", 1, null);
         Instituicao instituicao = new Instituicao("BTV");
         LTE lte = new LTE(null, "nome", 0.0, "carrier", "nminternetstate", "nmsimcardstate", "nmstatus", dtCriacao, equipamento, instituicao);
         GPS gps = new GPS(null, "nome", 0.0, 0.0, 0.0, dtCriacao, equipamento, instituicao);

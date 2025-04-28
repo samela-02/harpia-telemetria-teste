@@ -4,12 +4,19 @@ import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Equipamento;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.EquipamentoRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class EquipamentoRepositoryImpl implements EquipamentoRepository {
     private final EquipamentoRepositoryMongo equipamentoRepositoryMongo;
 
     public EquipamentoRepositoryImpl(EquipamentoRepositoryMongo equipamentoRepositoryMongo) {
         this.equipamentoRepositoryMongo = equipamentoRepositoryMongo;
+    }
+
+    @Override
+    public Optional<Equipamento> findEquipamentoByIdEquipamento(String idEquipamento) {
+        return equipamentoRepositoryMongo.findByIdEquipamento(idEquipamento);
     }
 
     @Override
