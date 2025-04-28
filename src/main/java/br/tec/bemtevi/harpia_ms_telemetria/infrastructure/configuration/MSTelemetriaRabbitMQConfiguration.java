@@ -16,7 +16,7 @@ public class MSTelemetriaRabbitMQConfiguration {
 
     public MSTelemetriaRabbitMQConfiguration(@Value("${ms-telemetria.queue.name}") String msTelemetriaQueueName,
                                           @Value("${ms.exchange.name}") String msExchageName,
-                                          @Value("${telemetria.routing-key}") String TelemetriaRoutingKey) {
+                                          @Value("${routing-key.telemetria}") String TelemetriaRoutingKey) {
         this.msTelemetriaQueueName = msTelemetriaQueueName;
         this.msExchageName = msExchageName;
         this.telemetriaRoutingKey = TelemetriaRoutingKey;
