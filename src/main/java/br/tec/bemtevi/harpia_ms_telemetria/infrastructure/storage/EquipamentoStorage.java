@@ -15,7 +15,7 @@ public class EquipamentoStorage {
     private final Map<String, Equipamento> equipamentoFlyweightMap;
     private String ultimoIdEquipamentoAdicionado;
 
-    public EquipamentoStorage(EquipamentoRepository equipamentoRepository, @Value("${corte.equipamento}") int corteEquipamento) {
+    public EquipamentoStorage(EquipamentoRepository equipamentoRepository, @Value("${flyweight.equipamento.max}") int corteEquipamento) {
         this.equipamentoRepository = equipamentoRepository;
         this.corteEquipamento = corteEquipamento;
         equipamentoFlyweightMap = new ConcurrentHashMap<>();

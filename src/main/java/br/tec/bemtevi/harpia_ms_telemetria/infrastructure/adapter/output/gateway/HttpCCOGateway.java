@@ -23,8 +23,8 @@ public class HttpCCOGateway implements CCOGateway {
 
     public HttpCCOGateway(HttpFacade httpFacade,
                           SerializationFacade serializationFacade,
-                          @Value("${authorization-server.url}") String authorizationServerUrl,
-                          @Value("${authorization-server.user-info-endpoint}") String authorizationServerUserInfoEndpoint) {
+                          @Value("${cco.url}") String authorizationServerUrl,
+                          @Value("${cco.user-info-endpoint}") String authorizationServerUserInfoEndpoint) {
         this.httpFacade = httpFacade;
         this.serializationFacade = serializationFacade;
         this.authorizationServerUrl = authorizationServerUrl;
