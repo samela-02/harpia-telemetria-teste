@@ -1,6 +1,6 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.controller;
 
-import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.gps.BuscarDadosGPSUseCase;
+import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.gps.BuscarGPSStreamUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.exception.PermissaoException;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPSTracker;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +15,10 @@ import reactor.core.publisher.Flux;
 @RestController
 @RequestMapping(value = "/api/v1/gps")
 public class GPSController {
-    private final BuscarDadosGPSUseCase buscarDadosGPSUseCase;
+    private final BuscarGPSStreamUseCase buscarGPSStreamUseCase;
 
-    public GPSController(BuscarDadosGPSUseCase buscarDadosGPSUseCase) {
-        this.buscarDadosGPSUseCase = buscarDadosGPSUseCase;
+    public GPSController(BuscarGPSStreamUseCase buscarGPSStreamUseCase) {
+        this.buscarGPSStreamUseCase = buscarGPSStreamUseCase;
     }
 
     @GetMapping
@@ -27,7 +27,7 @@ public class GPSController {
         String bearerToken = serverHttpRequest.getHeaders().getFirst("Authorization");
         try {
             Flux<ServerSentEvent<GPSTracker>> body =
-                    (Flux<ServerSentEvent<GPSTracker>>) buscarDadosGPSUseCase.execute(bearerToken, idInstituicao);
+                    (Flux<ServerSentEvent<GPSTracker>>) buscarGPSStreamUseCase.execute(bearerToken, idInstituicao);
             return ResponseEntity.ok(body);
         } catch (PermissaoException e) {
             return ResponseEntity.status(403).build();

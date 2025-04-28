@@ -8,11 +8,11 @@ import br.tec.bemtevi.harpia_ms_telemetria.domain.storage.GPSStorage;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BuscarDadosGPSUseCase {
+public class BuscarGPSStreamUseCase {
     private final CCOGateway ccoGateway;
     private final GPSStorage gpsStorage;
 
-    public BuscarDadosGPSUseCase(CCOGateway ccoGateway, GPSStorage gpsStorage) {
+    public BuscarGPSStreamUseCase(CCOGateway ccoGateway, GPSStorage gpsStorage) {
         this.ccoGateway = ccoGateway;
         this.gpsStorage = gpsStorage;
     }

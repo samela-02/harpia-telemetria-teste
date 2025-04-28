@@ -16,24 +16,24 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BuscarDadosGPSUseCaseTest {
-    private BuscarDadosGPSUseCase buscarDadosGPSUseCase;
+class BuscarGPSStreamUseCaseTest {
+    private BuscarGPSStreamUseCase buscarGPSStreamUseCase;
     private GPSStorage gpsStorage;
 
     @BeforeEach
     void setUp() {
         CCOGateway ccoGateway = new CCOGatewayInMemory();
         gpsStorage = new GPSSSE();
-        buscarDadosGPSUseCase = new BuscarDadosGPSUseCase(ccoGateway, gpsStorage);
+        buscarGPSStreamUseCase = new BuscarGPSStreamUseCase(ccoGateway, gpsStorage);
     }
 
     @Test
     void DadoUsuarioComPermissoesEIdInstituicao_QuandoExecuteForChamado_EntaoOsDadosDoGPSDevemSerRetornados() {
         String idInstituicao = "BTV";
 
-        buscarDadosGPSUseCase.execute("admin", idInstituicao);
-        buscarDadosGPSUseCase.execute("coordenador", idInstituicao);
-        buscarDadosGPSUseCase.execute("opcentral", idInstituicao);
+        buscarGPSStreamUseCase.execute("admin", idInstituicao);
+        buscarGPSStreamUseCase.execute("coordenador", idInstituicao);
+        buscarGPSStreamUseCase.execute("opcentral", idInstituicao);
     }
 
     @Test
@@ -41,7 +41,7 @@ class BuscarDadosGPSUseCaseTest {
         String idInstituicao = "BTV";
 
         PermissaoException e = assertThrows(PermissaoException.class,
-                () -> buscarDadosGPSUseCase.execute("opcampo", idInstituicao));
+                () -> buscarGPSStreamUseCase.execute("opcampo", idInstituicao));
 
         assertEquals("O usuário não tem permissões para buscar dados de gps.", e.getMessage());
     }
@@ -57,7 +57,7 @@ class BuscarDadosGPSUseCaseTest {
         Sinks.Many<ServerSentEvent<GPSTracker>> sinkInstituicaoDoUsuarioAntesDoExecute = sinkMap.get(idInstituicaoDoUsuario);
         assertNull(sinkInstituicaoDoUsuarioAntesDoExecute);
 
-        buscarDadosGPSUseCase.execute("coordenador", idInstituicaoQualquer);
+        buscarGPSStreamUseCase.execute("coordenador", idInstituicaoQualquer);
 
         Sinks.Many<ServerSentEvent<GPSTracker>> sinkQualquerDepoisDoExecute = sinkMap.get(idInstituicaoQualquer);
         assertNull(sinkQualquerDepoisDoExecute);
