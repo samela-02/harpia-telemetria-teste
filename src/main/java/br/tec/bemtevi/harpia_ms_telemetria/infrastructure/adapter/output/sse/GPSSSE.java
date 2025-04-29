@@ -50,7 +50,7 @@ public class GPSSSE implements SSE, GPSStorage {
     private Sinks.Many<ServerSentEvent<GPSTracker>> findSinkByIdInstituicao(String idInstituicao) {
         Sinks.Many<ServerSentEvent<GPSTracker>> sink = sinkMap.get(idInstituicao);
         if (sink == null) {
-            sink = Sinks.many().multicast().onBackpressureBuffer();
+            sink = Sinks.many().replay().limit(1);
             sinkMap.put(idInstituicao, sink);
         }
         return sink;
