@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfiguration {
     private final String msTelemetriaQueueName;
 
-    public RabbitMQConfiguration(@Value("${rabbitmq.ms.queue.name}") String msTelemetriaQueueName) {
+    public RabbitMQConfiguration(@Value("${ms-telemetria.queue.name}") String msTelemetriaQueueName) {
         this.msTelemetriaQueueName = msTelemetriaQueueName;
     }
 

@@ -5,6 +5,7 @@ import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.EquipamentoReposito
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class EquipamentoRepositoryInMemory implements EquipamentoRepository {
     private final List<Equipamento> equipamentos;
@@ -14,8 +15,10 @@ public class EquipamentoRepositoryInMemory implements EquipamentoRepository {
     }
 
     @Override
-    public Equipamento save(Equipamento equipamento) {
-        equipamentos.add(equipamento);
-        return equipamento;
+    public Optional<Equipamento> findEquipamentoByIdEquipamento(String idEquipamento) {
+        return equipamentos
+                .stream()
+                .filter(equipamento -> equipamento.getIdEquipamento().equals(idEquipamento))
+                .findFirst();
     }
 }

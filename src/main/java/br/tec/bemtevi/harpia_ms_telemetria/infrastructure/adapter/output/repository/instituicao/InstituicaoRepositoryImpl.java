@@ -4,17 +4,18 @@ import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Instituicao;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.InstituicaoRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class InstituicaoRepositoryImpl implements InstituicaoRepository {
-    private final InstituicaoRepositoryMongo instituicaoRepositoryMongo;
+    private final InstituicaoJpaRepository instituicaoJpaRepository;
 
-    public InstituicaoRepositoryImpl(InstituicaoRepositoryMongo instituicaoRepositoryMongo) {
-        this.instituicaoRepositoryMongo = instituicaoRepositoryMongo;
+    public InstituicaoRepositoryImpl(InstituicaoJpaRepository instituicaoJpaRepository) {
+        this.instituicaoJpaRepository = instituicaoJpaRepository;
     }
 
     @Override
-    public Instituicao save(Instituicao instituicao) {
-        instituicao = instituicaoRepositoryMongo.save(instituicao);
-        return instituicao;
+    public Optional<Instituicao> findInstituicaoByIdInstituicao(String idInstituicao) {
+        return instituicaoJpaRepository.findByIdInstituicao(idInstituicao);
     }
 }

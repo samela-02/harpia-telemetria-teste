@@ -1,8 +1,9 @@
 package br.tec.bemtevi.harpia_ms_telemetria.domain.model;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDateTime;
 
 @Document(collection = "arg_lte")
 public class LTE {
@@ -14,12 +15,9 @@ public class LTE {
     private String nmInternetState;
     private String nmSimCardState;
     private String nmStatus;
-
-    @DBRef
-    private Equipamento equipamento;
-
-    @DBRef
-    private Instituicao instituicao;
+    private LocalDateTime dtCriacao;
+    private String idEquipamento;
+    private String idInstituicao;
 
     public LTE(String cdLTE,
                String nmLTE,
@@ -28,8 +26,9 @@ public class LTE {
                String nmInternetState,
                String nmSimCardState,
                String nmStatus,
-               Equipamento equipamento,
-               Instituicao instituicao) {
+               LocalDateTime dtCriacao,
+               String idEquipamento,
+               String idInstituicao) {
         this.cdLTE = cdLTE;
         this.nmLTE = nmLTE;
         this.vlSignalStrength = vlSignalStrength;
@@ -37,8 +36,9 @@ public class LTE {
         this.nmInternetState = nmInternetState;
         this.nmSimCardState = nmSimCardState;
         this.nmStatus = nmStatus;
-        this.equipamento = equipamento;
-        this.instituicao = instituicao;
+        this.dtCriacao = dtCriacao;
+        this.idEquipamento = idEquipamento;
+        this.idInstituicao = idInstituicao;
     }
 
     public String getCdLTE() {
@@ -69,19 +69,15 @@ public class LTE {
         return nmStatus;
     }
 
-    public Equipamento getEquipamento() {
-        return equipamento;
+    public LocalDateTime getDtCriacao() {
+        return dtCriacao;
     }
 
-    public Instituicao getInstituicao() {
-        return instituicao;
+    public String getIdEquipamento() {
+        return idEquipamento;
     }
 
-    public void setEquipamento(Equipamento equipamento) {
-        this.equipamento = equipamento;
-    }
-
-    public void setInstituicao(Instituicao instituicao) {
-        this.instituicao = instituicao;
+    public String getIdInstituicao() {
+        return idInstituicao;
     }
 }

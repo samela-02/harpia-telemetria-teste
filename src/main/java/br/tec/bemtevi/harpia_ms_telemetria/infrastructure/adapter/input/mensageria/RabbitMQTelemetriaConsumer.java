@@ -14,7 +14,7 @@ public class RabbitMQTelemetriaConsumer {
         this.observer = observer;
     }
 
-    @RabbitListener(queues = "${rabbitmq.ms.queue.name}")
+    @RabbitListener(queues = "${ms-telemetria.queue.name}")
     public void consume(@Payload byte[] mensagem) {
         observer.onEvent(mensagem);
     }

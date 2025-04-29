@@ -11,6 +11,7 @@ import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.storage.EquipamentoSto
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.storage.InstituicaoStorage;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -39,6 +40,8 @@ public class HarpiaAntiCorruptionLayer {
     private List<LTE> harpiaLteToLteDomain(HarpiaTelemetryMessage harpiaTelemetryMessage,
                                            Equipamento equipamento,
                                            Instituicao instituicao) {
+        if (harpiaTelemetryMessage.getSensors().getLte() == null)
+            return null;
         return harpiaTelemetryMessage
                 .getSensors()
                 .getLte()
@@ -50,14 +53,17 @@ public class HarpiaAntiCorruptionLayer {
                         lte.getInternetState(),
                         lte.getSimCardState(),
                         lte.getStatus(),
-                        equipamento,
-                        instituicao))
+                        harpiaTelemetryMessage.getTimestamp(),
+                        equipamento.getIdEquipamento(),
+                        instituicao.getIdInstituicao()))
                 .toList();
     }
 
     private List<GPS> harpiaGpsToGpsDomain(HarpiaTelemetryMessage harpiaTelemetryMessage,
                                            Equipamento equipamento,
                                            Instituicao instituicao) {
+        if (harpiaTelemetryMessage.getSensors().getGps() == null)
+            return null;
         return harpiaTelemetryMessage
                 .getSensors()
                 .getGps()
@@ -67,14 +73,17 @@ public class HarpiaAntiCorruptionLayer {
                         gps.getLatitude(),
                         gps.getLongitude(),
                         gps.getTrueCourse(),
-                        equipamento,
-                        instituicao))
+                        harpiaTelemetryMessage.getTimestamp(),
+                        equipamento.getIdEquipamento(),
+                        instituicao.getIdInstituicao()))
                 .toList();
     }
 
     private List<Temperature> harpiaTemperatureToTemperatureDomain(HarpiaTelemetryMessage harpiaTelemetryMessage,
                                                                    Equipamento equipamento,
                                                                    Instituicao instituicao) {
+        if (harpiaTelemetryMessage.getSensors().getTemperature() == null)
+            return null;
         return harpiaTelemetryMessage
                 .getSensors()
                 .getTemperature()
@@ -82,8 +91,9 @@ public class HarpiaAntiCorruptionLayer {
                 .map(temperature -> new Temperature(null,
                         temperature.getName(),
                         temperature.getValue(),
-                        equipamento,
-                        instituicao))
+                        harpiaTelemetryMessage.getTimestamp(),
+                        equipamento.getIdEquipamento(),
+                        instituicao.getIdInstituicao()))
                 .toList();
     }
 }

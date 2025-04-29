@@ -1,12 +1,14 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.gps;
 
+import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.SensorMediator;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.*;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.sse.SSE;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.sse.GPSSSERepositoryInMemory;
-import br.tec.bemtevi.harpia_ms_telemetria.testutils.ListManager;
+import br.tec.bemtevi.harpia_ms_telemetria.testutils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,23 +20,22 @@ class PropagarGPSUseCaseTest {
     @BeforeEach
     void setUp() {
         sse = new GPSSSERepositoryInMemory();
-        propagarGPSUseCase = new PropagarGPSUseCase(sse);
+        SensorMediator sensorMediator = new SensorMediator();
+        propagarGPSUseCase = new PropagarGPSUseCase(sse, sensorMediator);
     }
 
     @SuppressWarnings("unchecked")
     @Test
     void DadoGPSListComObjetos_QuandoOnEventForChamado_EntaoOEventoDeveSerDisparado() {
-        Equipamento equipamento = new Equipamento("H-1234");
-        Instituicao instituicao = new Instituicao("BTV");
-        GPS gps = new GPS(null, "nome", 0.0, 0.0, 0.0, equipamento, instituicao);
+        GPS gps = new GPS(null, "nome", 0.0, 0.0, 0.0, LocalDateTime.now(), "1L", "1L");
 
         propagarGPSUseCase.onEvent(List.of(gps));
 
-        List<GPSTracker> gpsTrackerList = (List<GPSTracker>) ListManager.getListFromRepositoryInMemory("gpsTrackerList", sse);
+        List<GPSTracker> gpsTrackerList = (List<GPSTracker>) TestUtils.getFieldFromClass("gpsTrackerList", sse);
         assertFalse(gpsTrackerList.isEmpty());
         GPSTracker gpsTracker = gpsTrackerList.stream().findFirst().get();
-        assertEquals(equipamento.getIdEquipamento(), gpsTracker.getIdEquipamento());
-        assertEquals(instituicao.getIdInstituicao(), gpsTracker.getIdInstituicao());
+        assertEquals("1L", gpsTracker.getIdEquipamento());
+        assertEquals("1L", gpsTracker.getIdInstituicao());
         assertEquals(1, gpsTrackerList.size());
         List<GPSSSEResponse> gpssseResponseList = gpsTracker.getSensores();
         assertFalse(gpssseResponseList.isEmpty());
@@ -48,7 +49,7 @@ class PropagarGPSUseCaseTest {
     void DadoGPSListVazia_QuandoOnEventForChamado_EntaoOEventoNaoDeveSerDisparado() {
         propagarGPSUseCase.onEvent(List.of());
 
-        List<GPSTracker> gpsTrackerList = (List<GPSTracker>) ListManager.getListFromRepositoryInMemory("gpsTrackerList", sse);
+        List<GPSTracker> gpsTrackerList = (List<GPSTracker>) TestUtils.getFieldFromClass("gpsTrackerList", sse);
         assertTrue(gpsTrackerList.isEmpty());
     }
 }

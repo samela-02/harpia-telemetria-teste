@@ -1,0 +1,40 @@
+package br.tec.bemtevi.harpia_ms_telemetria.application.usecase;
+
+import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.SensorMediator;
+import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.lte.SalvarLTEUseCase;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.LTE;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.LTERepository;
+import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.repository.lte.LTERepositoryInMemory;
+import br.tec.bemtevi.harpia_ms_telemetria.testutils.TestUtils;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class SalvarLTEUseCaseTest {
+    private SalvarLTEUseCase salvarLteUseCase;
+    private LTERepository lteRepository;
+
+    @BeforeEach
+    void setUp() {
+        lteRepository = new LTERepositoryInMemory();
+        SensorMediator sensorMediator = new SensorMediator();
+        salvarLteUseCase = new SalvarLTEUseCase(lteRepository, sensorMediator);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    void DadoLTE_QuandoOnEventForChamado_EntaoOLTEDeveSerSalvo() {
+        List<LTE> lteListAntesDoOnEvent = (List<LTE>) TestUtils.getFieldFromClass("lteList", lteRepository);
+        assertTrue(lteListAntesDoOnEvent.isEmpty());
+
+        LTE lte = new LTE(null, "name", 0.0, "nmcarrier", "nminternalstate", "nmsimcardstate", "nmstatus", LocalDateTime.now(), null, null);
+        salvarLteUseCase.onEvent(List.of(lte));
+
+        assertFalse(lteListAntesDoOnEvent.isEmpty());
+        assertEquals(1, lteListAntesDoOnEvent.size());
+    }
+}
