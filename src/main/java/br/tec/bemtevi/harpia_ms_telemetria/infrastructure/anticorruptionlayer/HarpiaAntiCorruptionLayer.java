@@ -54,8 +54,8 @@ public class HarpiaAntiCorruptionLayer {
                         lte.getSimCardState(),
                         lte.getStatus(),
                         harpiaTelemetryMessage.getTimestamp(),
-                        equipamento,
-                        instituicao))
+                        equipamento.getIdEquipamento(),
+                        instituicao.getIdInstituicao()))
                 .toList();
     }
 
@@ -74,8 +74,8 @@ public class HarpiaAntiCorruptionLayer {
                         gps.getLongitude(),
                         gps.getTrueCourse(),
                         harpiaTelemetryMessage.getTimestamp(),
-                        equipamento,
-                        instituicao))
+                        equipamento.getIdEquipamento(),
+                        instituicao.getIdInstituicao()))
                 .toList();
     }
 
@@ -92,8 +92,8 @@ public class HarpiaAntiCorruptionLayer {
                         temperature.getName(),
                         temperature.getValue(),
                         harpiaTelemetryMessage.getTimestamp(),
-                        equipamento,
-                        instituicao))
+                        equipamento.getIdEquipamento(),
+                        instituicao.getIdInstituicao()))
                 .toList();
     }
 }

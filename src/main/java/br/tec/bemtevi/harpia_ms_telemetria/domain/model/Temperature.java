@@ -1,7 +1,6 @@
 package br.tec.bemtevi.harpia_ms_telemetria.domain.model;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -13,25 +12,21 @@ public class Temperature {
     private String nmTemperature;
     private Double vlTemperature;
     private LocalDateTime dtCriacao;
-
-    @DBRef
-    private Equipamento equipamento;
-
-    @DBRef
-    private Instituicao instituicao;
+    private String idEquipamento;
+    private String idInstituicao;
 
     public Temperature(String cdTemperature,
                        String nmTemperature,
                        Double vlTemperature,
                        LocalDateTime dtCriacao,
-                       Equipamento equipamento,
-                       Instituicao instituicao) {
+                       String idEquipamento,
+                       String idInstituicao) {
         this.cdTemperature = cdTemperature;
         this.nmTemperature = nmTemperature;
         this.vlTemperature = vlTemperature;
         this.dtCriacao = dtCriacao;
-        this.equipamento = equipamento;
-        this.instituicao = instituicao;
+        this.idEquipamento = idEquipamento;
+        this.idInstituicao = idInstituicao;
     }
 
     public String getCdTemperature() {
@@ -46,23 +41,15 @@ public class Temperature {
         return vlTemperature;
     }
 
-    public Equipamento getEquipamento() {
-        return equipamento;
-    }
-
-    public Instituicao getInstituicao() {
-        return instituicao;
-    }
-
     public LocalDateTime getDtCriacao() {
         return dtCriacao;
     }
 
-    public void setEquipamento(Equipamento equipamento) {
-        this.equipamento = equipamento;
+    public String getIdEquipamento() {
+        return idEquipamento;
     }
 
-    public void setInstituicao(Instituicao instituicao) {
-        this.instituicao = instituicao;
+    public String getIdInstituicao() {
+        return idInstituicao;
     }
 }

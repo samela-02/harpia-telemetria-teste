@@ -8,20 +8,14 @@ import java.util.Optional;
 
 @Component
 public class InstituicaoRepositoryImpl implements InstituicaoRepository {
-    private final InstituicaoRepositoryMongo instituicaoRepositoryMongo;
+    private final InstituicaoJpaRepository instituicaoJpaRepository;
 
-    public InstituicaoRepositoryImpl(InstituicaoRepositoryMongo instituicaoRepositoryMongo) {
-        this.instituicaoRepositoryMongo = instituicaoRepositoryMongo;
+    public InstituicaoRepositoryImpl(InstituicaoJpaRepository instituicaoJpaRepository) {
+        this.instituicaoJpaRepository = instituicaoJpaRepository;
     }
 
     @Override
     public Optional<Instituicao> findInstituicaoByIdInstituicao(String idInstituicao) {
-        return instituicaoRepositoryMongo.findByIdInstituicao(idInstituicao);
-    }
-
-    @Override
-    public Instituicao save(Instituicao instituicao) {
-        instituicao = instituicaoRepositoryMongo.save(instituicao);
-        return instituicao;
+        return instituicaoJpaRepository.findByIdInstituicao(idInstituicao);
     }
 }

@@ -6,5 +6,4 @@ import java.util.Optional;
 
 public interface InstituicaoRepository {
     Optional<Instituicao> findInstituicaoByIdInstituicao(String idInstituicao);
-    Instituicao save(Instituicao instituicao);
 }

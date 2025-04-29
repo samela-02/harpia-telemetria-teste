@@ -27,9 +27,8 @@ public class TemperatureRepositoryInMemory implements TemperatureRepository {
                 "nome",
                 0.0,
                 temperature.getDtCriacao(),
-                temperature.getEquipamento(),
-                temperature.getInstituicao());
-        novo.setEquipamento(temperature.getEquipamento());
+                temperature.getIdEquipamento(),
+                temperature.getIdInstituicao());
         temperatureList.add(novo);
     }
 }

@@ -1,27 +1,44 @@
 package br.tec.bemtevi.harpia_ms_telemetria.domain.model;
 
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
 
-@Document(collection = "arg_equipamento")
+@Entity
+@Table(name = "arg_equipamento")
 public class Equipamento {
     @Id
-    private ObjectId cdEquipamento;
+    @Column(name = "cd_equipamento", insertable = false, updatable = false)
+    private Long cdEquipamento;
+
+    @Column(name = "cd_instituicao")
     private Long cdInstituicao;
+
+    @Column(name = "cd_tipo_equipamento")
     private Long cdTipoEquipamento;
+
+    @Column(name = "id_equipamento")
     private String idEquipamento;
+
+    @Column(name = "nm_equipamento")
     private String nmEquipamento;
+
+    @Column(name = "nr_serie")
     private String nrSerie;
+
+    @Column(name = "lg_ativo")
     private Integer lgAtivo;
+
+    @Column(name = "dt_delecao")
     private LocalDateTime dtDelecao;
 
-    private Equipamento() {
+    public Equipamento() {
     }
 
-    public Equipamento(ObjectId cdEquipamento,
+    public Equipamento(Long cdEquipamento,
                        Long cdInstituicao,
                        Long cdTipoEquipamento,
                        String idEquipamento,
@@ -39,7 +56,7 @@ public class Equipamento {
         this.dtDelecao = dtDelecao;
     }
 
-    public ObjectId getCdEquipamento() {
+    public Long getCdEquipamento() {
         return cdEquipamento;
     }
 

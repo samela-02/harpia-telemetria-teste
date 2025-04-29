@@ -21,10 +21,4 @@ public class InstituicaoRepositoryInMemory implements InstituicaoRepository {
                 .filter(instituicao -> instituicao.getIdInstituicao().equals(idInstituicao))
                 .findFirst();
     }
-
-    @Override
-    public Instituicao save(Instituicao instituicao) {
-        instituicaoList.add(instituicao);
-        return instituicao;
-    }
 }

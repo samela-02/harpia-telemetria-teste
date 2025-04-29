@@ -27,17 +27,15 @@ class PropagarGPSUseCaseTest {
     @SuppressWarnings("unchecked")
     @Test
     void DadoGPSListComObjetos_QuandoOnEventForChamado_EntaoOEventoDeveSerDisparado() {
-        Equipamento equipamento = new Equipamento(null, 1L, 1L, "H-1234", "H-1234", "H-1234", 1, null);
-        Instituicao instituicao = new Instituicao("BTV");
-        GPS gps = new GPS(null, "nome", 0.0, 0.0, 0.0, LocalDateTime.now(), equipamento, instituicao);
+        GPS gps = new GPS(null, "nome", 0.0, 0.0, 0.0, LocalDateTime.now(), "1L", "1L");
 
         propagarGPSUseCase.onEvent(List.of(gps));
 
         List<GPSTracker> gpsTrackerList = (List<GPSTracker>) TestUtils.getFieldFromClass("gpsTrackerList", sse);
         assertFalse(gpsTrackerList.isEmpty());
         GPSTracker gpsTracker = gpsTrackerList.stream().findFirst().get();
-        assertEquals(equipamento.getIdEquipamento(), gpsTracker.getIdEquipamento());
-        assertEquals(instituicao.getIdInstituicao(), gpsTracker.getIdInstituicao());
+        assertEquals("1L", gpsTracker.getIdEquipamento());
+        assertEquals("1L", gpsTracker.getIdInstituicao());
         assertEquals(1, gpsTrackerList.size());
         List<GPSSSEResponse> gpssseResponseList = gpsTracker.getSensores();
         assertFalse(gpssseResponseList.isEmpty());

@@ -8,20 +8,14 @@ import java.util.Optional;
 
 @Component
 public class EquipamentoRepositoryImpl implements EquipamentoRepository {
-    private final EquipamentoRepositoryMongo equipamentoRepositoryMongo;
+    private final EquipamentoJpaRepository equipamentoJpaRepository;
 
-    public EquipamentoRepositoryImpl(EquipamentoRepositoryMongo equipamentoRepositoryMongo) {
-        this.equipamentoRepositoryMongo = equipamentoRepositoryMongo;
+    public EquipamentoRepositoryImpl(EquipamentoJpaRepository equipamentoJpaRepository) {
+        this.equipamentoJpaRepository = equipamentoJpaRepository;
     }
 
     @Override
     public Optional<Equipamento> findEquipamentoByIdEquipamento(String idEquipamento) {
-        return equipamentoRepositoryMongo.findByIdEquipamento(idEquipamento);
-    }
-
-    @Override
-    public Equipamento save(Equipamento equipamento) {
-        equipamento = equipamentoRepositoryMongo.save(equipamento);
-        return equipamento;
+        return equipamentoJpaRepository.findByIdEquipamento(idEquipamento);
     }
 }

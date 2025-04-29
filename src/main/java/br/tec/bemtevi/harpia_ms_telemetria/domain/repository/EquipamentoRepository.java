@@ -6,5 +6,4 @@ import java.util.Optional;
 
 public interface EquipamentoRepository {
     Optional<Equipamento> findEquipamentoByIdEquipamento(String idEquipamento);
-    Equipamento save(Equipamento equipamento);
 }

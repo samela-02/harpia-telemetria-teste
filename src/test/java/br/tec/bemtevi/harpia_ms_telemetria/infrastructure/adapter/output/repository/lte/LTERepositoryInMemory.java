@@ -31,10 +31,9 @@ public class LTERepositoryInMemory implements LTERepository {
                 "nmsimcardstate",
                 "nmstatus",
                 lte.getDtCriacao(),
-                null,
-                null
+                lte.getIdEquipamento(),
+                lte.getIdInstituicao()
         );
-        novo.setEquipamento(lte.getEquipamento());
         lteList.add(novo);
     }
 }

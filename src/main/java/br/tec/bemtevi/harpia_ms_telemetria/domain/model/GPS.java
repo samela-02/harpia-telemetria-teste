@@ -1,7 +1,6 @@
 package br.tec.bemtevi.harpia_ms_telemetria.domain.model;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -15,12 +14,8 @@ public class GPS {
     private Double vlLongitude;
     private Double vlTrueCourse;
     private LocalDateTime dtCriacao;
-
-    @DBRef
-    private Equipamento equipamento;
-
-    @DBRef
-    private Instituicao instituicao;
+    private String idEquipamento;
+    private String idInstituicao;
 
     public GPS(String cdGPS,
                String nmGPS,
@@ -28,16 +23,16 @@ public class GPS {
                Double vlLongitude,
                Double vlTrueCourse,
                LocalDateTime dtCriacao,
-               Equipamento equipamento,
-               Instituicao instituicao) {
+               String idEquipamento,
+               String idInstituicao) {
         this.cdGPS = cdGPS;
         this.nmGPS = nmGPS;
         this.vlLatitude = vlLatitude;
         this.vlLongitude = vlLongitude;
         this.vlTrueCourse = vlTrueCourse;
         this.dtCriacao = dtCriacao;
-        this.equipamento = equipamento;
-        this.instituicao = instituicao;
+        this.idEquipamento = idEquipamento;
+        this.idInstituicao = idInstituicao;
     }
 
     public String getCdGPS() {
@@ -64,19 +59,11 @@ public class GPS {
         return dtCriacao;
     }
 
-    public Equipamento getEquipamento() {
-        return equipamento;
+    public String getIdEquipamento() {
+        return idEquipamento;
     }
 
-    public Instituicao getInstituicao() {
-        return instituicao;
-    }
-
-    public void setEquipamento(Equipamento equipamento) {
-        this.equipamento = equipamento;
-    }
-
-    public void setInstituicao(Instituicao instituicao) {
-        this.instituicao = instituicao;
+    public String getIdInstituicao() {
+        return idInstituicao;
     }
 }
