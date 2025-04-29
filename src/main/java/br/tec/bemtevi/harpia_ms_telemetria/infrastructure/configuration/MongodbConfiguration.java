@@ -1,7 +1,10 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.configuration;
 
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import org.bson.UuidRepresentation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +24,13 @@ public class MongodbConfiguration {
 
     @Bean
     MongoClient mongoClient() {
-        return MongoClients.create(mondodbDatabaseUrl);
+        ConnectionString connectionString = new ConnectionString(mondodbDatabaseUrl);
+        MongoClientSettings mongoClientSettings = MongoClientSettings
+                .builder()
+                .uuidRepresentation(UuidRepresentation.STANDARD)
+                .applyConnectionString(connectionString)
+                .build();
+        return MongoClients.create(mongoClientSettings);
     }
 
     @Bean
