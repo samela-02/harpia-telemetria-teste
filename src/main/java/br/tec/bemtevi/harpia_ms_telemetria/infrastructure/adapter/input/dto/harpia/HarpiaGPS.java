@@ -1,8 +1,11 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.harpia;
 
+import java.time.LocalDateTime;
+
 public class HarpiaGPS {
     private String id;
     private String name;
+    private LocalDateTime timestamp;
     private Double latitude;
     private Double longitude;
     private Double trueCourse;
@@ -10,9 +13,15 @@ public class HarpiaGPS {
     public HarpiaGPS() {
     }
 
-    public HarpiaGPS(String id, String name, Double latitude, Double longitude, Double trueCourse) {
+    public HarpiaGPS(String id,
+                     String name,
+                     LocalDateTime timestamp,
+                     Double latitude,
+                     Double longitude,
+                     Double trueCourse) {
         this.id = id;
         this.name = name;
+        this.timestamp = timestamp;
         this.latitude = latitude;
         this.longitude = longitude;
         this.trueCourse = trueCourse;
@@ -24,6 +33,10 @@ public class HarpiaGPS {
 
     public String getName() {
         return name;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
 
     public Double getLatitude() {
