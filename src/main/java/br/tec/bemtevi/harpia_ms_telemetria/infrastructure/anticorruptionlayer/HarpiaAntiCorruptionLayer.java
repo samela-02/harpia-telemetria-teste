@@ -86,7 +86,7 @@ public class HarpiaAntiCorruptionLayer {
                 .stream()
                 .map(temperature -> new Temperature(null,
                         temperature.getName(),
-                        temperature.getValue(),
+                        temperature.getTemperature(),
                         harpiaTelemetryMessage.getTimestamp(),
                         equipamento.getIdEquipamento(),
                         instituicao.getIdInstituicao()))
