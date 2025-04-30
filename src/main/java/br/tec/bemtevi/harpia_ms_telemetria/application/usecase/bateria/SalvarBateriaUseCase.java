@@ -28,5 +28,11 @@ public class SalvarBateriaUseCase implements Observer {
         List<Bateria> bateriaList = (List<Bateria>) object;
         bateriaRepository.saveAll(bateriaList);
         log.info("Dados de bateria persistidos com sucesso.");
+        for (Bateria bateria : bateriaList)
+            log.debug("Dados da bateria. busVoltage: {}. loadVoltage: {}. currentMA: {}. currentMW: {}",
+                    bateria.getBusVoltage(),
+                    bateria.getLoadVoltage(),
+                    bateria.getCurrentMA(),
+                    bateria.getCurrentMW());
     }
 }
