@@ -34,7 +34,7 @@ class ProcessarTelemetriaUseCaseTest {
         List<GPS> gpsList = new ArrayList<>();
         GPS gps = new GPS("id", "GPS", 0.0, 0.0, 0.0, LocalDateTime.now(), null, null);
         gpsList.add(gps);
-        Sensors sensors = new Sensors("TIVIC_PDI", "H-1234", null, gpsList, null);
+        Sensors sensors = new Sensors("TIVIC_PDI", "H-1234", null, gpsList, null, null);
 
         processarTelemetriaUseCase.execute(sensors);
 

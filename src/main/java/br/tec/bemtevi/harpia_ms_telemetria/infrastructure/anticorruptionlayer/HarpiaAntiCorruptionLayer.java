@@ -1,11 +1,6 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.anticorruptionlayer;
 
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Equipamento;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Instituicao;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPS;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.LTE;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Temperature;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.*;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.harpia.HarpiaTelemetryMessage;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.storage.EquipamentoStorage;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.storage.InstituicaoStorage;
@@ -30,11 +25,13 @@ public class HarpiaAntiCorruptionLayer {
         List<LTE> lteList = harpiaLteToLteDomain(harpiaTelemetryMessage, equipamento, instituicao);
         List<GPS> gpsList = harpiaGpsToGpsDomain(harpiaTelemetryMessage, equipamento, instituicao);
         List<Temperature> temperatureList = harpiaTemperatureToTemperatureDomain(harpiaTelemetryMessage, equipamento, instituicao);
+        List<Bateria> bateriaList = harpiaBatteryToBateriaDomain(harpiaTelemetryMessage, equipamento, instituicao);
         return new Sensors(harpiaTelemetryMessage.getInstitutionId(),
                 harpiaTelemetryMessage.getSerial(),
                 lteList,
                 gpsList,
-                temperatureList);
+                temperatureList,
+                bateriaList);
     }
 
     private List<LTE> harpiaLteToLteDomain(HarpiaTelemetryMessage harpiaTelemetryMessage,
@@ -94,6 +91,30 @@ public class HarpiaAntiCorruptionLayer {
                         harpiaTelemetryMessage.getTimestamp(),
                         equipamento.getIdEquipamento(),
                         instituicao.getIdInstituicao()))
+                .toList();
+    }
+
+    private List<Bateria> harpiaBatteryToBateriaDomain(HarpiaTelemetryMessage harpiaTelemetryMessage,
+                                                       Equipamento equipamento,
+                                                       Instituicao instituicao) {
+        if (harpiaTelemetryMessage.getSensors().getBattery() == null)
+            return null;
+        return harpiaTelemetryMessage
+                .getSensors()
+                .getBattery()
+                .stream()
+                .map(harpiaBattery -> new Bateria(
+                        null,
+                        harpiaBattery.getId(),
+                        harpiaBattery.getName(),
+                        harpiaBattery.getTimestamp(),
+                        harpiaBattery.getBusVoltage(),
+                        harpiaBattery.getLoadVoltage(),
+                        harpiaBattery.getCurrentMA(),
+                        harpiaBattery.getCurrentMA(),
+                        equipamento.getIdEquipamento(),
+                        instituicao.getIdInstituicao()
+                ))
                 .toList();
     }
 }

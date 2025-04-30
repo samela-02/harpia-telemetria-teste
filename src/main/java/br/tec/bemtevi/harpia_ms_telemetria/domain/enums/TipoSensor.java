@@ -3,7 +3,8 @@ package br.tec.bemtevi.harpia_ms_telemetria.domain.enums;
 public enum TipoSensor {
     GPS("GPS"),
     LTE("LTE"),
-    TEMPERATURE("TEMPERATURE");
+    TEMPERATURE("TEMPERATURE"),
+    BATERIA("BATERIA");
 
     private final String nome;
 
