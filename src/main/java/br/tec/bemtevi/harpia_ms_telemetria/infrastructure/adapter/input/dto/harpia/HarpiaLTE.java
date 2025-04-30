@@ -1,8 +1,11 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.harpia;
 
+import java.time.LocalDateTime;
+
 public class HarpiaLTE {
     private String id;
     private String name;
+    private LocalDateTime timestamp;
     private Double signalStrength;
     private String carrier;
     private String internetState;
@@ -14,6 +17,7 @@ public class HarpiaLTE {
 
     public HarpiaLTE(String id,
                      String name,
+                     LocalDateTime timestamp,
                      Double signalStrength,
                      String carrier,
                      String internetState,
@@ -21,6 +25,7 @@ public class HarpiaLTE {
                      String status) {
         this.id = id;
         this.name = name;
+        this.timestamp = timestamp;
         this.signalStrength = signalStrength;
         this.carrier = carrier;
         this.internetState = internetState;
@@ -34,6 +39,10 @@ public class HarpiaLTE {
 
     public String getName() {
         return name;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
 
     public Double getSignalStrength() {
