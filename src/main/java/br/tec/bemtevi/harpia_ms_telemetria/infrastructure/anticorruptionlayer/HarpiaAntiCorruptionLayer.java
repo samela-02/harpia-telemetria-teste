@@ -109,8 +109,8 @@ public class HarpiaAntiCorruptionLayer {
                         harpiaBattery.getTimestamp(),
                         harpiaBattery.getBusVoltage(),
                         harpiaBattery.getLoadVoltage(),
-                        harpiaBattery.getCurrentmA(),
-                        harpiaBattery.getCurrentmA(),
+                        harpiaBattery.getCurrent(),
+                        harpiaBattery.getCurrent(),
                         equipamento.getIdEquipamento(),
                         instituicao.getIdInstituicao()
                 ))

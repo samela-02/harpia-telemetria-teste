@@ -8,8 +8,8 @@ public class HarpiaBattery {
     private LocalDateTime timestamp;
     private Double busVoltage;
     private Double loadVoltage;
-    private Double currentmA;
-    private Double powermW;
+    private Double current;
+    private Double power;
 
     public HarpiaBattery() {
     }
@@ -19,15 +19,15 @@ public class HarpiaBattery {
                          LocalDateTime timestamp,
                          Double busVoltage,
                          Double loadVoltage,
-                         Double currentmA,
-                         Double powermW) {
+                         Double current,
+                         Double power) {
         this.id = id;
         this.name = name;
         this.timestamp = timestamp;
         this.busVoltage = busVoltage;
         this.loadVoltage = loadVoltage;
-        this.currentmA = currentmA;
-        this.powermW = powermW;
+        this.current = current;
+        this.power = power;
     }
 
     public String getId() {
@@ -50,11 +50,11 @@ public class HarpiaBattery {
         return loadVoltage;
     }
 
-    public Double getCurrentmA() {
-        return currentmA;
+    public Double getCurrent() {
+        return current;
     }
 
-    public Double getPowermW() {
-        return powermW;
+    public Double getPower() {
+        return power;
     }
 }
