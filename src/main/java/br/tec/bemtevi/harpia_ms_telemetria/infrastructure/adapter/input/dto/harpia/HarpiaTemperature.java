@@ -3,15 +3,15 @@ package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.har
 public class HarpiaTemperature {
     private String id;
     private String name;
-    private Double value;
+    private Double temperature;
 
     public HarpiaTemperature() {
     }
 
-    public HarpiaTemperature(String id, String name, Double value) {
+    public HarpiaTemperature(String id, String name, Double temperature) {
         this.id = id;
         this.name = name;
-        this.value = value;
+        this.temperature = temperature;
     }
 
     public String getId() {
@@ -22,7 +22,7 @@ public class HarpiaTemperature {
         return name;
     }
 
-    public Double getValue() {
-        return value;
+    public Double getTemperature() {
+        return temperature;
     }
 }

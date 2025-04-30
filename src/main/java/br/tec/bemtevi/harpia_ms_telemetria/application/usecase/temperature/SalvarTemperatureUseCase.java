@@ -29,5 +29,9 @@ public class SalvarTemperatureUseCase implements Observer {
         List<Temperature> temperatureList = (List<Temperature>) object;
         temperatureRepository.saveAll(temperatureList);
         log.info("Dados de temperatura persistidos com sucesso.");
+        for (Temperature temperature : temperatureList)
+            log.info("Dados de temperatura. nmTemperature: {}. vlTemperature: {}.",
+                    temperature.getNmTemperature(),
+                    temperature.getVlTemperature());
     }
 }

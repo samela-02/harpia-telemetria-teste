@@ -30,5 +30,11 @@ public class SalvarGPSUseCase implements Observer {
         List<GPS> gpsList = (List<GPS>) object;
         gpsRepository.saveAll(gpsList);
         log.info("Dados de gps persistidos com sucesso.");
+        for (GPS gps : gpsList)
+            log.info("Dados de GPS. nmGps: {}. vlLatitude: {}. vlLongitude: {}. vlTrueCourse: {}.",
+                    gps.getNmGPS(),
+                    gps.getVlLatitude(),
+                    gps.getVlLongitude(),
+                    gps.getVlTrueCourse());
     }
 }

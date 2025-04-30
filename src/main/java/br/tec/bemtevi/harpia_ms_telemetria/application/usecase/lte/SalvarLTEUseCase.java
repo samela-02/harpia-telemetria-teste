@@ -30,5 +30,13 @@ public class SalvarLTEUseCase implements Observer {
         List<LTE> lteList = (List<LTE>) object;
         lteRepository.saveAll(lteList);
         log.info("Dados de lte persistidos com sucesso.");
+        for (LTE lte : lteList)
+            log.info("Dados do lte. nmLte: {}. vlSignalStrength: {}. nmCarrier: {}. nmInternetState: {}. nmSimCardState: {}. nmStatus: {}.",
+                    lte.getNmLTE(),
+                    lte.getVlSignalStrength(),
+                    lte.getNmCarrier(),
+                    lte.getNmInternetState(),
+                    lte.getNmSimCardState(),
+                    lte.getNmStatus());
     }
 }

@@ -8,13 +8,20 @@ public class Sensors {
     private List<LTE> lte;
     private List<GPS> gps;
     private List<Temperature> temperature;
+    private List<Bateria> bateria;
 
-    public Sensors(String idInstituicao, String idEquipamento, List<LTE> lte, List<GPS> gps, List<Temperature> temperature) {
+    public Sensors(String idInstituicao,
+                   String idEquipamento,
+                   List<LTE> lte,
+                   List<GPS> gps,
+                   List<Temperature> temperature,
+                   List<Bateria> bateria) {
         this.idInstituicao = idInstituicao;
         this.idEquipamento = idEquipamento;
         this.lte = lte;
         this.gps = gps;
         this.temperature = temperature;
+        this.bateria = bateria;
     }
 
     public String getIdInstituicao() {
@@ -35,5 +42,9 @@ public class Sensors {
 
     public List<Temperature> getTemperature() {
         return temperature;
+    }
+
+    public List<Bateria> getBateria() {
+        return bateria;
     }
 }
