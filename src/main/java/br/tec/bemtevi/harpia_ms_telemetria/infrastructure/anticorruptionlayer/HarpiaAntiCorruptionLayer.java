@@ -6,7 +6,6 @@ import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.storage.EquipamentoSto
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.storage.InstituicaoStorage;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -110,8 +109,8 @@ public class HarpiaAntiCorruptionLayer {
                         harpiaBattery.getTimestamp(),
                         harpiaBattery.getBusVoltage(),
                         harpiaBattery.getLoadVoltage(),
-                        harpiaBattery.getCurrentMA(),
-                        harpiaBattery.getCurrentMA(),
+                        harpiaBattery.getCurrentmA(),
+                        harpiaBattery.getCurrentmA(),
                         equipamento.getIdEquipamento(),
                         instituicao.getIdInstituicao()
                 ))
