@@ -15,9 +15,10 @@ public class LTE {
     private String nmInternetState;
     private String nmSimCardState;
     private String nmStatus;
-    private LocalDateTime dtCriacao;
+    private LocalDateTime dtEvento;
     private String idEquipamento;
     private String idInstituicao;
+    private LocalDateTime dtCriacao;
 
     public LTE(String cdLTE,
                String nmLTE,
@@ -26,7 +27,7 @@ public class LTE {
                String nmInternetState,
                String nmSimCardState,
                String nmStatus,
-               LocalDateTime dtCriacao,
+               LocalDateTime dtEvento,
                String idEquipamento,
                String idInstituicao) {
         this.cdLTE = cdLTE;
@@ -36,9 +37,10 @@ public class LTE {
         this.nmInternetState = nmInternetState;
         this.nmSimCardState = nmSimCardState;
         this.nmStatus = nmStatus;
-        this.dtCriacao = dtCriacao;
+        this.dtEvento = dtEvento;
         this.idEquipamento = idEquipamento;
         this.idInstituicao = idInstituicao;
+        this.dtCriacao = LocalDateTime.now();
     }
 
     public String getCdLTE() {
@@ -69,8 +71,8 @@ public class LTE {
         return nmStatus;
     }
 
-    public LocalDateTime getDtCriacao() {
-        return dtCriacao;
+    public LocalDateTime getDtEvento() {
+        return dtEvento;
     }
 
     public String getIdEquipamento() {
@@ -79,5 +81,9 @@ public class LTE {
 
     public String getIdInstituicao() {
         return idInstituicao;
+    }
+
+    public LocalDateTime getDtCriacao() {
+        return dtCriacao;
     }
 }

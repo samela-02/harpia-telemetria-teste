@@ -1,0 +1,36 @@
+server.port=
+
+spring.application.name=harpia-ms-telemetria
+
+### Persistencia
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.datasource.url=
+spring.datasource.username=
+spring.datasource.password=
+
+mongodb.database.url=
+mongodb.database.name=
+### Persistencia
+
+### RabbitMQ
+spring.rabbitmq.host=
+spring.rabbitmq.port=
+spring.rabbitmq.username=
+spring.rabbitmq.password=
+
+ms-telemetria.queue.name=
+ms.exchange.name=
+routing-key.telemetria=
+### RabbitMQ
+
+### CCO
+cco.url=
+cco.user-info-endpoint=
+### CCO
+
+### Frontend
+frontend.url=
+### Frontend
+
+flyweight.equipamento.max=

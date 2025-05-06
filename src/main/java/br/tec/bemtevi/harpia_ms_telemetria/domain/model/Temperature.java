@@ -11,22 +11,24 @@ public class Temperature {
     private String cdTemperature;
     private String nmTemperature;
     private Double vlTemperature;
-    private LocalDateTime dtCriacao;
+    private LocalDateTime dtEvento;
     private String idEquipamento;
     private String idInstituicao;
+    private LocalDateTime dtCriacao;
 
     public Temperature(String cdTemperature,
                        String nmTemperature,
                        Double vlTemperature,
-                       LocalDateTime dtCriacao,
+                       LocalDateTime dtEvento,
                        String idEquipamento,
                        String idInstituicao) {
         this.cdTemperature = cdTemperature;
         this.nmTemperature = nmTemperature;
         this.vlTemperature = vlTemperature;
-        this.dtCriacao = dtCriacao;
+        this.dtEvento = dtEvento;
         this.idEquipamento = idEquipamento;
         this.idInstituicao = idInstituicao;
+        this.dtCriacao = LocalDateTime.now();
     }
 
     public String getCdTemperature() {
@@ -41,8 +43,8 @@ public class Temperature {
         return vlTemperature;
     }
 
-    public LocalDateTime getDtCriacao() {
-        return dtCriacao;
+    public LocalDateTime getDtEvento() {
+        return dtEvento;
     }
 
     public String getIdEquipamento() {
@@ -51,5 +53,9 @@ public class Temperature {
 
     public String getIdInstituicao() {
         return idInstituicao;
+    }
+
+    public LocalDateTime getDtCriacao() {
+        return dtCriacao;
     }
 }
