@@ -8,17 +8,29 @@ public final class GPSSSEResponse {
     private final Double vlLongitude;
     private final Double vlTrueCourse;
     private final LocalDateTime dtEvento;
+    private final LocalDateTime dtCriacao;
 
-    private GPSSSEResponse(String nmGPS, Double vlLatitude, Double vlLongitude, Double vlTrueCourse, LocalDateTime dtEvento) {
+    public GPSSSEResponse(String nmGPS,
+                          Double vlLatitude,
+                          Double vlLongitude,
+                          Double vlTrueCourse,
+                          LocalDateTime dtEvento,
+                          LocalDateTime dtCriacao) {
         this.nmGPS = nmGPS;
         this.vlLatitude = vlLatitude;
         this.vlLongitude = vlLongitude;
         this.vlTrueCourse = vlTrueCourse;
         this.dtEvento = dtEvento;
+        this.dtCriacao = dtCriacao;
     }
 
     public static GPSSSEResponse fromGPS(GPS gps) {
-        return new GPSSSEResponse(gps.getNmGPS(), gps.getVlLatitude(), gps.getVlLongitude(), gps.getVlTrueCourse(), gps.getDtEvento());
+        return new GPSSSEResponse(gps.getNmGPS(),
+                gps.getVlLatitude(),
+                gps.getVlLongitude(),
+                gps.getVlTrueCourse(),
+                gps.getDtEvento(),
+                gps.getDtCriacao());
     }
 
     public String getNmGPS() {
@@ -39,5 +51,9 @@ public final class GPSSSEResponse {
 
     public LocalDateTime getDtEvento() {
         return dtEvento;
+    }
+
+    public LocalDateTime getDtCriacao() {
+        return dtCriacao;
     }
 }
