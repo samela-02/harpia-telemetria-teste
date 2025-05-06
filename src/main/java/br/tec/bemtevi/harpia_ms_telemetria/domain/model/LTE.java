@@ -18,6 +18,7 @@ public class LTE {
     private LocalDateTime dtEvento;
     private String idEquipamento;
     private String idInstituicao;
+    private LocalDateTime dtCriacao;
 
     public LTE(String cdLTE,
                String nmLTE,
@@ -39,6 +40,7 @@ public class LTE {
         this.dtEvento = dtEvento;
         this.idEquipamento = idEquipamento;
         this.idInstituicao = idInstituicao;
+        this.dtCriacao = LocalDateTime.now();
     }
 
     public String getCdLTE() {
@@ -79,5 +81,9 @@ public class LTE {
 
     public String getIdInstituicao() {
         return idInstituicao;
+    }
+
+    public LocalDateTime getDtCriacao() {
+        return dtCriacao;
     }
 }

@@ -18,6 +18,7 @@ public class Bateria {
     private Double currentMW;
     private String idEquipamento;
     private String idInstituicao;
+    private LocalDateTime dtCriacao;
 
     public Bateria(String cdBateria,
                    String idBateria,
@@ -39,6 +40,7 @@ public class Bateria {
         this.currentMW = currentMW;
         this.idEquipamento = idEquipamento;
         this.idInstituicao = idInstituicao;
+        this.dtCriacao = LocalDateTime.now();
     }
 
     public String getCdBateria() {
@@ -79,5 +81,9 @@ public class Bateria {
 
     public String getIdInstituicao() {
         return idInstituicao;
+    }
+
+    public LocalDateTime getDtCriacao() {
+        return dtCriacao;
     }
 }

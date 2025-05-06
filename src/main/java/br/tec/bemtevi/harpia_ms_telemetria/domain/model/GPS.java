@@ -16,6 +16,7 @@ public class GPS {
     private LocalDateTime dtEvento;
     private String idEquipamento;
     private String idInstituicao;
+    private LocalDateTime dtCriacao;
 
     public GPS(String cdGPS,
                String nmGPS,
@@ -33,6 +34,7 @@ public class GPS {
         this.dtEvento = dtEvento;
         this.idEquipamento = idEquipamento;
         this.idInstituicao = idInstituicao;
+        this.dtCriacao = LocalDateTime.now();
     }
 
     public String getCdGPS() {
@@ -65,5 +67,9 @@ public class GPS {
 
     public String getIdInstituicao() {
         return idInstituicao;
+    }
+
+    public LocalDateTime getDtCriacao() {
+        return dtCriacao;
     }
 }
