@@ -11,7 +11,7 @@ public class Bateria {
     private String cdBateria;
     private String idBateria;
     private String nmBateria;
-    private LocalDateTime dtCriacao;
+    private LocalDateTime dtEvento;
     private Double busVoltage;
     private Double loadVoltage;
     private Double currentMA;
@@ -22,7 +22,7 @@ public class Bateria {
     public Bateria(String cdBateria,
                    String idBateria,
                    String nmBateria,
-                   LocalDateTime dtCriacao,
+                   LocalDateTime dtEvento,
                    Double busVoltage,
                    Double loadVoltage,
                    Double currentMA,
@@ -32,7 +32,7 @@ public class Bateria {
         this.cdBateria = cdBateria;
         this.idBateria = idBateria;
         this.nmBateria = nmBateria;
-        this.dtCriacao = dtCriacao;
+        this.dtEvento = dtEvento;
         this.busVoltage = busVoltage;
         this.loadVoltage = loadVoltage;
         this.currentMA = currentMA;
@@ -53,8 +53,8 @@ public class Bateria {
         return nmBateria;
     }
 
-    public LocalDateTime getDtCriacao() {
-        return dtCriacao;
+    public LocalDateTime getDtEvento() {
+        return dtEvento;
     }
 
     public Double getBusVoltage() {

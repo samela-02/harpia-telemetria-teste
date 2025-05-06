@@ -18,7 +18,7 @@ public final class GPSSSEResponse {
     }
 
     public static GPSSSEResponse fromGPS(GPS gps) {
-        return new GPSSSEResponse(gps.getNmGPS(), gps.getVlLatitude(), gps.getVlLongitude(), gps.getVlTrueCourse(), gps.getDtCriacao());
+        return new GPSSSEResponse(gps.getNmGPS(), gps.getVlLatitude(), gps.getVlLongitude(), gps.getVlTrueCourse(), gps.getDtEvento());
     }
 
     public String getNmGPS() {

@@ -26,7 +26,7 @@ public class TemperatureRepositoryInMemory implements TemperatureRepository {
         Temperature novo = new Temperature(uuid.toString(),
                 "nome",
                 0.0,
-                temperature.getDtCriacao(),
+                temperature.getDtEvento(),
                 temperature.getIdEquipamento(),
                 temperature.getIdInstituicao());
         temperatureList.add(novo);

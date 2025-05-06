@@ -13,7 +13,7 @@ public class GPS {
     private Double vlLatitude;
     private Double vlLongitude;
     private Double vlTrueCourse;
-    private LocalDateTime dtCriacao;
+    private LocalDateTime dtEvento;
     private String idEquipamento;
     private String idInstituicao;
 
@@ -22,7 +22,7 @@ public class GPS {
                Double vlLatitude,
                Double vlLongitude,
                Double vlTrueCourse,
-               LocalDateTime dtCriacao,
+               LocalDateTime dtEvento,
                String idEquipamento,
                String idInstituicao) {
         this.cdGPS = cdGPS;
@@ -30,7 +30,7 @@ public class GPS {
         this.vlLatitude = vlLatitude;
         this.vlLongitude = vlLongitude;
         this.vlTrueCourse = vlTrueCourse;
-        this.dtCriacao = dtCriacao;
+        this.dtEvento = dtEvento;
         this.idEquipamento = idEquipamento;
         this.idInstituicao = idInstituicao;
     }
@@ -55,8 +55,8 @@ public class GPS {
         return vlTrueCourse;
     }
 
-    public LocalDateTime getDtCriacao() {
-        return dtCriacao;
+    public LocalDateTime getDtEvento() {
+        return dtEvento;
     }
 
     public String getIdEquipamento() {
