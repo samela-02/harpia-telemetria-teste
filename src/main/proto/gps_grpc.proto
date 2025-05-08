@@ -20,5 +20,5 @@ message GpsTracker {
 }
 
 service GpsGrpcService {
-  rpc PropagarGPS (GpsTracker) returns (Void);
+  rpc PropagarGPS (stream GpsTracker) returns (Void);
 }

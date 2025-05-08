@@ -5,6 +5,7 @@ import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPSSSEResponse;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPSTracker;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.stub.StreamObserver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +17,7 @@ public class GrpcSensorPublisher {
     private final LoggerFacade loggerFacade;
     private final String grpcServerHost;
     private final int grpcServerPort;
-    private final GpsGrpcServiceGrpc.GpsGrpcServiceBlockingStub asyncStub;
+    private final GpsGrpcServiceGrpc.GpsGrpcServiceStub asyncStub;
 
     public GrpcSensorPublisher(LoggerFacade loggerFacade,
                                @Value("${grpc.server.host}") String grpcServerHost,
@@ -27,7 +28,7 @@ public class GrpcSensorPublisher {
         asyncStub = criarStub();
     }
 
-    private GpsGrpcServiceGrpc.GpsGrpcServiceBlockingStub criarStub() {
+    private GpsGrpcServiceGrpc.GpsGrpcServiceStub criarStub() {
         loggerFacade.info(String.format("Criando stub que irá enviar requests gRPC ao servidor %s na porta %s.",
                 grpcServerHost,
                 grpcServerPort));
@@ -35,15 +36,21 @@ public class GrpcSensorPublisher {
                 .forAddress(grpcServerHost, grpcServerPort)
                 .usePlaintext();
         ManagedChannel channel = managedChannelBuilder.build();
-        return GpsGrpcServiceGrpc.newBlockingStub(channel);
+        return GpsGrpcServiceGrpc.newStub(channel);
     }
 
     public void enviarEvento(GPSTracker gpsTracker) {
         loggerFacade.info("Enviando evento via gRPC.");
-        List<GpsGrpc.Gps> requestSensor = converterGpsSseEmGpsGrpc(gpsTracker.getSensores());
-        GpsGrpc.GpsTracker request = getRequest(gpsTracker, requestSensor);
-        asyncStub.propagarGPS(request);
+        StreamObserver<GpsGrpc.GpsTracker> streamObserver =
+                asyncStub.propagarGPS(new GpsGrpcStreamObserver(loggerFacade));
+        GpsGrpc.GpsTracker request = criarRequest(gpsTracker);
+        streamObserver.onNext(request);
         loggerFacade.info("Evento enviado com sucesso.");
+    }
+
+    private GpsGrpc.GpsTracker criarRequest(GPSTracker gpsTracker) {
+        List<GpsGrpc.Gps> requestSensor = converterGpsSseEmGpsGrpc(gpsTracker.getSensores());
+        return getRequest(gpsTracker, requestSensor);
     }
 
     private List<GpsGrpc.Gps> converterGpsSseEmGpsGrpc(List<GPSSSEResponse> sensores) {
@@ -51,9 +58,9 @@ public class GrpcSensorPublisher {
                 .stream()
                 .map(sensor -> GpsGrpc.Gps
                         .newBuilder()
-                        .setNmGPS(sensor.getNmGPS())
-                        .setVlLatitude(sensor.getVlLatitude())
-                        .setVlLongitude(sensor.getVlLongitude())
+                        .setNmGPS(sensor.getNmGPS() != null ? sensor.getNmGPS() : "")
+                        .setVlLatitude(sensor.getVlLatitude() != null ? sensor.getVlLatitude() : 0)
+                        .setVlLongitude(sensor.getVlLongitude() != null ? sensor.getVlLongitude() : 0)
                         .setVlTrueCourse(sensor.getVlTrueCourse() != null ? sensor.getVlTrueCourse() : 0)
                         .setDtEvento(sensor.getDtEvento() != null ? sensor.getDtEvento().toInstant(ZoneOffset.UTC).toEpochMilli() : 0)
                         .setDtCriacao(sensor.getDtCriacao() != null ? sensor.getDtCriacao().toInstant(ZoneOffset.UTC).toEpochMilli() : 0)
