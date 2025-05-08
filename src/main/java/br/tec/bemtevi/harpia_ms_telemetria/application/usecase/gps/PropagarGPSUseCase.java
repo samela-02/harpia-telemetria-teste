@@ -16,7 +16,7 @@ import java.util.List;
 public class PropagarGPSUseCase implements Observer {
     private final SSE sse;
 
-    public PropagarGPSUseCase(@Qualifier(value = "GPSSSE") SSE sse, SensorMediator sensorMediator) {
+    public PropagarGPSUseCase(@Qualifier(value = "GrpcSse") SSE sse, SensorMediator sensorMediator) {
         this.sse = sse;
         sensorMediator.registrar(TipoSensor.GPS, this);
     }
