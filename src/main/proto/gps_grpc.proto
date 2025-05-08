@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option java_package = "br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.grpc";
+
+message Void {}
+
+message Gps {
+  string nmGPS = 1;
+  double vlLatitude = 2;
+  double vlLongitude = 3;
+  double vlTrueCourse = 4;
+  int64 dtEvento = 5;
+  int64 dtCriacao = 6;
+}
+
+message GpsTracker {
+  string idInstituicao = 1;
+  string idEquipamento = 2;
+  repeated Gps sensores = 3;
+}
+
+service GpsGrpcService {
+  rpc PropagarGPS (Void) returns (stream GpsTracker);
+}
