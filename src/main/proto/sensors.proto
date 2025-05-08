@@ -59,3 +59,7 @@ message Sensors {
   repeated Temperature temperature = 5;
   repeated Bateria bateria = 6;
 }
+
+service SensorsGrpcService {
+  rpc propagarSensores (stream Sensors) returns (Void);
+}
