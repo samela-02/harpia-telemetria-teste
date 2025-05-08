@@ -72,4 +72,19 @@ public class GPS {
     public LocalDateTime getDtCriacao() {
         return dtCriacao;
     }
+
+    @Override
+    public String toString() {
+        return "GPS Info {" +
+                "cdGPS='" + cdGPS + '\'' +
+                ", nmGPS='" + nmGPS + '\'' +
+                ", vlLatitude=" + vlLatitude +
+                ", vlLongitude=" + vlLongitude +
+                ", vlTrueCourse=" + vlTrueCourse +
+                ", dtEvento=" + (dtEvento != null ? dtEvento.toString() : "null") +
+                ", idEquipamento='" + idEquipamento + '\'' +
+                ", idInstituicao='" + idInstituicao + '\'' +
+                ", dtCriacao=" + (dtCriacao != null ? dtCriacao.toString() : "null") +
+                '}';
+    }
 }

@@ -47,4 +47,40 @@ public class Sensors {
     public List<Bateria> getBateria() {
         return bateria;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("IdInstituição: ").append(idInstituicao);
+        stringBuilder.append("IdEquipamento: ").append(idEquipamento);
+        adicionarToStringLte(stringBuilder);
+        adicionarToStringGps(stringBuilder);
+        adicionarToStringTemperature(stringBuilder);
+        adicionarToStringBateria(stringBuilder);
+        return stringBuilder.toString();
+    }
+
+    private void adicionarToStringLte(StringBuilder stringBuilder) {
+        stringBuilder.append("Lte: { ");
+        lte.stream().forEach(lte -> stringBuilder.append(lte.toString()));
+        stringBuilder.append("}. ");
+    }
+
+    private void adicionarToStringGps(StringBuilder stringBuilder) {
+        stringBuilder.append("Gps: { ");
+        gps.stream().forEach(gps -> stringBuilder.append(gps.toString()));
+        stringBuilder.append("}. ");
+    }
+
+    private void adicionarToStringTemperature(StringBuilder stringBuilder) {
+        stringBuilder.append("Temperature: { ");
+        temperature.stream().forEach(temperature -> stringBuilder.append(temperature.toString()));
+        stringBuilder.append("}. ");
+    }
+
+    private void adicionarToStringBateria(StringBuilder stringBuilder) {
+        stringBuilder.append("Bateria: { ");
+        bateria.stream().forEach(bateria -> stringBuilder.append(bateria.toString()));
+        stringBuilder.append("}. ");
+    }
 }

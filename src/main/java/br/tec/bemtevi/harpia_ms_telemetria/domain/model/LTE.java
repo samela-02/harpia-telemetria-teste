@@ -86,4 +86,21 @@ public class LTE {
     public LocalDateTime getDtCriacao() {
         return dtCriacao;
     }
+
+    @Override
+    public String toString() {
+        return "LTE Info {" +
+                "cdLTE='" + cdLTE + '\'' +
+                ", nmLTE='" + nmLTE + '\'' +
+                ", vlSignalStrength=" + vlSignalStrength +
+                ", nmCarrier='" + nmCarrier + '\'' +
+                ", nmInternetState='" + nmInternetState + '\'' +
+                ", nmSimCardState='" + nmSimCardState + '\'' +
+                ", nmStatus='" + nmStatus + '\'' +
+                ", dtEvento=" + dtEvento +
+                ", idEquipamento='" + idEquipamento + '\'' +
+                ", idInstituicao='" + idInstituicao + '\'' +
+                ", dtCriacao=" + dtCriacao +
+                '}';
+    }
 }
