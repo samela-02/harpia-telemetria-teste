@@ -3,13 +3,11 @@ package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.telemetria;
 import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.SensorMediator;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoSensor;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Set;
 
 import static java.util.Arrays.stream;
 
