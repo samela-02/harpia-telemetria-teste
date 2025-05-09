@@ -18,16 +18,18 @@ import org.springframework.stereotype.Component;
 public class GrpcCCOGateway implements Observer, ISendSensorsMsgToCCO {
     private final LoggerFacade loggerFacade;
     private final SensorsGrpcMapper sensorsGrpcMapper;
-    private final SensorsGrpcServiceGrpc.SensorsGrpcServiceStub asyncStub;
+    private final StreamObserver<SensorsGrpc> sensorsGrpcRequestStreamObserver;
 
-    public GrpcCCOGateway(LoggerFacade loggerFacade,
+    public GrpcCCOGateway(Mediator mediator,
+                          LoggerFacade loggerFacade,
                           SensorsGrpcMapper sensorsGrpcMapper,
-                          Mediator mediator,
                           GrpcChannel grpcChannel) {
+        mediator.registrar(TipoEvento.SENSORS, this);
         this.loggerFacade = loggerFacade;
         this.sensorsGrpcMapper = sensorsGrpcMapper;
-        mediator.registrar(TipoEvento.SENSORS, this);
-        asyncStub = SensorsGrpcServiceGrpc.newStub(grpcChannel.getChannel());
+        sensorsGrpcRequestStreamObserver = SensorsGrpcServiceGrpc
+                .newStub(grpcChannel.getChannel())
+                .propagarSensores(new SensorsGrpcResponseStreamObserver(loggerFacade));
     }
 
     @Override
@@ -39,10 +41,7 @@ public class GrpcCCOGateway implements Observer, ISendSensorsMsgToCCO {
     public void send(Sensors sensors) {
         loggerFacade.info("Enviando mensagem que contém informações de telemetria ao CCO via gRPC.");
         loggerFacade.debug(String.format("Dados dos sensores: %s", sensors.toString()));
-        SensorsGrpc sensorsGrpcRequest = sensorsGrpcMapper.sensorsToSensorsGrpc(sensors);
-        StreamObserver<SensorsGrpc> sensorsGrpcRequestStreamObserver = asyncStub
-                .propagarSensores(new SensorsGrpcResponseStreamObserver(loggerFacade));
-        sensorsGrpcRequestStreamObserver.onNext(sensorsGrpcRequest);
+        sensorsGrpcRequestStreamObserver.onNext(sensorsGrpcMapper.sensorsToSensorsGrpc(sensors));
         loggerFacade.info("Mensagem enviada com sucesso.");
     }
 }
