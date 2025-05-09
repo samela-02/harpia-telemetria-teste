@@ -6,46 +6,28 @@ import br.tec.bemtevi.harpia_ms_telemetria.domain.facade.LoggerFacade;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.gateway.ISendSensorsMsgToCCO;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
+import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.grpc.GrpcChannel;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.grpc.SensorsGrpc;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.grpc.SensorsGrpcResponseStreamObserver;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.grpc.SensorsGrpcServiceGrpc;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.mapper.SensorsGrpcMapper;
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class GrpcCCOGateway implements Observer, ISendSensorsMsgToCCO {
     private final LoggerFacade loggerFacade;
     private final SensorsGrpcMapper sensorsGrpcMapper;
-    private final String grpcServerHost;
-    private final int grpcServerPort;
     private final SensorsGrpcServiceGrpc.SensorsGrpcServiceStub asyncStub;
 
     public GrpcCCOGateway(LoggerFacade loggerFacade,
                           SensorsGrpcMapper sensorsGrpcMapper,
                           Mediator mediator,
-                          @Value("${grpc.server.host}") String grpcServerHost,
-                          @Value("${grpc.server.port}") int grpcServerPort) {
+                          GrpcChannel grpcChannel) {
         this.loggerFacade = loggerFacade;
         this.sensorsGrpcMapper = sensorsGrpcMapper;
         mediator.registrar(TipoEvento.SENSORS, this);
-        this.grpcServerHost = grpcServerHost;
-        this.grpcServerPort = grpcServerPort;
-        asyncStub = criarStubAsync();
-    }
-
-    private SensorsGrpcServiceGrpc.SensorsGrpcServiceStub criarStubAsync() {
-        loggerFacade.info(String.format("Criando stub que irá enviar requests gRPC ao servidor %s na porta %s.",
-                grpcServerHost,
-                grpcServerPort));
-        ManagedChannelBuilder<?> managedChannelBuilder = ManagedChannelBuilder
-                .forAddress(grpcServerHost, grpcServerPort)
-                .usePlaintext();
-        ManagedChannel channel = managedChannelBuilder.build();
-        return SensorsGrpcServiceGrpc.newStub(channel);
+        asyncStub = SensorsGrpcServiceGrpc.newStub(grpcChannel.getChannel());
     }
 
     @Override
