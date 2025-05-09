@@ -1,7 +1,7 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.bateria;
 
 import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoSensor;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoEvento;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Bateria;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.BateriaRepository;
@@ -19,7 +19,7 @@ public class SalvarBateriaUseCase implements Observer {
 
     public SalvarBateriaUseCase(BateriaRepository bateriaRepository, Mediator sensorMediator) {
         this.bateriaRepository = bateriaRepository;
-        sensorMediator.registrar(TipoSensor.BATERIA, this);
+        sensorMediator.registrar(TipoEvento.BATERIA, this);
     }
 
     @SuppressWarnings("unchecked")

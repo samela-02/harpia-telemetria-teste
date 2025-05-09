@@ -1,7 +1,7 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.gps;
 
 import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoSensor;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoEvento;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPS;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPSSSEResponse;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPSTracker;
@@ -18,7 +18,7 @@ public class PropagarGPSUseCase implements Observer {
 
     public PropagarGPSUseCase(@Qualifier(value = "GPSSSE") SSE sse, Mediator sensorMediator) {
         this.sse = sse;
-        sensorMediator.registrar(TipoSensor.GPS, this);
+        sensorMediator.registrar(TipoEvento.GPS, this);
     }
 
     @SuppressWarnings("unchecked")

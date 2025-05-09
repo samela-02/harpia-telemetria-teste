@@ -1,7 +1,7 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.telemetria;
 
 import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoSensor;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoEvento;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,8 +55,8 @@ public class ProcessarTelemetriaUseCase {
     private void processarSensores(String sensorFieldName, Sensors sensors) {
         Object campo = getCampo(sensorFieldName, sensors);
         if (campo != null) {
-            TipoSensor tipoSensor = TipoSensor.fromString(sensorFieldName.toUpperCase());
-            sensorMediator.emitirEvento(tipoSensor, campo);
+            TipoEvento tipoEvento = TipoEvento.fromString(sensorFieldName.toUpperCase());
+            sensorMediator.emitirEvento(tipoEvento, campo);
         }
     }
 
