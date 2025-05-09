@@ -1,6 +1,7 @@
 package br.tec.bemtevi.harpia_ms_telemetria.domain.enums;
 
 public enum TipoEvento {
+    SENSORS("SENSORS"),
     GPS("GPS"),
     LTE("LTE"),
     TEMPERATURE("TEMPERATURE"),
