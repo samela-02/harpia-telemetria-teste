@@ -1,6 +1,6 @@
 package br.tec.bemtevi.harpia_ms_telemetria.testutils.mediator;
 
-import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.SensorMediator;
+import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoSensor;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
 
@@ -10,7 +10,7 @@ import java.util.List;
 public class SensorObserverInMemory implements Observer {
     private final List<Object> eventos;
 
-    public SensorObserverInMemory(SensorMediator sensorMediator) {
+    public SensorObserverInMemory(Mediator sensorMediator) {
         eventos = new ArrayList<>();
         sensorMediator.registrar(TipoSensor.GPS, this);
     }

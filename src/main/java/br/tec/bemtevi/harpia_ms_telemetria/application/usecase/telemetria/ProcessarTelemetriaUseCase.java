@@ -1,6 +1,6 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.telemetria;
 
-import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.SensorMediator;
+import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoSensor;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;
 import org.springframework.stereotype.Service;
@@ -18,9 +18,9 @@ public class ProcessarTelemetriaUseCase {
             "idEquipamento"
     };
 
-    private final SensorMediator sensorMediator;
+    private final Mediator sensorMediator;
 
-    public ProcessarTelemetriaUseCase(SensorMediator sensorMediator) {
+    public ProcessarTelemetriaUseCase(Mediator sensorMediator) {
         this.sensorMediator = sensorMediator;
     }
 

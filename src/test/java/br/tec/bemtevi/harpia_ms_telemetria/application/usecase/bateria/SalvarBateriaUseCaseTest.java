@@ -1,6 +1,6 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.bateria;
 
-import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.SensorMediator;
+import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Bateria;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.BateriaRepository;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.repository.bateria.BateriaRepositoryInMemory;
@@ -20,7 +20,7 @@ class SalvarBateriaUseCaseTest {
     @BeforeEach
     void setUp() {
         bateriaRepository = new BateriaRepositoryInMemory();
-        SensorMediator sensorMediator = new SensorMediator();
+        Mediator sensorMediator = new Mediator();
         salvarBateriaUseCase = new SalvarBateriaUseCase(bateriaRepository, sensorMediator);
     }
 

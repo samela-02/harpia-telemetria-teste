@@ -1,6 +1,6 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.gps;
 
-import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.SensorMediator;
+import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoSensor;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPS;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
@@ -18,7 +18,7 @@ public class SalvarGPSUseCase implements Observer {
 
     private final GPSRepository gpsRepository;
 
-    public SalvarGPSUseCase(GPSRepository gpsRepository, SensorMediator sensorMediator) {
+    public SalvarGPSUseCase(GPSRepository gpsRepository, Mediator sensorMediator) {
         this.gpsRepository = gpsRepository;
         sensorMediator.registrar(TipoSensor.GPS, this);
     }

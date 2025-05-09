@@ -1,6 +1,6 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.gps;
 
-import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.SensorMediator;
+import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.*;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.sse.SSE;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.sse.GPSSSERepositoryInMemory;
@@ -20,7 +20,7 @@ class PropagarGPSUseCaseTest {
     @BeforeEach
     void setUp() {
         sse = new GPSSSERepositoryInMemory();
-        SensorMediator sensorMediator = new SensorMediator();
+        Mediator sensorMediator = new Mediator();
         propagarGPSUseCase = new PropagarGPSUseCase(sse, sensorMediator);
     }
 

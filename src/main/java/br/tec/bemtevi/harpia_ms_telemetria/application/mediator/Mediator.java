@@ -10,10 +10,10 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
-public class SensorMediator {
+public class Mediator {
     private final Map<TipoSensor, Set<Observer>> tipoSensorObservers;
 
-    public SensorMediator() {
+    public Mediator() {
         tipoSensorObservers = new ConcurrentHashMap<>();
     }
 
