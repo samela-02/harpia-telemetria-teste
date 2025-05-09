@@ -3,9 +3,9 @@ syntax = "proto3";
 option java_package = "br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.grpc";
 option java_multiple_files = true;
 
-message Void {}
+message VoidGrpc {}
 
-message LTE {
+message LTEGrpc {
   string nm_lte = 1;
   double vl_signal_strength = 2;
   string nm_carrier = 3;
@@ -18,7 +18,7 @@ message LTE {
   int64 dt_criacao = 10;
 }
 
-message GPS {
+message GPSGrpc {
   string nm_gps = 1;
   double vl_latitude = 2;
   double vl_longitude = 3;
@@ -29,7 +29,7 @@ message GPS {
   int64 dt_criacao = 8;
 }
 
-message Temperature {
+message TemperatureGrpc {
   string nm_temperature = 1;
   double vl_temperature = 2;
   int64 dt_Evento = 3;
@@ -38,7 +38,7 @@ message Temperature {
   int64 dt_criacao = 6;
 }
 
-message Bateria {
+message BateriaGrpc {
   string id_bateria = 1;
   string nm_bateria = 2;
   int64 dt_evento = 3;
@@ -51,15 +51,15 @@ message Bateria {
   int64 dt_criacao = 10;
 }
 
-message Sensors {
+message SensorsGrpc {
   string id_instituicao = 1;
   string id_equipamento = 2;
-  repeated LTE lte = 3;
-  repeated GPS gps = 4;
-  repeated Temperature temperature = 5;
-  repeated Bateria bateria = 6;
+  repeated LTEGrpc lte = 3;
+  repeated GPSGrpc gps = 4;
+  repeated TemperatureGrpc temperature = 5;
+  repeated BateriaGrpc bateria = 6;
 }
 
 service SensorsGrpcService {
-  rpc propagarSensores (stream Sensors) returns (Void);
+  rpc propagarSensores (stream SensorsGrpc) returns (VoidGrpc);
 }

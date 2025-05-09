@@ -4,7 +4,7 @@ import br.tec.bemtevi.harpia_ms_telemetria.domain.facade.LoggerFacade;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 
-public class SensorsGrpcResponseStreamObserver implements StreamObserver<Void> {
+public class SensorsGrpcResponseStreamObserver implements StreamObserver<VoidGrpc> {
     private final LoggerFacade loggerFacade;
 
     public SensorsGrpcResponseStreamObserver(LoggerFacade loggerFacade) {
@@ -12,7 +12,7 @@ public class SensorsGrpcResponseStreamObserver implements StreamObserver<Void> {
     }
 
     @Override
-    public void onNext(Void value) {
+    public void onNext(VoidGrpc value) {
         loggerFacade.info("Mensagem entregue com sucesso.");
     }
 
