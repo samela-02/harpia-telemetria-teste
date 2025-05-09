@@ -30,6 +30,7 @@ public class GrpcCCOGateway implements Observer, ISendSensorsMsgToCCO {
         sensorsGrpcRequestStreamObserver = SensorsGrpcServiceGrpc
                 .newStub(grpcChannel.getChannel())
                 .propagarSensores(new SensorsGrpcResponseStreamObserver(loggerFacade));
+        grpcChannel.registrarShutdown(sensorsGrpcRequestStreamObserver);
     }
 
     @Override
