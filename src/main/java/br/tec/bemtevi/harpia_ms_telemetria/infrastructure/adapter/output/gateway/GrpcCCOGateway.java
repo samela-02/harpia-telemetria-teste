@@ -1,8 +1,11 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.gateway;
 
+import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoEvento;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.facade.LoggerFacade;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.gateway.ISendSensorsMsgToCCO;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.grpc.SensorsGrpc;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.grpc.SensorsGrpcResponseStreamObserver;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.grpc.SensorsGrpcServiceGrpc;
@@ -14,7 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GrpcCCOGateway implements ISendSensorsMsgToCCO {
+public class GrpcCCOGateway implements Observer, ISendSensorsMsgToCCO {
     private final LoggerFacade loggerFacade;
     private final SensorsGrpcMapper sensorsGrpcMapper;
     private final String grpcServerHost;
@@ -23,10 +26,12 @@ public class GrpcCCOGateway implements ISendSensorsMsgToCCO {
 
     public GrpcCCOGateway(LoggerFacade loggerFacade,
                           SensorsGrpcMapper sensorsGrpcMapper,
+                          Mediator mediator,
                           @Value("${grpc.server.host}") String grpcServerHost,
                           @Value("${grpc.server.port}") int grpcServerPort) {
         this.loggerFacade = loggerFacade;
         this.sensorsGrpcMapper = sensorsGrpcMapper;
+        mediator.registrar(TipoEvento.SENSORS, this);
         this.grpcServerHost = grpcServerHost;
         this.grpcServerPort = grpcServerPort;
         asyncStub = criarStubAsync();
@@ -41,6 +46,11 @@ public class GrpcCCOGateway implements ISendSensorsMsgToCCO {
                 .usePlaintext();
         ManagedChannel channel = managedChannelBuilder.build();
         return SensorsGrpcServiceGrpc.newStub(channel);
+    }
+
+    @Override
+    public void onEvent(Object object) {
+        send((Sensors) object);
     }
 
     @Override
