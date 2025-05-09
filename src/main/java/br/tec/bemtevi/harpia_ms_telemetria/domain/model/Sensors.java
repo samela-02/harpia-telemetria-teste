@@ -61,24 +61,32 @@ public class Sensors {
     }
 
     private void adicionarToStringLte(StringBuilder stringBuilder) {
+        if (lte == null)
+            return;
         stringBuilder.append("Lte: { ");
         lte.stream().forEach(lte -> stringBuilder.append(lte.toString()));
         stringBuilder.append("}. ");
     }
 
     private void adicionarToStringGps(StringBuilder stringBuilder) {
+        if (gps == null)
+            return;
         stringBuilder.append("Gps: { ");
         gps.stream().forEach(gps -> stringBuilder.append(gps.toString()));
         stringBuilder.append("}. ");
     }
 
     private void adicionarToStringTemperature(StringBuilder stringBuilder) {
+        if (temperature == null)
+            return;
         stringBuilder.append("Temperature: { ");
         temperature.stream().forEach(temperature -> stringBuilder.append(temperature.toString()));
         stringBuilder.append("}. ");
     }
 
     private void adicionarToStringBateria(StringBuilder stringBuilder) {
+        if (bateria == null)
+            return;
         stringBuilder.append("Bateria: { ");
         bateria.stream().forEach(bateria -> stringBuilder.append(bateria.toString()));
         stringBuilder.append("}. ");
