@@ -45,7 +45,7 @@ public class GrpcCCOGateway implements ISendSensorsMsgToCCO {
 
     @Override
     public void send(Sensors sensors) {
-        loggerFacade.info("Enviando mensagem, que contém informações de telemetria, ao CCO via gRPC.");
+        loggerFacade.info("Enviando mensagem que contém informações de telemetria ao CCO via gRPC.");
         loggerFacade.debug(String.format("Dados dos sensores: %s", sensors.toString()));
         SensorsGrpc sensorsGrpcRequest = sensorsGrpcMapper.sensorsToSensorsGrpc(sensors);
         StreamObserver<SensorsGrpc> sensorsGrpcRequestStreamObserver = asyncStub
