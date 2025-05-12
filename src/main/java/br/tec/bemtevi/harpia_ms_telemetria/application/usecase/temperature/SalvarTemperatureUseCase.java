@@ -1,7 +1,7 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.temperature;
 
-import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.SensorMediator;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoSensor;
+import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoEvento;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Temperature;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.TemperatureRepository;
@@ -17,9 +17,9 @@ public class SalvarTemperatureUseCase implements Observer {
     private static final Logger log = LoggerFactory.getLogger(SalvarTemperatureUseCase.class);
     private final TemperatureRepository temperatureRepository;
 
-    public SalvarTemperatureUseCase(TemperatureRepository temperatureRepository, SensorMediator sensorMediator) {
+    public SalvarTemperatureUseCase(TemperatureRepository temperatureRepository, Mediator sensorMediator) {
         this.temperatureRepository = temperatureRepository;
-        sensorMediator.registrar(TipoSensor.TEMPERATURE, this);
+        sensorMediator.registrar(TipoEvento.TEMPERATURE, this);
     }
 
     @SuppressWarnings("unchecked")

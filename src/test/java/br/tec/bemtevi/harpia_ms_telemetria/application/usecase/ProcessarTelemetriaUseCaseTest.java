@@ -1,6 +1,6 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.usecase;
 
-import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.SensorMediator;
+import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.telemetria.ProcessarTelemetriaUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPS;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;
@@ -21,7 +21,7 @@ class ProcessarTelemetriaUseCaseTest {
 
     @BeforeEach
     void setUp() {
-        SensorMediator sensorMediator = new SensorMediator();
+        Mediator sensorMediator = new Mediator();
         sensorObserverInMemory = new SensorObserverInMemory(sensorMediator);
         processarTelemetriaUseCase = new ProcessarTelemetriaUseCase(sensorMediator);
     }

@@ -1,29 +1,35 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.telemetria;
 
-import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.SensorMediator;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoSensor;
+import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoEvento;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Set;
 
 import static java.util.Arrays.stream;
 
 @Service
-public class ProcessarTelemetriaUseCase {
+public class ProcessarTelemetriaUseCase implements Observer {
     private static final String[] CAMPOS_IGNORADOS_DO_SENSORS = {
             "idInstituicao",
             "idEquipamento"
     };
 
-    private final SensorMediator sensorMediator;
+    private final Mediator sensorMediator;
 
-    public ProcessarTelemetriaUseCase(SensorMediator sensorMediator) {
+    public ProcessarTelemetriaUseCase(Mediator sensorMediator) {
         this.sensorMediator = sensorMediator;
+        sensorMediator.registrar(TipoEvento.SENSORS, this);
+    }
+
+    @Override
+    public void onEvent(Object object) {
+        execute((Sensors) object);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -57,8 +63,8 @@ public class ProcessarTelemetriaUseCase {
     private void processarSensores(String sensorFieldName, Sensors sensors) {
         Object campo = getCampo(sensorFieldName, sensors);
         if (campo != null) {
-            TipoSensor tipoSensor = TipoSensor.fromString(sensorFieldName.toUpperCase());
-            sensorMediator.emitirEvento(tipoSensor, campo);
+            TipoEvento tipoEvento = TipoEvento.fromString(sensorFieldName.toUpperCase());
+            sensorMediator.emitirEvento(tipoEvento, campo);
         }
     }
 

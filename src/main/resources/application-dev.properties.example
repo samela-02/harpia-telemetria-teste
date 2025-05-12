@@ -1,5 +1,3 @@
-server.port=
-
 spring.application.name=harpia-ms-telemetria
 
 ### Persistencia
@@ -24,13 +22,9 @@ ms.exchange.name=
 routing-key.telemetria=
 ### RabbitMQ
 
-### CCO
-cco.url=
-cco.user-info-endpoint=
-### CCO
-
-### Frontend
-frontend.url=
-### Frontend
-
 flyweight.equipamento.max=
+
+### gRPC
+grpc.server.host=
+grpc.server.port=
+### gRPC

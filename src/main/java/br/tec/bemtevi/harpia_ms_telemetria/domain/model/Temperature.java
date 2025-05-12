@@ -58,4 +58,17 @@ public class Temperature {
     public LocalDateTime getDtCriacao() {
         return dtCriacao;
     }
+
+    @Override
+    public String toString() {
+        return "Temperature Info {" +
+                "cdTemperature='" + cdTemperature + '\'' +
+                ", nmTemperature='" + nmTemperature + '\'' +
+                ", vlTemperature=" + vlTemperature +
+                ", dtEvento=" + (dtEvento != null ? dtEvento.toString() : "null") +
+                ", idEquipamento='" + idEquipamento + '\'' +
+                ", idInstituicao='" + idInstituicao + '\'' +
+                ", dtCriacao=" + (dtCriacao != null ? dtCriacao.toString() : "null") +
+                '}';
+    }
 }

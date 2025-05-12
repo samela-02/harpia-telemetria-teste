@@ -86,4 +86,21 @@ public class Bateria {
     public LocalDateTime getDtCriacao() {
         return dtCriacao;
     }
+
+    @Override
+    public String toString() {
+        return "Bateria Info {" +
+                "cdBateria='" + cdBateria + '\'' +
+                ", idBateria='" + idBateria + '\'' +
+                ", nmBateria='" + nmBateria + '\'' +
+                ", dtEvento=" + (dtEvento != null ? dtEvento.toString() : "null") +
+                ", busVoltage=" + busVoltage +
+                ", loadVoltage=" + loadVoltage +
+                ", currentMA=" + currentMA +
+                ", currentMW=" + currentMW +
+                ", idEquipamento='" + idEquipamento + '\'' +
+                ", idInstituicao='" + idInstituicao + '\'' +
+                ", dtCriacao=" + (dtCriacao != null ? dtCriacao.toString() : "null") +
+                '}';
+    }
 }

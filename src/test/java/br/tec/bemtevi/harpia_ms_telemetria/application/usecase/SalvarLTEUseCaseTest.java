@@ -1,6 +1,6 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.usecase;
 
-import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.SensorMediator;
+import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.lte.SalvarLTEUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.LTE;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.LTERepository;
@@ -21,7 +21,7 @@ class SalvarLTEUseCaseTest {
     @BeforeEach
     void setUp() {
         lteRepository = new LTERepositoryInMemory();
-        SensorMediator sensorMediator = new SensorMediator();
+        Mediator sensorMediator = new Mediator();
         salvarLteUseCase = new SalvarLTEUseCase(lteRepository, sensorMediator);
     }
 

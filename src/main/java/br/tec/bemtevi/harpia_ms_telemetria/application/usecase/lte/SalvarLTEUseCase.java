@@ -1,7 +1,7 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.lte;
 
-import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.SensorMediator;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoSensor;
+import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoEvento;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.LTE;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.LTERepository;
@@ -18,9 +18,9 @@ public class SalvarLTEUseCase implements Observer {
 
     private final LTERepository lteRepository;
 
-    public SalvarLTEUseCase(LTERepository lteRepository, SensorMediator sensorMediator) {
+    public SalvarLTEUseCase(LTERepository lteRepository, Mediator sensorMediator) {
         this.lteRepository = lteRepository;
-        sensorMediator.registrar(TipoSensor.LTE, this);
+        sensorMediator.registrar(TipoEvento.LTE, this);
     }
 
     @SuppressWarnings("unchecked")
