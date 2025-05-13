@@ -26,5 +26,5 @@ flyweight.equipamento.max=
 
 ### gRPC
 grpc.server.host=
-grpc.server.port=
+grpc-cco.server.port=
 ### gRPC

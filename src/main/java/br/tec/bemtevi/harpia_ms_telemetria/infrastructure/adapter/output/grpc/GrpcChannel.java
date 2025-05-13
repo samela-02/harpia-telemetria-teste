@@ -19,7 +19,7 @@ public class GrpcChannel {
 
     public GrpcChannel(LoggerFacade loggerFacade,
                        @Value("${grpc.server.host}") String grpcServerHost,
-                       @Value("${grpc.server.port}") int grpcServerPort) {
+                       @Value("${grpc-cco.server.port}") int grpcServerPort) {
         this.loggerFacade = loggerFacade;
         loggerFacade.info(String.format("Criando canal para realizar comunicação gRPC no servidor %s na porta %s.",
                 grpcServerHost,
