@@ -18,14 +18,14 @@ public class GrpcChannel {
     private final Set<StreamObserver<?>> streamObserverSet;
 
     public GrpcChannel(LoggerFacade loggerFacade,
-                       @Value("${grpc.server.host}") String grpcServerHost,
-                       @Value("${grpc-cco.server.port}") int grpcServerPort) {
+                       @Value("${grpc-cco.server.host}") String grpcCcoServerHost,
+                       @Value("${grpc-cco.server.port}") int grpcCcoServerPort) {
         this.loggerFacade = loggerFacade;
         loggerFacade.info(String.format("Criando canal para realizar comunicação gRPC no servidor %s na porta %s.",
-                grpcServerHost,
-                grpcServerPort));
+                grpcCcoServerHost,
+                grpcCcoServerPort));
         channel = ManagedChannelBuilder
-                .forAddress(grpcServerHost, grpcServerPort)
+                .forAddress(grpcCcoServerHost, grpcCcoServerPort)
                 .usePlaintext()
                 .build();
         adicionarHookDeShutdown();
