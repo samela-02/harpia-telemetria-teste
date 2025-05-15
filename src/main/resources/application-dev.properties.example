@@ -25,6 +25,6 @@ routing-key.telemetria=
 flyweight.equipamento.max=
 
 ### gRPC
-grpc.server.host=
+grpc-cco.server.host=
 grpc-cco.server.port=
 ### gRPC
