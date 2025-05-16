@@ -1,20 +1,13 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.mapper;
 
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Bateria;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPS;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.LTE;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.*;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Temperature;
-import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.grpc.BateriaGrpc;
-import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.grpc.GPSGrpc;
-import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.grpc.LTEGrpc;
-import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.grpc.SensorsGrpc;
-import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.grpc.TemperatureGrpc;
-
+import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.grpc.*;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,10 +38,10 @@ public class SensorsGrpcMapper {
                         .setNmInternetState(asSafeString(lte.getNmInternetState()))
                         .setNmSimCardState(asSafeString(lte.getNmSimCardState()))
                         .setNmStatus(asSafeString(lte.getNmStatus()))
-                        .setDtEvento(asSafeLong(lte.getDtEvento()))
+                        .setDtEvento(asSafeTimestamp(lte.getDtEvento()))
                         .setIdEquipamento(asSafeString(lte.getIdEquipamento()))
                         .setIdInstituicao(asSafeString(lte.getIdInstituicao()))
-                        .setDtCriacao(asSafeLong(lte.getDtCriacao()))
+                        .setDtCriacao(asSafeTimestamp(lte.getDtCriacao()))
                         .build())
                 .toList();
     }
@@ -64,10 +57,10 @@ public class SensorsGrpcMapper {
                         .setVlLatitude(asSafeDouble(gps.getVlLatitude()))
                         .setVlLongitude(asSafeDouble(gps.getVlLongitude()))
                         .setVlTrueCourse(asSafeDouble(gps.getVlTrueCourse()))
-                        .setDtEvento(asSafeLong(gps.getDtEvento()))
+                        .setDtEvento(asSafeTimestamp(gps.getDtEvento()))
                         .setIdEquipamento(asSafeString(gps.getIdEquipamento()))
                         .setIdInstituicao(asSafeString(gps.getIdInstituicao()))
-                        .setDtCriacao(asSafeLong(gps.getDtCriacao()))
+                        .setDtCriacao(asSafeTimestamp(gps.getDtCriacao()))
                         .build())
                 .toList();
     }
@@ -81,10 +74,10 @@ public class SensorsGrpcMapper {
                         .newBuilder()
                         .setNmTemperature(asSafeString(temperature.getNmTemperature()))
                         .setVlTemperature(asSafeDouble(temperature.getVlTemperature()))
-                        .setDtEvento(asSafeLong(temperature.getDtEvento()))
+                        .setDtEvento(asSafeTimestamp(temperature.getDtEvento()))
                         .setIdEquipamento(asSafeString(temperature.getIdEquipamento()))
                         .setIdInstituicao(asSafeString(temperature.getIdInstituicao()))
-                        .setDtCriacao(asSafeLong(temperature.getDtCriacao()))
+                        .setDtCriacao(asSafeTimestamp(temperature.getDtCriacao()))
                         .build())
                 .toList();
     }
@@ -98,14 +91,14 @@ public class SensorsGrpcMapper {
                         .newBuilder()
                         .setIdBateria(asSafeString(bateria.getIdBateria()))
                         .setNmBateria(asSafeString(bateria.getNmBateria()))
-                        .setDtEvento(asSafeLong(bateria.getDtEvento()))
+                        .setDtEvento(asSafeTimestamp(bateria.getDtEvento()))
                         .setBusVoltage(asSafeDouble(bateria.getBusVoltage()))
                         .setLoadVoltage(asSafeDouble(bateria.getLoadVoltage()))
                         .setCurrentMa(asSafeDouble(bateria.getCurrentMA()))
                         .setCurrentMw(asSafeDouble(bateria.getCurrentMW()))
                         .setIdEquipamento(asSafeString(bateria.getIdEquipamento()))
                         .setIdInstituicao(asSafeString(bateria.getIdInstituicao()))
-                        .setDtCriacao(asSafeLong(bateria.getDtCriacao()))
+                        .setDtCriacao(asSafeTimestamp(bateria.getDtCriacao()))
                         .build())
                 .toList();
     }
@@ -122,11 +115,17 @@ public class SensorsGrpcMapper {
         return doubleInstance;
     }
 
-    private long asSafeLong(LocalDateTime localDateTime) {
-        if (localDateTime == null)
-            return 0;
-        return localDateTime
-                .toInstant(ZoneOffset.UTC)
-                .toEpochMilli();
+    private com.google.protobuf.Timestamp asSafeTimestamp(LocalDateTime localDateTime) {
+        if (localDateTime == null) {
+            return com.google.protobuf.Timestamp
+                    .newBuilder()
+                    .build();
+        }
+        Instant instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
+        return com.google.protobuf.Timestamp
+                .newBuilder()
+                .setSeconds(instant.getEpochSecond())
+                .setNanos(instant.getNano())
+                .build();
     }
 }
