@@ -1,9 +1,11 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.configuration;
 
+import com.rabbitmq.client.DefaultSaslConfig;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,11 +17,13 @@ public class MSTelemetriaRabbitMQConfiguration {
     private final String telemetriaRoutingKey;
 
     public MSTelemetriaRabbitMQConfiguration(@Value("${ms-telemetria.queue.name}") String msTelemetriaQueueName,
-                                          @Value("${ms.exchange.name}") String msExchageName,
-                                          @Value("${routing-key.telemetria}") String TelemetriaRoutingKey) {
+                                             @Value("${ms.exchange.name}") String msExchageName,
+                                             @Value("${routing-key.telemetria}") String TelemetriaRoutingKey,
+                                             CachingConnectionFactory cachingConnectionFactory) {
         this.msTelemetriaQueueName = msTelemetriaQueueName;
         this.msExchageName = msExchageName;
         this.telemetriaRoutingKey = TelemetriaRoutingKey;
+        cachingConnectionFactory.getRabbitConnectionFactory().setSaslConfig(DefaultSaslConfig.EXTERNAL);
     }
 
     @Bean

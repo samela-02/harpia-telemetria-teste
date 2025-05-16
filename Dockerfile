@@ -1,10 +1,13 @@
-FROM eclipse-temurin:21.0.7_6-jdk-alpine-3.21 AS build
+FROM eclipse-temurin:21.0.7_6-jdk-noble AS build
 WORKDIR /app
 COPY . /app
 RUN chmod +x ./mvnw
 RUN ./mvnw clean package
 
-FROM eclipse-temurin:21.0.7_6-jre-alpine-3.21
+FROM eclipse-temurin:21.0.7_6-jre-noble
 WORKDIR /app
+RUN mkdir /app/certs
+COPY --from=build /app/certs/client.p12 /app/certs
+COPY --from=build /app/certs/rabbit_truststore.jks /app/certs
 COPY --from=build /app/target/harpia-ms-telemetria-0.0.1-SNAPSHOT.jar /app
 ENTRYPOINT ["java", "-jar", "harpia-ms-telemetria-0.0.1-SNAPSHOT.jar"]

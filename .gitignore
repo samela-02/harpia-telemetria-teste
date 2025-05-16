@@ -37,3 +37,7 @@ build/
 
 ### Properties ###
 src/main/resources/application-dev.properties
+
+### Certificados
+certs/*
+!certs/.gitkeep
