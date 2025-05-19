@@ -13,7 +13,7 @@ public class SensorsGrpcResponseStreamObserver implements StreamObserver<VoidGrp
 
     @Override
     public void onNext(VoidGrpc value) {
-        loggerFacade.info("Mensagem entregue com sucesso.");
+        loggerFacade.info("Servidor entregou o sinal que finalizou o processamentoda mensagem.");
     }
 
     @Override
@@ -24,6 +24,6 @@ public class SensorsGrpcResponseStreamObserver implements StreamObserver<VoidGrp
 
     @Override
     public void onCompleted() {
-        loggerFacade.info("Entrega da mensagem completada com sucesso.");
+        loggerFacade.info("Stream processada com sucesso.");
     }
 }
