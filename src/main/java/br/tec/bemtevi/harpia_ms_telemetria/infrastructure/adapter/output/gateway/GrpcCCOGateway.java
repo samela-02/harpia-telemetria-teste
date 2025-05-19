@@ -43,6 +43,5 @@ public class GrpcCCOGateway implements Observer, ISendSensorsMsgToCCO {
         loggerFacade.info("Enviando mensagem que contém informações de telemetria ao CCO via gRPC.");
         loggerFacade.debug(String.format("Dados dos sensores: %s", sensors.toString()));
         sensorsGrpcRequestStreamObserver.onNext(sensorsGrpcMapper.sensorsToSensorsGrpc(sensors));
-        loggerFacade.info("Mensagem enviada com sucesso.");
     }
 }
