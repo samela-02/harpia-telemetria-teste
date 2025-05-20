@@ -1,6 +1,7 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.grpc;
 
 import br.tec.bemtevi.harpia_ms_telemetria.domain.facade.LoggerFacade;
+import io.grpc.ConnectivityState;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
@@ -12,55 +13,58 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Component
-public class GrpcChannel {
+public class CcoGrpcChannel {
     private final LoggerFacade loggerFacade;
-    private final ManagedChannel channel;
-    private final Set<StreamObserver<?>> streamObserverSet;
+    private final String grpcCcoHost;
+    private final int grpcCcoPort;
+    private Set<StreamObserver<?>> observers;
+    private ManagedChannel channel;
 
-    public GrpcChannel(LoggerFacade loggerFacade,
-                       @Value("${grpc-cco.server.host}") String grpcCcoServerHost,
-                       @Value("${grpc-cco.server.port}") int grpcCcoServerPort) {
+    public CcoGrpcChannel(LoggerFacade loggerFacade,
+                          @Value("${grpc-cco.server.host}") String grpcCcoHost,
+                          @Value("${grpc-cco.server.port}") int grpcCcoPort) {
         this.loggerFacade = loggerFacade;
+        this.grpcCcoHost = grpcCcoHost;
+        this.grpcCcoPort = grpcCcoPort;
+        criarNovoCanal();
+    }
+
+    private void criarNovoCanal() {
+        observers = new HashSet<>();
         loggerFacade.info(String.format("Criando canal para realizar comunicação gRPC no servidor %s na porta %s.",
-                grpcCcoServerHost,
-                grpcCcoServerPort));
+                grpcCcoHost,
+                grpcCcoPort));
         channel = ManagedChannelBuilder
-                .forAddress(grpcCcoServerHost, grpcCcoServerPort)
+                .forAddress(grpcCcoHost, grpcCcoPort)
                 .usePlaintext()
                 .build();
         adicionarHookDeShutdown();
-        streamObserverSet = new HashSet<>();
     }
 
     private void adicionarHookDeShutdown() {
-        Runtime.getRuntime().addShutdownHook(getHook(channel));
-    }
-
-    private Thread getHook(ManagedChannel channel) {
-        return new Thread(() -> {
-            loggerFacade.info("Desligando canal gRPC com graceful shutdown de, no máximo, 30 segundos.");
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
-                finalizarStreams();
-                channel.shutdown().awaitTermination(30, TimeUnit.SECONDS);
+                loggerFacade.info("Desligando canal gRPC com graceful shutdown de, no máximo, 10 segundos.");
+                observers.forEach(StreamObserver::onCompleted);
+                channel.shutdown().awaitTermination(1, TimeUnit.SECONDS);
                 loggerFacade.info("Canal gRPC desligado com sucesso.");
             } catch (InterruptedException e) {
                 loggerFacade.error(String.format("Erro ao finalizar o canal gRPC. " +
                         "Mensagem da exception: %s.", e.getMessage()));
                 e.printStackTrace(System.err);
             }
-        });
+        }));
     }
 
-    private void finalizarStreams() {
-        for (StreamObserver<?> streamObserver : streamObserverSet)
-            streamObserver.onCompleted();
+    public void registrarShutdown(StreamObserver<?> streamObserver) {
+        observers.add(streamObserver);
     }
 
     public ManagedChannel getChannel() {
         return channel;
     }
 
-    public void registrarShutdown(StreamObserver<?> streamObserver) {
-        streamObserverSet.add(streamObserver);
+    public boolean isProcessavel() {
+        return channel.getState(true).equals(ConnectivityState.READY);
     }
 }
