@@ -35,7 +35,6 @@ public class CcoSensorsGrpcClient {
     }
 
     public void criarNovaConexaoGrpc() {
-        ccoGrpcChannel.criarNovoCanal();
         sensorsGrpcStreamObserver = SensorsGrpcServiceGrpc
                 .newStub(ccoGrpcChannel.getChannel())
                 .propagarSensores(new SensorsGrpcResponseStreamObserver(loggerFacade, this));

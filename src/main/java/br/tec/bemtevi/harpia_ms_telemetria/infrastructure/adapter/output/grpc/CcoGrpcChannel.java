@@ -29,9 +29,8 @@ public class CcoGrpcChannel {
         criarNovoCanal();
     }
 
-    public void criarNovoCanal() {
+    private void criarNovoCanal() {
         observers = new HashSet<>();
-        desligarCanalAntigo();
         loggerFacade.info(String.format("Criando canal para realizar comunicação gRPC no servidor %s na porta %s.",
                 grpcCcoHost,
                 grpcCcoPort));
@@ -40,18 +39,6 @@ public class CcoGrpcChannel {
                 .usePlaintext()
                 .build();
         adicionarHookDeShutdown();
-    }
-
-    private void desligarCanalAntigo() {
-        if (channel != null) {
-            try {
-                loggerFacade.info("Desligando canal ativo para criação de um novo. Graceful de 5 segundos.");
-                channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
-            } catch (InterruptedException e) {
-                loggerFacade.error("Erro ao desligar o canal ativo.");
-                loggerFacade.error(e.getMessage());
-            }
-        }
     }
 
     private void adicionarHookDeShutdown() {
