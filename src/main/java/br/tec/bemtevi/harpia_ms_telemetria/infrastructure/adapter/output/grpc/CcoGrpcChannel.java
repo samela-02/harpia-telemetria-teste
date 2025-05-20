@@ -64,7 +64,7 @@ public class CcoGrpcChannel {
         return channel;
     }
 
-    public boolean isAptoAEnviarMensagem() {
+    public boolean isProcessavel() {
         return channel.getState(true).equals(ConnectivityState.READY);
     }
 }

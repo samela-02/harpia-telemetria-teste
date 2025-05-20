@@ -24,7 +24,7 @@ public class CcoSensorsGrpcClient {
 
     public void enviarMensagem(Sensors sensors) {
         try {
-            if (ccoGrpcChannel.isAptoAEnviarMensagem()) {
+            if (ccoGrpcChannel.isProcessavel()) {
                 loggerFacade.info("Iniciando tentativa do envio da mensagem dos sensores via gRPC.");
                 loggerFacade.debug(String.format("Dados dos sensores: %s.", sensors.toString()));
                 sensorsGrpcStreamObserver.onNext(sensorsGrpcMapper.sensorsToSensorsGrpc(sensors));
@@ -35,9 +35,11 @@ public class CcoSensorsGrpcClient {
     }
 
     public void criarNovaConexaoGrpc() {
-        sensorsGrpcStreamObserver = SensorsGrpcServiceGrpc
-                .newStub(ccoGrpcChannel.getChannel())
-                .propagarSensores(new SensorsGrpcResponseStreamObserver(loggerFacade, this));
-        ccoGrpcChannel.registrarShutdown(sensorsGrpcStreamObserver);
+        if (ccoGrpcChannel.isProcessavel()) {
+            sensorsGrpcStreamObserver = SensorsGrpcServiceGrpc
+                    .newStub(ccoGrpcChannel.getChannel())
+                    .propagarSensores(new SensorsGrpcResponseStreamObserver(loggerFacade, this));
+            ccoGrpcChannel.registrarShutdown(sensorsGrpcStreamObserver);
+        }
     }
 }
