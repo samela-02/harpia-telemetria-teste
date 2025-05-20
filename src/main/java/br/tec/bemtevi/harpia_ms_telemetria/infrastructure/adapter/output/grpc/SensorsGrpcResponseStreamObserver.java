@@ -6,9 +6,11 @@ import io.grpc.stub.StreamObserver;
 
 public class SensorsGrpcResponseStreamObserver implements StreamObserver<VoidGrpc> {
     private final LoggerFacade loggerFacade;
+    private final CcoSensorsGrpcClient ccoSensorsGrpcClient;
 
-    public SensorsGrpcResponseStreamObserver(LoggerFacade loggerFacade) {
+    public SensorsGrpcResponseStreamObserver(LoggerFacade loggerFacade, CcoSensorsGrpcClient ccoSensorsGrpcClient) {
         this.loggerFacade = loggerFacade;
+        this.ccoSensorsGrpcClient = ccoSensorsGrpcClient;
     }
 
     @Override
@@ -20,6 +22,7 @@ public class SensorsGrpcResponseStreamObserver implements StreamObserver<VoidGrp
     public void onError(Throwable t) {
         Status status = Status.fromThrowable(t);
         loggerFacade.error(String.format("Erro ao enviar mensagem. Código de status: %s.", status.toString()));
+        ccoSensorsGrpcClient.criarNovaConexaoGrpc();
     }
 
     @Override
