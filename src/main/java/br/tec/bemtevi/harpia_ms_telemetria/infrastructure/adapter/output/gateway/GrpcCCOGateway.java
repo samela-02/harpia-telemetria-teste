@@ -6,7 +6,7 @@ import br.tec.bemtevi.harpia_ms_telemetria.domain.facade.LoggerFacade;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.gateway.ISendSensorsMsgToCCO;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
-import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.grpc.GrpcChannel;
+import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.grpc.CcoSensorsGrpcClient;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.grpc.SensorsGrpc;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.grpc.SensorsGrpcResponseStreamObserver;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.grpc.SensorsGrpcServiceGrpc;
@@ -23,7 +23,7 @@ public class GrpcCCOGateway implements Observer, ISendSensorsMsgToCCO {
     public GrpcCCOGateway(Mediator mediator,
                           LoggerFacade loggerFacade,
                           SensorsGrpcMapper sensorsGrpcMapper,
-                          GrpcChannel grpcChannel) {
+                          CcoSensorsGrpcClient grpcChannel) {
         mediator.registrar(TipoEvento.SENSORS, this);
         this.loggerFacade = loggerFacade;
         this.sensorsGrpcMapper = sensorsGrpcMapper;

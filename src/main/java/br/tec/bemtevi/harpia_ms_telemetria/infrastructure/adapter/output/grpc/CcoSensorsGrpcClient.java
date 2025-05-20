@@ -12,14 +12,14 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Component
-public class GrpcChannel {
+public class CcoSensorsGrpcClient {
     private final LoggerFacade loggerFacade;
     private final ManagedChannel channel;
     private final Set<StreamObserver<?>> streamObserverSet;
 
-    public GrpcChannel(LoggerFacade loggerFacade,
-                       @Value("${grpc-cco.server.host}") String grpcCcoServerHost,
-                       @Value("${grpc-cco.server.port}") int grpcCcoServerPort) {
+    public CcoSensorsGrpcClient(LoggerFacade loggerFacade,
+                                @Value("${grpc-cco.server.host}") String grpcCcoServerHost,
+                                @Value("${grpc-cco.server.port}") int grpcCcoServerPort) {
         this.loggerFacade = loggerFacade;
         loggerFacade.info(String.format("Criando canal para realizar comunicação gRPC no servidor %s na porta %s.",
                 grpcCcoServerHost,
