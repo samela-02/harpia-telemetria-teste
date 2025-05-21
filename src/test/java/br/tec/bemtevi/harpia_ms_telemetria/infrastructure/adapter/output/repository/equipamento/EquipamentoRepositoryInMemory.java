@@ -21,4 +21,9 @@ public class EquipamentoRepositoryInMemory implements EquipamentoRepository {
                 .filter(equipamento -> equipamento.getIdEquipamento().equals(idEquipamento))
                 .findFirst();
     }
+
+    @Override
+    public void save(Equipamento equipamento) {
+        equipamentos.add(equipamento);
+    }
 }

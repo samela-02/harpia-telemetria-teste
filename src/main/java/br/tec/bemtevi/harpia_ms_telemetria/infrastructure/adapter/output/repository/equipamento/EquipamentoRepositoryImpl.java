@@ -18,4 +18,9 @@ public class EquipamentoRepositoryImpl implements EquipamentoRepository {
     public Optional<Equipamento> findEquipamentoByIdEquipamento(String idEquipamento) {
         return equipamentoJpaRepository.findByIdEquipamento(idEquipamento);
     }
+
+    @Override
+    public void save(Equipamento equipamento) {
+        equipamentoJpaRepository.save(equipamento);
+    }
 }
