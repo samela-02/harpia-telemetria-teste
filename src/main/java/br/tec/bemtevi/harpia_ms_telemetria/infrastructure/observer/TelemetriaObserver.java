@@ -2,6 +2,7 @@ package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.observer;
 
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.service.EquipamentoService;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.harpia.HarpiaTelemetryMessage;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.anticorruptionlayer.HarpiaAntiCorruptionLayer;
 import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
@@ -17,13 +18,15 @@ public class TelemetriaObserver implements Observer {
     private final SerializationFacade serializationFacade;
     private final HarpiaAntiCorruptionLayer harpiaAntiCorruptionLayer;
     private final Mediator mediator;
+    private final EquipamentoService equipamentoService;
 
     public TelemetriaObserver(SerializationFacade serializationFacade,
                               HarpiaAntiCorruptionLayer harpiaAntiCorruptionLayer,
-                              Mediator mediator) {
+                              Mediator mediator, EquipamentoService equipamentoService) {
         this.serializationFacade = serializationFacade;
         this.harpiaAntiCorruptionLayer = harpiaAntiCorruptionLayer;
         this.mediator = mediator;
+        this.equipamentoService = equipamentoService;
     }
 
     @Override
@@ -34,5 +37,6 @@ public class TelemetriaObserver implements Observer {
         Sensors sensors = harpiaAntiCorruptionLayer.fromHarpiaTelemetryMessage(harpiaTelemetryMessage);
         mediator.emitirEvento(TipoEvento.SENSORS, sensors);
         log.info("Mensagem processada com sucesso.");
+        equipamentoService.atualizarDtUltimaAtualizacao(harpiaTelemetryMessage.getSerial());
     }
 }
