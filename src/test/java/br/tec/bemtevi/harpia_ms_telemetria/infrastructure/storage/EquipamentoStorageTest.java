@@ -27,9 +27,9 @@ class EquipamentoStorageTest {
     @Test
     void DadoIdEquipamento_QuandoGetInstanceForChamado_EntaoOEquipamentoDeveSerRetornadoEAdicionadoNoFlyweightMap() {
         List<Equipamento> equipamentos = (List<Equipamento>) TestUtils.getFieldFromClass("equipamentos", equipamentoRepository);
-        Equipamento equipamento1 = new Equipamento(null, 1L, 1L, "H1", "H1", "H1", 1, null);
-        Equipamento equipamento2 = new Equipamento(null, 1L, 1L, "H2", "H2", "H2", 1, null);
-        Equipamento equipamento3 = new Equipamento(null, 1L, 1L, "H3", "H3", "H3", 1, null);
+        Equipamento equipamento1 = new Equipamento(null, 1L, 1L, "H1", "H1", "H1", 1, null, null);
+        Equipamento equipamento2 = new Equipamento(null, 1L, 1L, "H2", "H2", "H2", 1, null, null);
+        Equipamento equipamento3 = new Equipamento(null, 1L, 1L, "H3", "H3", "H3", 1, null, null);
         equipamentos.addAll(asList(equipamento1, equipamento2, equipamento3));
 
         Map<String, Equipamento> equipamentoFlyweightMap = (Map<String, Equipamento>) TestUtils.getFieldFromClass("equipamentoFlyweightMap", equipamentoStorage);
