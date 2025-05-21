@@ -96,4 +96,14 @@ public class Equipamento {
     public LocalDateTime getDtUltimaComunicacao() {
         return dtUltimaComunicacao;
     }
+
+    public boolean isDtUltimaAtualizacaoAntesDe(LocalDateTime data) {
+        if (dtUltimaComunicacao == null)
+            return true;
+        return dtUltimaComunicacao.isBefore(data);
+    }
+
+    public void atualizarDtUltimaComunicacao() {
+        this.dtUltimaComunicacao = LocalDateTime.now();
+    }
 }
