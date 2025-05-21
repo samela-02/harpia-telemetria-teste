@@ -35,27 +35,27 @@ public class CcoSensorsGrpcClient {
     }
 
     public void criarNovaConexaoGrpc() {
-        try {
-            loggerFacade.info("Abrindo nova stream que vai processar o envio dos comandos.");
-            boolean isStreamAberta = false;
-            while (!isStreamAberta) {
-                if (ccoGrpcChannel.isProcessavel()) {
-                    sensorsGrpcStreamObserver = SensorsGrpcServiceGrpc
-                            .newStub(ccoGrpcChannel.getChannel())
-                            .propagarSensores(new SensorsGrpcResponseStreamObserver(loggerFacade, this));
-                    ccoGrpcChannel.registrarShutdown(sensorsGrpcStreamObserver);
-                    isStreamAberta = true;
-                    loggerFacade.info("Stream aberta com sucesso.");
-                } else {
+        loggerFacade.info("Abrindo nova stream que vai processar o envio dos comandos.");
+        boolean isStreamAberta = false;
+        while (!isStreamAberta) {
+            if (ccoGrpcChannel.isProcessavel()) {
+                sensorsGrpcStreamObserver = SensorsGrpcServiceGrpc
+                        .newStub(ccoGrpcChannel.getChannel())
+                        .propagarSensores(new SensorsGrpcResponseStreamObserver(loggerFacade, this));
+                ccoGrpcChannel.registrarShutdown(sensorsGrpcStreamObserver);
+                isStreamAberta = true;
+                loggerFacade.info("Stream aberta com sucesso.");
+            } else {
+                try {
                     loggerFacade.info("O canal não está apto a abrir streams.");
                     loggerFacade.info("Aguardando 15 segundos para tentar novamente.");
                     loggerFacade.debug(String.format("Estado da conexão: %s.",
                             ccoGrpcChannel.getChannel().getState(true)));
                     Thread.sleep(15000L);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException("Erro ao executar o sleep.", e);
                 }
             }
-        } catch (InterruptedException e) {
-            throw new RuntimeException("Erro ao executar o sleep.", e);
         }
     }
 }
