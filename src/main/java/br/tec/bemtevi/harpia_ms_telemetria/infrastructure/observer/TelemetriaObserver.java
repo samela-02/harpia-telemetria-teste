@@ -36,7 +36,7 @@ public class TelemetriaObserver implements Observer {
         HarpiaTelemetryMessage harpiaTelemetryMessage = serializationFacade.fromSnakeCaseBytes(mensagem, HarpiaTelemetryMessage.class);
         Sensors sensors = harpiaAntiCorruptionLayer.fromHarpiaTelemetryMessage(harpiaTelemetryMessage);
         mediator.emitirEvento(TipoEvento.SENSORS, sensors);
-        log.info("Mensagem processada com sucesso.");
         equipamentoService.atualizarDtUltimaAtualizacao(harpiaTelemetryMessage.getSerial());
+        log.info("Mensagem processada com sucesso.");
     }
 }
