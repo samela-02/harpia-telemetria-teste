@@ -35,6 +35,9 @@ public class Equipamento {
     @Column(name = "dt_delecao")
     private LocalDateTime dtDelecao;
 
+    @Column(name = "dt_ultima_comunicacao")
+    private LocalDateTime dtUltimaComunicacao;
+
     public Equipamento() {
     }
 
@@ -45,7 +48,8 @@ public class Equipamento {
                        String nmEquipamento,
                        String nrSerie,
                        Integer lgAtivo,
-                       LocalDateTime dtDelecao) {
+                       LocalDateTime dtDelecao,
+                       LocalDateTime dtUltimaComunicacao) {
         this.cdEquipamento = cdEquipamento;
         this.cdInstituicao = cdInstituicao;
         this.cdTipoEquipamento = cdTipoEquipamento;
@@ -54,6 +58,7 @@ public class Equipamento {
         this.nrSerie = nrSerie;
         this.lgAtivo = lgAtivo;
         this.dtDelecao = dtDelecao;
+        this.dtUltimaComunicacao = dtUltimaComunicacao;
     }
 
     public Long getCdEquipamento() {
@@ -86,5 +91,19 @@ public class Equipamento {
 
     public LocalDateTime getDtDelecao() {
         return dtDelecao;
+    }
+
+    public LocalDateTime getDtUltimaComunicacao() {
+        return dtUltimaComunicacao;
+    }
+
+    public boolean isDtUltimaAtualizacaoAntesDe(LocalDateTime data) {
+        if (dtUltimaComunicacao == null)
+            return true;
+        return dtUltimaComunicacao.isBefore(data);
+    }
+
+    public void atualizarDtUltimaComunicacao() {
+        this.dtUltimaComunicacao = LocalDateTime.now();
     }
 }

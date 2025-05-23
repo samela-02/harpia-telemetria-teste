@@ -46,7 +46,7 @@ public class CcoGrpcChannel {
             try {
                 loggerFacade.info("Desligando canal gRPC com graceful shutdown de, no máximo, 10 segundos.");
                 observers.forEach(StreamObserver::onCompleted);
-                channel.shutdown().awaitTermination(1, TimeUnit.SECONDS);
+                channel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
                 loggerFacade.info("Canal gRPC desligado com sucesso.");
             } catch (InterruptedException e) {
                 loggerFacade.error(String.format("Erro ao finalizar o canal gRPC. " +
