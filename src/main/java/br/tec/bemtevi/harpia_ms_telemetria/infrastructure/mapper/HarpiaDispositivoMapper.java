@@ -9,9 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class HarpiaDispositivoMapper {
-    public Dispositivo fromHarpiaDevice(HarpiaTelemetryMessage harpiaTelemetryMessage,
-                                        Instituicao instituicao,
-                                        Equipamento equipamento) {
+    public Dispositivo fromHarpiaDevice(HarpiaTelemetryMessage harpiaTelemetryMessage) {
         Tempo tempo = fromHarpiaTime(harpiaTelemetryMessage.getDevice().getTime());
         Cpu cpu = fromHarpiaCpu(harpiaTelemetryMessage.getDevice().getCpu());
         Memoria memoria = fromHarpiaMemoria(harpiaTelemetryMessage.getDevice().getMemory());
@@ -21,8 +19,8 @@ public class HarpiaDispositivoMapper {
         Fan fan = fromHarpiaFan(harpiaTelemetryMessage.getDevice().getFan());
         Power power = fromHarpiaPower(harpiaTelemetryMessage.getDevice().getPower());
         return new Dispositivo(null,
-                instituicao.getIdInstituicao(),
-                equipamento.getIdEquipamento(),
+                harpiaTelemetryMessage.getInstitutionId(),
+                harpiaTelemetryMessage.getSerial(),
                 tempo,
                 cpu,
                 memoria,

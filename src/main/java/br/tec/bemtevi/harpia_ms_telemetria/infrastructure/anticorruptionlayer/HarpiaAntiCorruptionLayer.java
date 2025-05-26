@@ -1,7 +1,5 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.anticorruptionlayer;
 
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Equipamento;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Instituicao;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Mensagem;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.dispositivo.Dispositivo;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.*;
@@ -28,20 +26,18 @@ public class HarpiaAntiCorruptionLayer {
     }
 
     public Mensagem fromHarpiaTelemetryMessage(HarpiaTelemetryMessage harpiaTelemetryMessage) {
-        Equipamento equipamento = equipamentoStorage.getInstance(harpiaTelemetryMessage.getSerial());
-        Instituicao instituicao = instituicaoStorage.getInstance(harpiaTelemetryMessage.getInstitutionId());
-        Dispositivo dispositivo = harpiaDispositivoMapper.fromHarpiaDevice(harpiaTelemetryMessage, instituicao, equipamento);
-        Sensors sensors = getSensors(harpiaTelemetryMessage, equipamento, instituicao);
+        equipamentoStorage.getInstance(harpiaTelemetryMessage.getSerial());
+        instituicaoStorage.getInstance(harpiaTelemetryMessage.getInstitutionId());
+        Dispositivo dispositivo = harpiaDispositivoMapper.fromHarpiaDevice(harpiaTelemetryMessage);
+        Sensors sensors = getSensors(harpiaTelemetryMessage);
         return new Mensagem(dispositivo, sensors);
     }
 
-    private Sensors getSensors(HarpiaTelemetryMessage harpiaTelemetryMessage,
-                               Equipamento equipamento,
-                               Instituicao instituicao) {
-        List<LTE> lteList = harpiaLteToLteDomain(harpiaTelemetryMessage, equipamento, instituicao);
-        List<GPS> gpsList = harpiaGpsToGpsDomain(harpiaTelemetryMessage, equipamento, instituicao);
-        List<Temperature> temperatureList = harpiaTemperatureToTemperatureDomain(harpiaTelemetryMessage, equipamento, instituicao);
-        List<Bateria> bateriaList = harpiaBatteryToBateriaDomain(harpiaTelemetryMessage, equipamento, instituicao);
+    private Sensors getSensors(HarpiaTelemetryMessage harpiaTelemetryMessage) {
+        List<LTE> lteList = harpiaLteToLteDomain(harpiaTelemetryMessage);
+        List<GPS> gpsList = harpiaGpsToGpsDomain(harpiaTelemetryMessage);
+        List<Temperature> temperatureList = harpiaTemperatureToTemperatureDomain(harpiaTelemetryMessage);
+        List<Bateria> bateriaList = harpiaBatteryToBateriaDomain(harpiaTelemetryMessage);
         return new Sensors(harpiaTelemetryMessage.getInstitutionId(),
                 harpiaTelemetryMessage.getSerial(),
                 lteList,
@@ -50,9 +46,7 @@ public class HarpiaAntiCorruptionLayer {
                 bateriaList);
     }
 
-    private List<LTE> harpiaLteToLteDomain(HarpiaTelemetryMessage harpiaTelemetryMessage,
-                                           Equipamento equipamento,
-                                           Instituicao instituicao) {
+    private List<LTE> harpiaLteToLteDomain(HarpiaTelemetryMessage harpiaTelemetryMessage) {
         if (harpiaTelemetryMessage.getSensors().getLte() == null)
             return null;
         return harpiaTelemetryMessage
@@ -67,14 +61,12 @@ public class HarpiaAntiCorruptionLayer {
                         lte.getSimCardState(),
                         lte.getStatus(),
                         lte.getTimestamp(),
-                        equipamento.getIdEquipamento(),
-                        instituicao.getIdInstituicao()))
+                        harpiaTelemetryMessage.getSerial(),
+                        harpiaTelemetryMessage.getInstitutionId()))
                 .toList();
     }
 
-    private List<GPS> harpiaGpsToGpsDomain(HarpiaTelemetryMessage harpiaTelemetryMessage,
-                                           Equipamento equipamento,
-                                           Instituicao instituicao) {
+    private List<GPS> harpiaGpsToGpsDomain(HarpiaTelemetryMessage harpiaTelemetryMessage) {
         if (harpiaTelemetryMessage.getSensors().getGps() == null)
             return null;
         return harpiaTelemetryMessage
@@ -87,14 +79,12 @@ public class HarpiaAntiCorruptionLayer {
                         gps.getLongitude(),
                         gps.getTrueCourse(),
                         gps.getTimestamp(),
-                        equipamento.getIdEquipamento(),
-                        instituicao.getIdInstituicao()))
+                        harpiaTelemetryMessage.getSerial(),
+                        harpiaTelemetryMessage.getInstitutionId()))
                 .toList();
     }
 
-    private List<Temperature> harpiaTemperatureToTemperatureDomain(HarpiaTelemetryMessage harpiaTelemetryMessage,
-                                                                   Equipamento equipamento,
-                                                                   Instituicao instituicao) {
+    private List<Temperature> harpiaTemperatureToTemperatureDomain(HarpiaTelemetryMessage harpiaTelemetryMessage) {
         if (harpiaTelemetryMessage.getSensors().getTemperature() == null)
             return null;
         return harpiaTelemetryMessage
@@ -105,14 +95,12 @@ public class HarpiaAntiCorruptionLayer {
                         temperature.getName(),
                         temperature.getTemperature(),
                         temperature.getTimestamp(),
-                        equipamento.getIdEquipamento(),
-                        instituicao.getIdInstituicao()))
+                        harpiaTelemetryMessage.getSerial(),
+                        harpiaTelemetryMessage.getInstitutionId()))
                 .toList();
     }
 
-    private List<Bateria> harpiaBatteryToBateriaDomain(HarpiaTelemetryMessage harpiaTelemetryMessage,
-                                                       Equipamento equipamento,
-                                                       Instituicao instituicao) {
+    private List<Bateria> harpiaBatteryToBateriaDomain(HarpiaTelemetryMessage harpiaTelemetryMessage) {
         if (harpiaTelemetryMessage.getSensors().getBattery() == null)
             return null;
         return harpiaTelemetryMessage
@@ -128,8 +116,8 @@ public class HarpiaAntiCorruptionLayer {
                         harpiaBattery.getLoadVoltage(),
                         harpiaBattery.getCurrent(),
                         harpiaBattery.getCurrent(),
-                        equipamento.getIdEquipamento(),
-                        instituicao.getIdInstituicao()
+                        harpiaTelemetryMessage.getSerial(),
+                        harpiaTelemetryMessage.getInstitutionId()
                 ))
                 .toList();
     }
