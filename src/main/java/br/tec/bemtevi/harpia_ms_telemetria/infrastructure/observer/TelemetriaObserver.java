@@ -1,6 +1,6 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.observer;
 
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.Sensors;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.service.EquipamentoService;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.harpia.HarpiaTelemetryMessage;

@@ -1,6 +1,6 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.repository.temperature;
 
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Temperature;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.Temperature;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.TemperatureRepository;
 import org.springframework.stereotype.Component;
 

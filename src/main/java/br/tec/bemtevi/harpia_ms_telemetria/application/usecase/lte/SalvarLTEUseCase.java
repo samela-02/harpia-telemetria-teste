@@ -2,7 +2,7 @@ package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.lte;
 
 import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoEvento;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.LTE;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.LTE;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.LTERepository;
 import org.slf4j.Logger;

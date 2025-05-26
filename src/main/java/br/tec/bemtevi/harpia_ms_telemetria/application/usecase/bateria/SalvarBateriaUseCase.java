@@ -2,7 +2,7 @@ package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.bateria;
 
 import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoEvento;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Bateria;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.Bateria;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.BateriaRepository;
 import org.slf4j.Logger;

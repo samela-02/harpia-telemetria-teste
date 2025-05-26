@@ -2,7 +2,7 @@ package br.tec.bemtevi.harpia_ms_telemetria.application.usecase;
 
 import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.lte.SalvarLTEUseCase;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.LTE;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.LTE;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.LTERepository;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.repository.lte.LTERepositoryInMemory;
 import br.tec.bemtevi.harpia_ms_telemetria.testutils.TestUtils;

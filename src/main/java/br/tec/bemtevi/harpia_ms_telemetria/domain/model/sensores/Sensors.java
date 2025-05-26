@@ -1,4 +1,4 @@
-package br.tec.bemtevi.harpia_ms_telemetria.domain.model;
+package br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores;
 
 import java.util.List;
 

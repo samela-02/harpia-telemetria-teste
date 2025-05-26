@@ -2,8 +2,8 @@ package br.tec.bemtevi.harpia_ms_telemetria.application.usecase;
 
 import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.telemetria.ProcessarTelemetriaUseCase;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.GPS;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.GPS;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.Sensors;
 import br.tec.bemtevi.harpia_ms_telemetria.testutils.TestUtils;
 import br.tec.bemtevi.harpia_ms_telemetria.testutils.mediator.SensorObserverInMemory;
 import org.junit.jupiter.api.BeforeEach;

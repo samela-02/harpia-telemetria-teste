@@ -2,7 +2,7 @@ package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.telemetria;
 
 import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoEvento;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.Sensors;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
 
 import org.springframework.stereotype.Service;

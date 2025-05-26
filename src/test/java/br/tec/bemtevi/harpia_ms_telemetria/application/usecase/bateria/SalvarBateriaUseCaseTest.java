@@ -1,7 +1,7 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.bateria;
 
 import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Bateria;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.Bateria;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.BateriaRepository;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.repository.bateria.BateriaRepositoryInMemory;
 import br.tec.bemtevi.harpia_ms_telemetria.testutils.TestUtils;
