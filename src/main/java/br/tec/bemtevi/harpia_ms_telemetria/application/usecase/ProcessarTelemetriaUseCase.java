@@ -34,7 +34,7 @@ public class ProcessarTelemetriaUseCase implements Observer {
 
     @Transactional(rollbackFor = Exception.class)
     public void execute(Sensors sensors) {
-        List<String> sensorsFieldsString = getSensorsFieldsAsString(sensors);
+        List<String> sensorsFieldsString = getAllClassFieldAsString(sensors);
         for (String sensorFieldName : sensorsFieldsString) {
             try {
                 processarSensores(sensorFieldName, sensors);
@@ -44,8 +44,8 @@ public class ProcessarTelemetriaUseCase implements Observer {
         }
     }
 
-    private List<String> getSensorsFieldsAsString(Sensors sensors) {
-        return stream(sensors.getClass().getDeclaredFields())
+    private List<String> getAllClassFieldAsString(Object object) {
+        return stream(object.getClass().getDeclaredFields())
                 .map(field -> {
                     String[] fieldFullNameSplitado = field.toString().split("\\.");
                     return fieldFullNameSplitado[fieldFullNameSplitado.length - 1];
