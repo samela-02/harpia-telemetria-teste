@@ -15,8 +15,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ProcessarTelemetriaUseCaseTest {
-    private ProcessarTelemetriaUseCase processarTelemetriaUseCase;
+class ProcessarSensorsUseCaseTest {
+    private ProcessarSensorsUseCase processarSensorsUseCase;
     private SensorObserverInMemory sensorObserverInMemory;
 
     @BeforeEach
@@ -24,7 +24,7 @@ class ProcessarTelemetriaUseCaseTest {
         Mediator sensorMediator = new Mediator();
         sensorObserverInMemory = new SensorObserverInMemory(sensorMediator);
         ReflectionService reflectionService = new ReflectionService();
-        processarTelemetriaUseCase = new ProcessarTelemetriaUseCase(reflectionService, sensorMediator);
+        processarSensorsUseCase = new ProcessarSensorsUseCase(reflectionService, sensorMediator);
     }
 
     @SuppressWarnings("unchecked")
@@ -37,7 +37,7 @@ class ProcessarTelemetriaUseCaseTest {
         gpsList.add(gps);
         Sensors sensors = new Sensors("TIVIC_PDI", "H-1234", null, gpsList, null, null);
 
-        processarTelemetriaUseCase.execute(sensors);
+        processarSensorsUseCase.execute(sensors);
 
         assertFalse(eventos.isEmpty());
         assertEquals(1, eventos.size());

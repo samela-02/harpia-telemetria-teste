@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class ProcessarTelemetriaUseCase implements Observer {
+public class ProcessarSensorsUseCase implements Observer {
     private static final String[] CAMPOS_IGNORADOS_DO_SENSORS = {
             "idInstituicao",
             "idEquipamento"
@@ -20,8 +20,8 @@ public class ProcessarTelemetriaUseCase implements Observer {
     private final ReflectionService reflectionService;
     private final Mediator sensorMediator;
 
-    public ProcessarTelemetriaUseCase(ReflectionService reflectionService,
-                                      Mediator sensorMediator) {
+    public ProcessarSensorsUseCase(ReflectionService reflectionService,
+                                   Mediator sensorMediator) {
         this.reflectionService = reflectionService;
         this.sensorMediator = sensorMediator;
         sensorMediator.registrar(TipoEvento.SENSORS, this);
