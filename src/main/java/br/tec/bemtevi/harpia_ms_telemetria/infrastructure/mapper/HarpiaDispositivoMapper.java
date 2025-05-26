@@ -22,26 +22,38 @@ public class HarpiaDispositivoMapper {
     }
 
     private Tempo fromHarpiaTime(HarpiaTime time) {
+        if (time == null)
+            return null;
         return new Tempo(time.getTimestamp(), time.getUptime());
     }
 
     private Cpu fromHarpiaCpu(HarpiaCpu cpu) {
+        if (cpu == null)
+            return null;
         return new Cpu(cpu.getCpu1(), cpu.getCpu2(), cpu.getCpu3(), cpu.getCpu4(), cpu.getCpu5(), cpu.getCpu6());
     }
 
     private Memoria fromHarpiaMemoria(HarpiaMemory memory) {
+        if (memory == null)
+            return null;
         return new Memoria(memory.getRam(), memory.getSwap(), memory.getEmc());
     }
 
     private Gpu fromHarpiaGpu(HarpiaGpu gpu) {
+        if (gpu == null)
+            return null;
         return new Gpu(gpu.getGpuUsage());
     }
 
     private Disco fromHarpiaDisk(HarpiaDisk disk) {
+        if (disk == null)
+            return null;
         return new Disco(disk.getTotal(), disk.getUsed(), disk.getFree(), disk.getPercent());
     }
 
     private TemperaturaDispositivo fromHarpiaDeviceTemperature(HarpiaTemperaturaDispositivo temperature) {
+        if (temperature == null)
+            return null;
         return new TemperaturaDispositivo(temperature.getGpu(),
                 temperature.getCpu(),
                 temperature.getCv0(),
@@ -54,10 +66,14 @@ public class HarpiaDispositivoMapper {
     }
 
     private Fan fromHarpiaFan(HarpiaFan fan) {
+        if (fan == null)
+            return null;
         return new Fan(fan.getPwmfan0());
     }
 
     private Power fromHarpiaPower(HarpiaPower power) {
+        if (power == null)
+            return null;
         return new Power(power.getVddCpuGpuCd(), power.getVddSoc(), power.getTotal());
     }
 }

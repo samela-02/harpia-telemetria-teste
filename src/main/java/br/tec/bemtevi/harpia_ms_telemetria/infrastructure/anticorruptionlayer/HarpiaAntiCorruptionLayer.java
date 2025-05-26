@@ -30,9 +30,21 @@ public class HarpiaAntiCorruptionLayer {
     public Mensagem fromHarpiaTelemetryMessage(HarpiaTelemetryMessage harpiaTelemetryMessage) {
         validarEquipamento(harpiaTelemetryMessage);
         validarInstituicao(harpiaTelemetryMessage);
-        Dispositivo dispositivo = harpiaDispositivoMapper.fromHarpiaDevice(harpiaTelemetryMessage);
-        Sensors sensors = harpiaSensorsMapper.fromHarpiaSensors(harpiaTelemetryMessage);
+        Dispositivo dispositivo = getDispositivo(harpiaTelemetryMessage);
+        Sensors sensors = getSensors(harpiaTelemetryMessage);
         return new Mensagem(dispositivo, sensors);
+    }
+
+    private Dispositivo getDispositivo(HarpiaTelemetryMessage harpiaTelemetryMessage) {
+        if (harpiaTelemetryMessage.getDevice() == null)
+            return null;
+        return harpiaDispositivoMapper.fromHarpiaDevice(harpiaTelemetryMessage);
+    }
+
+    private Sensors getSensors(HarpiaTelemetryMessage harpiaTelemetryMessage) {
+        if (harpiaTelemetryMessage.getSensors() == null)
+            return null;
+        return harpiaSensorsMapper.fromHarpiaSensors(harpiaTelemetryMessage);
     }
 
     private void validarEquipamento(HarpiaTelemetryMessage harpiaTelemetryMessage) {
