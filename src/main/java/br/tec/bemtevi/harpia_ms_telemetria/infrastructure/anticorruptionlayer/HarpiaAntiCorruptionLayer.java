@@ -1,8 +1,12 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.anticorruptionlayer;
 
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.*;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Equipamento;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Instituicao;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Mensagem;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.dispositivo.Dispositivo;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.*;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.harpia.HarpiaTelemetryMessage;
+import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.mapper.HarpiaDispositivoMapper;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.storage.EquipamentoStorage;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.storage.InstituicaoStorage;
 import org.springframework.stereotype.Component;
@@ -13,15 +17,27 @@ import java.util.List;
 public class HarpiaAntiCorruptionLayer {
     private final InstituicaoStorage instituicaoStorage;
     private final EquipamentoStorage equipamentoStorage;
+    private final HarpiaDispositivoMapper harpiaDispositivoMapper;
 
-    public HarpiaAntiCorruptionLayer(InstituicaoStorage instituicaoStorage, EquipamentoStorage equipamentoStorage) {
+    public HarpiaAntiCorruptionLayer(InstituicaoStorage instituicaoStorage,
+                                     EquipamentoStorage equipamentoStorage,
+                                     HarpiaDispositivoMapper harpiaDispositivoMapper) {
         this.instituicaoStorage = instituicaoStorage;
         this.equipamentoStorage = equipamentoStorage;
+        this.harpiaDispositivoMapper = harpiaDispositivoMapper;
     }
 
-    public Sensors fromHarpiaTelemetryMessage(HarpiaTelemetryMessage harpiaTelemetryMessage) {
+    public Mensagem fromHarpiaTelemetryMessage(HarpiaTelemetryMessage harpiaTelemetryMessage) {
         Equipamento equipamento = equipamentoStorage.getInstance(harpiaTelemetryMessage.getSerial());
         Instituicao instituicao = instituicaoStorage.getInstance(harpiaTelemetryMessage.getInstitutionId());
+        Dispositivo dispositivo = harpiaDispositivoMapper.fromHarpiaDevice(harpiaTelemetryMessage, instituicao, equipamento);
+        Sensors sensors = getSensors(harpiaTelemetryMessage, equipamento, instituicao);
+        return new Mensagem(dispositivo, sensors);
+    }
+
+    private Sensors getSensors(HarpiaTelemetryMessage harpiaTelemetryMessage,
+                               Equipamento equipamento,
+                               Instituicao instituicao) {
         List<LTE> lteList = harpiaLteToLteDomain(harpiaTelemetryMessage, equipamento, instituicao);
         List<GPS> gpsList = harpiaGpsToGpsDomain(harpiaTelemetryMessage, equipamento, instituicao);
         List<Temperature> temperatureList = harpiaTemperatureToTemperatureDomain(harpiaTelemetryMessage, equipamento, instituicao);
