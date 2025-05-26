@@ -34,7 +34,7 @@ class ProcessarDispositivoUseCaseTest {
     void DadoDispositivo_QuandoOnEventForChamado_EntaoODispositivoDeveSerPersistido() {
         List<Dispositivo> dispositivos = (List<Dispositivo>) TestUtils.getFieldFromClass("dispositivos", dispositivoRepository);
         assertTrue(dispositivos.isEmpty());
-        Dispositivo dispositivo = new Dispositivo("IDINSTITUICAO", "IDEQUIPAMENTO", null, null, null, null, null, null, null, null);
+        Dispositivo dispositivo = new Dispositivo("ID", "IDINSTITUICAO", "IDEQUIPAMENTO", null, null, null, null, null, null, null, null);
 
         mediator.emitirEvento(TipoEvento.DISPOSITIVO, dispositivo);
 

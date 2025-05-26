@@ -4,8 +4,14 @@ import br.tec.bemtevi.harpia_ms_telemetria.domain.model.dispositivo.Dispositivo;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.DispositivoRepository;
 
 public class DispositivoRepositoryImpl implements DispositivoRepository {
+    private final DispositivoMongoRepository dispositivoMongoRepository;
+
+    public DispositivoRepositoryImpl(DispositivoMongoRepository dispositivoMongoRepository) {
+        this.dispositivoMongoRepository = dispositivoMongoRepository;
+    }
+
     @Override
     public void save(Dispositivo dispositivo) {
-        throw new UnsupportedOperationException();
+        dispositivoMongoRepository.save(dispositivo);
     }
 }

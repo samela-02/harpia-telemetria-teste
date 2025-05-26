@@ -1,6 +1,12 @@
 package br.tec.bemtevi.harpia_ms_telemetria.domain.model.dispositivo;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "arg_dispositivo")
 public class Dispositivo {
+    @Id
+    private String id;
     private String idInstituicao;
     private String idEquipamento;
     private Tempo tempo;
@@ -15,7 +21,8 @@ public class Dispositivo {
     public Dispositivo() {
     }
 
-    public Dispositivo(String idInstituicao,
+    public Dispositivo(String id,
+                       String idInstituicao,
                        String idEquipamento,
                        Tempo tempo,
                        Cpu cpu,
@@ -25,6 +32,7 @@ public class Dispositivo {
                        TemperaturaDispositivo temperatura,
                        Fan fan,
                        Power power) {
+        this.id = id;
         this.idInstituicao = idInstituicao;
         this.idEquipamento = idEquipamento;
         this.tempo = tempo;
@@ -35,6 +43,10 @@ public class Dispositivo {
         this.temperatura = temperatura;
         this.fan = fan;
         this.power = power;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getIdInstituicao() {
