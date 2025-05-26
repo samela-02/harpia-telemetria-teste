@@ -4,14 +4,11 @@ import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoEvento;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.Sensors;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
-
+import br.tec.bemtevi.harpia_ms_telemetria.domain.service.ReflectionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Field;
 import java.util.List;
-
-import static java.util.Arrays.stream;
 
 @Service
 public class ProcessarTelemetriaUseCase implements Observer {
@@ -20,9 +17,12 @@ public class ProcessarTelemetriaUseCase implements Observer {
             "idEquipamento"
     };
 
+    private final ReflectionService reflectionService;
     private final Mediator sensorMediator;
 
-    public ProcessarTelemetriaUseCase(Mediator sensorMediator) {
+    public ProcessarTelemetriaUseCase(ReflectionService reflectionService,
+                                      Mediator sensorMediator) {
+        this.reflectionService = reflectionService;
         this.sensorMediator = sensorMediator;
         sensorMediator.registrar(TipoEvento.SENSORS, this);
     }
@@ -34,7 +34,7 @@ public class ProcessarTelemetriaUseCase implements Observer {
 
     @Transactional(rollbackFor = Exception.class)
     public void execute(Sensors sensors) {
-        List<String> sensorsFieldsString = getAllClassFieldAsString(sensors);
+        List<String> sensorsFieldsString = reflectionService.converterAtributosEmString(sensors, CAMPOS_IGNORADOS_DO_SENSORS);
         for (String sensorFieldName : sensorsFieldsString) {
             try {
                 processarSensores(sensorFieldName, sensors);
@@ -44,39 +44,11 @@ public class ProcessarTelemetriaUseCase implements Observer {
         }
     }
 
-    private List<String> getAllClassFieldAsString(Object object) {
-        return stream(object.getClass().getDeclaredFields())
-                .map(field -> {
-                    String[] fieldFullNameSplitado = field.toString().split("\\.");
-                    return fieldFullNameSplitado[fieldFullNameSplitado.length - 1];
-                })
-                .filter(campo -> {
-                    for (String campoIgnorado : CAMPOS_IGNORADOS_DO_SENSORS) {
-                        if (campo.equals(campoIgnorado))
-                            return false;
-                    }
-                    return true;
-                })
-                .toList();
-    }
-
     private void processarSensores(String sensorFieldName, Sensors sensors) {
-        Object campo = getCampo(sensorFieldName, sensors);
+        Object campo = reflectionService.getAtributoByNome(sensorFieldName, sensors);
         if (campo != null) {
             TipoEvento tipoEvento = TipoEvento.fromString(sensorFieldName.toUpperCase());
             sensorMediator.emitirEvento(tipoEvento, campo);
-        }
-    }
-
-    private Object getCampo(String sensorFieldName, Sensors sensors) {
-        try {
-            Field field = sensors
-                    .getClass()
-                    .getDeclaredField(sensorFieldName);
-            field.setAccessible(true);
-            return field.get(sensors);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException("Não foi possível recuperar o campo da classe.", e);
         }
     }
 }

@@ -3,6 +3,7 @@ package br.tec.bemtevi.harpia_ms_telemetria.application.usecase;
 import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.GPS;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.Sensors;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.service.ReflectionService;
 import br.tec.bemtevi.harpia_ms_telemetria.testutils.TestUtils;
 import br.tec.bemtevi.harpia_ms_telemetria.testutils.mediator.SensorObserverInMemory;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +23,8 @@ class ProcessarTelemetriaUseCaseTest {
     void setUp() {
         Mediator sensorMediator = new Mediator();
         sensorObserverInMemory = new SensorObserverInMemory(sensorMediator);
-        processarTelemetriaUseCase = new ProcessarTelemetriaUseCase(sensorMediator);
+        ReflectionService reflectionService = new ReflectionService();
+        processarTelemetriaUseCase = new ProcessarTelemetriaUseCase(reflectionService, sensorMediator);
     }
 
     @SuppressWarnings("unchecked")
