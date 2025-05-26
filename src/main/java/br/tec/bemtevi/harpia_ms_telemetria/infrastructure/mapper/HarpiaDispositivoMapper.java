@@ -1,7 +1,5 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.mapper;
 
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Equipamento;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Instituicao;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.dispositivo.*;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.harpia.HarpiaTelemetryMessage;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.harpia.dispositivo.*;
@@ -10,25 +8,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class HarpiaDispositivoMapper {
     public Dispositivo fromHarpiaDevice(HarpiaTelemetryMessage harpiaTelemetryMessage) {
-        Tempo tempo = fromHarpiaTime(harpiaTelemetryMessage.getDevice().getTime());
-        Cpu cpu = fromHarpiaCpu(harpiaTelemetryMessage.getDevice().getCpu());
-        Memoria memoria = fromHarpiaMemoria(harpiaTelemetryMessage.getDevice().getMemory());
-        Gpu gpu = fromHarpiaGpu(harpiaTelemetryMessage.getDevice().getGpu());
-        Disco disco = fromHarpiaDisk(harpiaTelemetryMessage.getDevice().getDisk());
-        TemperaturaDispositivo temperatura = fromHarpiaDeviceTemperature(harpiaTelemetryMessage.getDevice().getTemperature());
-        Fan fan = fromHarpiaFan(harpiaTelemetryMessage.getDevice().getFan());
-        Power power = fromHarpiaPower(harpiaTelemetryMessage.getDevice().getPower());
         return new Dispositivo(null,
                 harpiaTelemetryMessage.getInstitutionId(),
                 harpiaTelemetryMessage.getSerial(),
-                tempo,
-                cpu,
-                memoria,
-                gpu,
-                disco,
-                temperatura,
-                fan,
-                power);
+                fromHarpiaTime(harpiaTelemetryMessage.getDevice().getTime()),
+                fromHarpiaCpu(harpiaTelemetryMessage.getDevice().getCpu()),
+                fromHarpiaMemoria(harpiaTelemetryMessage.getDevice().getMemory()),
+                fromHarpiaGpu(harpiaTelemetryMessage.getDevice().getGpu()),
+                fromHarpiaDisk(harpiaTelemetryMessage.getDevice().getDisk()),
+                fromHarpiaDeviceTemperature(harpiaTelemetryMessage.getDevice().getTemperature()),
+                fromHarpiaFan(harpiaTelemetryMessage.getDevice().getFan()),
+                fromHarpiaPower(harpiaTelemetryMessage.getDevice().getPower()));
     }
 
     private Tempo fromHarpiaTime(HarpiaTime time) {

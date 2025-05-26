@@ -9,16 +9,12 @@ import java.util.List;
 @Component
 public class HarpiaSensorsMapper {
     public Sensors fromHarpiaSensors(HarpiaTelemetryMessage harpiaTelemetryMessage) {
-        List<LTE> lteList = harpiaLteToLteDomain(harpiaTelemetryMessage);
-        List<GPS> gpsList = harpiaGpsToGpsDomain(harpiaTelemetryMessage);
-        List<Temperature> temperatureList = harpiaTemperatureToTemperatureDomain(harpiaTelemetryMessage);
-        List<Bateria> bateriaList = harpiaBatteryToBateriaDomain(harpiaTelemetryMessage);
         return new Sensors(harpiaTelemetryMessage.getInstitutionId(),
                 harpiaTelemetryMessage.getSerial(),
-                lteList,
-                gpsList,
-                temperatureList,
-                bateriaList);
+                harpiaLteToLteDomain(harpiaTelemetryMessage),
+                harpiaGpsToGpsDomain(harpiaTelemetryMessage),
+                harpiaTemperatureToTemperatureDomain(harpiaTelemetryMessage),
+                harpiaBatteryToBateriaDomain(harpiaTelemetryMessage));
     }
 
     private List<LTE> harpiaLteToLteDomain(HarpiaTelemetryMessage harpiaTelemetryMessage) {
