@@ -26,11 +26,19 @@ public class HarpiaAntiCorruptionLayer {
     }
 
     public Mensagem fromHarpiaTelemetryMessage(HarpiaTelemetryMessage harpiaTelemetryMessage) {
-        equipamentoStorage.getInstance(harpiaTelemetryMessage.getSerial());
-        instituicaoStorage.getInstance(harpiaTelemetryMessage.getInstitutionId());
+        validarEquipamento(harpiaTelemetryMessage);
+        validarInstituicao(harpiaTelemetryMessage);
         Dispositivo dispositivo = harpiaDispositivoMapper.fromHarpiaDevice(harpiaTelemetryMessage);
         Sensors sensors = getSensors(harpiaTelemetryMessage);
         return new Mensagem(dispositivo, sensors);
+    }
+
+    private void validarEquipamento(HarpiaTelemetryMessage harpiaTelemetryMessage) {
+        equipamentoStorage.getInstance(harpiaTelemetryMessage.getSerial());
+    }
+
+    private void validarInstituicao(HarpiaTelemetryMessage harpiaTelemetryMessage) {
+        instituicaoStorage.getInstance(harpiaTelemetryMessage.getInstitutionId());
     }
 
     private Sensors getSensors(HarpiaTelemetryMessage harpiaTelemetryMessage) {
