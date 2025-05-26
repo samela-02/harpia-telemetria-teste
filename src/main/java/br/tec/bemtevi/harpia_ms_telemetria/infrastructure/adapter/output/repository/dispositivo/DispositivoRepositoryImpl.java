@@ -2,7 +2,9 @@ package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.reposi
 
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.dispositivo.Dispositivo;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.DispositivoRepository;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DispositivoRepositoryImpl implements DispositivoRepository {
     private final DispositivoMongoRepository dispositivoMongoRepository;
 
