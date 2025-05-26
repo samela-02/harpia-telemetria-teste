@@ -1,6 +1,7 @@
 package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.temperature;
 
 import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
+import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.ProcessarDispositivoUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoEvento;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.facade.LoggerFacade;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.dispositivo.Dispositivo;
