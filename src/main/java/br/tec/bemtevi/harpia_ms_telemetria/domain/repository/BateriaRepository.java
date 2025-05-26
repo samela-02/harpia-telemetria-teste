@@ -1,6 +1,6 @@
 package br.tec.bemtevi.harpia_ms_telemetria.domain.repository;
 
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Bateria;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.Bateria;
 
 import java.util.List;
 

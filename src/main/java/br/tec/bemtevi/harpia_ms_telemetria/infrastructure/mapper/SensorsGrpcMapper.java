@@ -1,7 +1,7 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.mapper;
 
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.*;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Sensors;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.*;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.Sensors;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.grpc.*;
 import org.springframework.stereotype.Component;
 

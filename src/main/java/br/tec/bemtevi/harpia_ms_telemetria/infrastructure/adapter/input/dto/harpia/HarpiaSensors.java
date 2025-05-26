@@ -1,5 +1,10 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.harpia;
 
+import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.harpia.sensores.HarpiaBattery;
+import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.harpia.sensores.HarpiaGPS;
+import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.harpia.sensores.HarpiaLTE;
+import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.harpia.sensores.HarpiaTemperature;
+
 import java.util.List;
 
 public class HarpiaSensors {

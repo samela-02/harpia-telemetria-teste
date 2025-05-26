@@ -2,7 +2,7 @@ package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.temperature;
 
 import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoEvento;
-import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Temperature;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.model.sensores.Temperature;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.repository.TemperatureRepository;
 import org.slf4j.Logger;

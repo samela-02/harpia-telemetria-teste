@@ -1,4 +1,4 @@
-package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.harpia;
+package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.harpia.sensores;
 
 import java.time.LocalDateTime;
 
