@@ -1,4 +1,4 @@
-package br.tec.bemtevi.harpia_ms_telemetria.application.usecase.telemetria;
+package br.tec.bemtevi.harpia_ms_telemetria.application.usecase;
 
 import br.tec.bemtevi.harpia_ms_telemetria.application.mediator.Mediator;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.enums.TipoEvento;
