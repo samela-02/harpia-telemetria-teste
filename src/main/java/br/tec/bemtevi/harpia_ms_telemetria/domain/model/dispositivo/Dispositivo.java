@@ -1,6 +1,8 @@
 package br.tec.bemtevi.harpia_ms_telemetria.domain.model.dispositivo;
 
 public class Dispositivo {
+    private String idInstituicao;
+    private String idEquipamento;
     private Tempo tempo;
     private Cpu cpu;
     private Memoria memoria;
@@ -13,7 +15,9 @@ public class Dispositivo {
     public Dispositivo() {
     }
 
-    public Dispositivo(Tempo tempo,
+    public Dispositivo(String idInstituicao,
+                       String idEquipamento,
+                       Tempo tempo,
                        Cpu cpu,
                        Memoria memoria,
                        Gpu gpu,
@@ -21,6 +25,8 @@ public class Dispositivo {
                        TemperaturaDispositivo temperatura,
                        Fan fan,
                        Power power) {
+        this.idInstituicao = idInstituicao;
+        this.idEquipamento = idEquipamento;
         this.tempo = tempo;
         this.cpu = cpu;
         this.memoria = memoria;
@@ -29,6 +35,14 @@ public class Dispositivo {
         this.temperatura = temperatura;
         this.fan = fan;
         this.power = power;
+    }
+
+    public String getIdInstituicao() {
+        return idInstituicao;
+    }
+
+    public String getIdEquipamento() {
+        return idEquipamento;
     }
 
     public Tempo getTempo() {
