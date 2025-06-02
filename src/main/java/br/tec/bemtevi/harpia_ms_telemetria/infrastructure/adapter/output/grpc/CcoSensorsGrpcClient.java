@@ -49,8 +49,7 @@ public class CcoSensorsGrpcClient {
                 try {
                     loggerFacade.info("O canal não está apto a abrir streams.");
                     loggerFacade.info("Aguardando 15 segundos para tentar novamente.");
-                    loggerFacade.debug(String.format("Estado da conexão: %s.",
-                            ccoGrpcChannel.getChannel().getState(true)));
+                    loggerFacade.debug(String.format("Estado da conexão: %s.", ccoGrpcChannel.getChannelState()));
                     Thread.sleep(15000L);
                 } catch (InterruptedException e) {
                     throw new RuntimeException("Erro ao executar o sleep.", e);

@@ -34,4 +34,6 @@ flyweight.equipamento.max=
 ### gRPC
 grpc-cco.server.host=
 grpc-cco.server.port=
+
+grpc.api-key=
 ### gRPC
