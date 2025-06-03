@@ -30,6 +30,15 @@ public class JacksonSerializationFacade implements SerializationFacade {
     }
 
     @Override
+    public String asSnakeCaseString(Object object) {
+        try {
+            return objectMapperSnakeCase.writeValueAsString(object);
+        } catch (JsonProcessingException exception) {
+            throw new RuntimeException("Não foi possível converter o objeto em string.", exception);
+        }
+    }
+
+    @Override
     public <T> T fromCamelCaseString(String object, Class<T> classType) {
         try {
             return objectMapperCamelCase.readValue(object, classType);
