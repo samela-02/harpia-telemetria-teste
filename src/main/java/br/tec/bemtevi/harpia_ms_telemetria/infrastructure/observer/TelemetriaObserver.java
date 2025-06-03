@@ -10,6 +10,7 @@ import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.input.dto.harp
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.dto.FallbackDto;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.gateway.FallbackGateway;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.anticorruptionlayer.HarpiaAntiCorruptionLayer;
+import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.gerenciador.aplicacao.GerenciadorDaAplicacao;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -22,19 +23,22 @@ public class TelemetriaObserver implements Observer {
     private final EquipamentoService equipamentoService;
     private final ProcessarMensagemUseCase processarMensagemUseCase;
     private final FallbackGateway fallbackGateway;
+    private final GerenciadorDaAplicacao gerenciadorDaAplicacao;
 
     public TelemetriaObserver(LoggerFacade loggerFacade,
                               SerializationFacade serializationFacade,
                               HarpiaAntiCorruptionLayer harpiaAntiCorruptionLayer,
                               EquipamentoService equipamentoService,
                               ProcessarMensagemUseCase processarMensagemUseCase,
-                              FallbackGateway fallbackGateway) {
+                              FallbackGateway fallbackGateway,
+                              GerenciadorDaAplicacao gerenciadorDaAplicacao) {
         this.loggerFacade = loggerFacade;
         this.serializationFacade = serializationFacade;
         this.harpiaAntiCorruptionLayer = harpiaAntiCorruptionLayer;
         this.equipamentoService = equipamentoService;
         this.processarMensagemUseCase = processarMensagemUseCase;
         this.fallbackGateway = fallbackGateway;
+        this.gerenciadorDaAplicacao = gerenciadorDaAplicacao;
     }
 
     @Override
@@ -47,7 +51,7 @@ public class TelemetriaObserver implements Observer {
             mensagem = converterHarpiaTelemetryMessageEmMensagem(harpiaTelemetryMessage);
         } catch (Exception e) {
             loggerFacade.warn(String.format("Erro ao atualizar a data de última comunicação: %s.", e.getMessage()));
-            // TODO chamar shutdown aqui
+            gerenciadorDaAplicacao.tentarDesligarAAplicacao();
             throw new RuntimeException(e);
         }
 
@@ -80,7 +84,7 @@ public class TelemetriaObserver implements Observer {
             enviarRequestCallback(mensagem, e);
         } catch (Exception ex) {
             loggerFacade.warn(String.format("Erro ao enviar request de callback: %s.", e.getMessage()));
-            // TODO chamar shutdown aqui
+            gerenciadorDaAplicacao.tentarDesligarAAplicacao();
             throw new RuntimeException(ex);
         }
     }
