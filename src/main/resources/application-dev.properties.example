@@ -37,3 +37,7 @@ grpc-cco.server.port=
 
 grpc.api-key=
 ### gRPC
+
+### Fallback
+fallback.url=
+### Fallback
