@@ -1,6 +1,7 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.observer;
 
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.ProcessarMensagemUseCase;
+import br.tec.bemtevi.harpia_ms_telemetria.domain.facade.LoggerFacade;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.facade.SerializationFacade;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.model.Mensagem;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.observer.Observer;
@@ -13,16 +14,18 @@ import org.springframework.stereotype.Component;
 
 @Component(value = "TelemetriaObserver")
 public class TelemetriaObserver implements Observer {
-    private static final Logger log = LoggerFactory.getLogger(TelemetriaObserver.class);
+    private final LoggerFacade loggerFacade;
     private final SerializationFacade serializationFacade;
     private final HarpiaAntiCorruptionLayer harpiaAntiCorruptionLayer;
     private final EquipamentoService equipamentoService;
     private final ProcessarMensagemUseCase processarMensagemUseCase;
 
-    public TelemetriaObserver(SerializationFacade serializationFacade,
+    public TelemetriaObserver(LoggerFacade loggerFacade,
+                              SerializationFacade serializationFacade,
                               HarpiaAntiCorruptionLayer harpiaAntiCorruptionLayer,
                               EquipamentoService equipamentoService,
                               ProcessarMensagemUseCase processarMensagemUseCase) {
+        this.loggerFacade = loggerFacade;
         this.serializationFacade = serializationFacade;
         this.harpiaAntiCorruptionLayer = harpiaAntiCorruptionLayer;
         this.equipamentoService = equipamentoService;
@@ -31,12 +34,12 @@ public class TelemetriaObserver implements Observer {
 
     @Override
     public void onEvent(Object object) {
-        log.info("Notificação de mensagem recebida.");
+        loggerFacade.info("Notificação de mensagem recebida.");
         byte[] mensagemBytes = (byte[]) object;
         HarpiaTelemetryMessage harpiaTelemetryMessage = serializationFacade.fromSnakeCaseBytes(mensagemBytes, HarpiaTelemetryMessage.class);
         Mensagem mensagem = harpiaAntiCorruptionLayer.fromHarpiaTelemetryMessage(harpiaTelemetryMessage);
         processarMensagemUseCase.execute(mensagem);
         equipamentoService.atualizarDtUltimaAtualizacao(harpiaTelemetryMessage.getSerial());
-        log.info("Mensagem processada com sucesso.");
+        loggerFacade.info("Mensagem processada com sucesso.");
     }
 }
