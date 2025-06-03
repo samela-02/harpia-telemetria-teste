@@ -82,7 +82,6 @@ public class TelemetriaObserver implements Observer {
         try {
             enviarRequestCallback(mensagem, e);
         } catch (Exception ex) {
-            loggerFacade.warn(String.format("Erro ao enviar request de callback: %s.", e.getMessage()));
             gerenciadorDaAplicacao.tentarDesligarAAplicacao();
             throw new RuntimeException(ex);
         }
