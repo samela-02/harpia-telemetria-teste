@@ -35,11 +35,25 @@ public class TelemetriaObserver implements Observer {
     @Override
     public void onEvent(Object object) {
         loggerFacade.info("Notificação de mensagem recebida.");
-        byte[] mensagemBytes = (byte[]) object;
-        HarpiaTelemetryMessage harpiaTelemetryMessage = serializationFacade.fromSnakeCaseBytes(mensagemBytes, HarpiaTelemetryMessage.class);
+        try {
+            processarMensagem((byte[]) object);
+        } catch (Exception e) {
+            processarFallback((byte[]) object);
+        }
+    }
+
+    private void processarMensagem(byte[] object) {
+        HarpiaTelemetryMessage harpiaTelemetryMessage = serializationFacade
+                .fromSnakeCaseBytes(object, HarpiaTelemetryMessage.class);
         Mensagem mensagem = harpiaAntiCorruptionLayer.fromHarpiaTelemetryMessage(harpiaTelemetryMessage);
         processarMensagemUseCase.execute(mensagem);
         equipamentoService.atualizarDtUltimaAtualizacao(harpiaTelemetryMessage.getSerial());
         loggerFacade.info("Mensagem processada com sucesso.");
+    }
+
+    private void processarFallback(byte[] object) {
+        loggerFacade.warn("Erro ao processar mensagem.");
+        loggerFacade.info("Iniciando fallback");
+        // TODO chamar fallback aqui
     }
 }
