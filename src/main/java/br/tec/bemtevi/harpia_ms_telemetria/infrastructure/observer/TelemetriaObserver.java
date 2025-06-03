@@ -90,7 +90,7 @@ public class TelemetriaObserver implements Observer {
 
     private void enviarRequestCallback(Mensagem mensagem, Exception e) {
         loggerFacade.info("Iniciando fallback");
-        fallbackGateway.enviarFallback(new FallbackDto("Microsserviço de detecção",
+        fallbackGateway.enviarFallback(new FallbackDto("Microsserviço de telemetria.",
                 LocalDateTime.now(),
                 e.getMessage(),
                 e.getCause(),
