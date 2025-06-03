@@ -76,6 +76,16 @@ public class TelemetriaObserver implements Observer {
     }
 
     private void processarFallback(Mensagem mensagem, Exception e) {
+        try {
+            enviarRequestCallback(mensagem, e);
+        } catch (Exception ex) {
+            loggerFacade.warn(String.format("Erro ao enviar request de callback: %s.", e.getMessage()));
+            // TODO chamar shutdown aqui
+            throw new RuntimeException(ex);
+        }
+    }
+
+    private void enviarRequestCallback(Mensagem mensagem, Exception e) {
         loggerFacade.warn("Erro ao processar mensagem.");
         loggerFacade.info("Iniciando fallback");
         fallbackGateway.enviarFallback(new FallbackDto("Microsserviço de detecção",
