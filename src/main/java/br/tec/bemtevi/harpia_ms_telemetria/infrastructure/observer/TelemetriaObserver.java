@@ -50,7 +50,6 @@ public class TelemetriaObserver implements Observer {
             atualizarUltimaComunicacaoEquipamento(harpiaTelemetryMessage.getSerial());
             mensagem = converterHarpiaTelemetryMessageEmMensagem(harpiaTelemetryMessage);
         } catch (Exception e) {
-            loggerFacade.warn(String.format("Erro ao atualizar a data de última comunicação: %s.", e.getMessage()));
             gerenciadorDaAplicacao.tentarDesligarAAplicacao();
             throw new RuntimeException(e);
         }
