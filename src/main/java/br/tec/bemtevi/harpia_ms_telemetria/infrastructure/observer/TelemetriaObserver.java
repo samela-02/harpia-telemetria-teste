@@ -46,8 +46,8 @@ public class TelemetriaObserver implements Observer {
         loggerFacade.info("Notificação de mensagem recebida.");
         HarpiaTelemetryMessage harpiaTelemetryMessage;
         try {
-            harpiaTelemetryMessage = converterBytesEmHarpiaTelemetryMessage((byte[]) object);
-            atualizarUltimaComunicacaoEquipamento(harpiaTelemetryMessage.getSerial());
+            harpiaTelemetryMessage = serializationFacade.fromSnakeCaseBytes((byte[]) object, HarpiaTelemetryMessage.class);
+            equipamentoService.atualizarDtUltimaAtualizacao(harpiaTelemetryMessage.getSerial());
         } catch (Exception e) {
             gerenciadorDaAplicacao.tentarDesligarAAplicacao();
             throw new RuntimeException(e);
@@ -55,7 +55,7 @@ public class TelemetriaObserver implements Observer {
 
         Mensagem mensagem;
         try {
-            mensagem = converterHarpiaTelemetryMessageEmMensagem(harpiaTelemetryMessage);
+            mensagem = harpiaAntiCorruptionLayer.fromHarpiaTelemetryMessage(harpiaTelemetryMessage);
         } catch (Exception e) {
             processarFallback(harpiaTelemetryMessage, e);
             return;
@@ -66,18 +66,6 @@ public class TelemetriaObserver implements Observer {
         } catch (Exception e) {
             processarFallback(mensagem, e);
         }
-    }
-
-    private Mensagem converterHarpiaTelemetryMessageEmMensagem(HarpiaTelemetryMessage harpiaTelemetryMessage) {
-        return harpiaAntiCorruptionLayer.fromHarpiaTelemetryMessage(harpiaTelemetryMessage);
-    }
-
-    private HarpiaTelemetryMessage converterBytesEmHarpiaTelemetryMessage(byte[] mensagem) {
-        return serializationFacade.fromSnakeCaseBytes(mensagem, HarpiaTelemetryMessage.class);
-    }
-
-    private void atualizarUltimaComunicacaoEquipamento(String idEquipamento) {
-        equipamentoService.atualizarDtUltimaAtualizacao(idEquipamento);
     }
 
     private void processarMensagem(Mensagem mensagem) {
