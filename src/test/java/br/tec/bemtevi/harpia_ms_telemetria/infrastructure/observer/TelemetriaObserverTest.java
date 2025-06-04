@@ -15,6 +15,7 @@ import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.anticorruptionlayer.Ha
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.anticorruptionlayer.HarpiaAntiCorruptionLayerDefeituoso;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.anticorruptionlayer.HarpiaAntiCorruptionLayerFake;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.JacksonSerializationFacade;
+import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.SerializationFacadeDefeituoso;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.Slf4jLoggerFacade;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.gerenciador.aplicacao.GerenciadorDaAplicacao;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.gerenciador.aplicacao.GerenciadorDaAplicacaoFake;
@@ -56,18 +57,33 @@ class TelemetriaObserverTest {
 
     @Test
     void deveLancarCincoExcecoesEDesligarAAplicacaoAposAUltimaCasoUmaExcecaoSejaLancadaAntesDoProcessamentoDaMensagem() {
-        harpiaAntiCorruptionLayer = new HarpiaAntiCorruptionLayerDefeituoso(null, null, null, null);
+        serializationFacade = new SerializationFacadeDefeituoso();
         telemetriaObserver = new TelemetriaObserver(loggerFacade, serializationFacade, harpiaAntiCorruptionLayer, equipamentoService, processarMensagemUseCase, fallbackGateway, gerenciadorDaAplicacao);
         boolean desligou = (boolean) TestUtils.getFieldFromClass("desligou", gerenciadorDaAplicacao);
         assertFalse(desligou);
         HarpiaTelemetryMessage harpiaTelemetryMessage = new HarpiaTelemetryMessage("id", "idInstituicao", null, null);
-        byte[] snakeCaseBytes = serializationFacade.asSnakeCaseBytes(harpiaTelemetryMessage);
+        byte[] snakeCaseBytes = new JacksonSerializationFacade().asSnakeCaseBytes(harpiaTelemetryMessage);
 
         for (int i = 0; i < 5; i++)
             assertThrows(RuntimeException.class, () -> telemetriaObserver.onEvent(snakeCaseBytes));
 
         desligou = (boolean) TestUtils.getFieldFromClass("desligou", gerenciadorDaAplicacao);
         assertTrue(desligou);
+    }
+
+    @Test
+    void deveFazerOFallbackCasoOAnticorruptionLayerQuebre() {
+        harpiaAntiCorruptionLayer = new HarpiaAntiCorruptionLayerDefeituoso(null, null, null, null);
+        telemetriaObserver = new TelemetriaObserver(loggerFacade, serializationFacade, harpiaAntiCorruptionLayer, equipamentoService, processarMensagemUseCase, fallbackGateway, gerenciadorDaAplicacao);
+        boolean fezFallback = (boolean) TestUtils.getFieldFromClass("fezFallback", fallbackGateway);
+        assertFalse(fezFallback);
+        HarpiaTelemetryMessage harpiaTelemetryMessage = new HarpiaTelemetryMessage("id", "idInstituicao", null, null);
+        byte[] snakeCaseBytes = serializationFacade.asSnakeCaseBytes(harpiaTelemetryMessage);
+
+        telemetriaObserver.onEvent(snakeCaseBytes);
+
+        fezFallback = (boolean) TestUtils.getFieldFromClass("fezFallback", fallbackGateway);
+        assertTrue(fezFallback);
     }
 
     @Test

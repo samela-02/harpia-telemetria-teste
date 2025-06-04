@@ -44,14 +44,21 @@ public class TelemetriaObserver implements Observer {
     @Override
     public void onEvent(Object object) {
         loggerFacade.info("Notificação de mensagem recebida.");
-        Mensagem mensagem;
+        HarpiaTelemetryMessage harpiaTelemetryMessage;
         try {
-            HarpiaTelemetryMessage harpiaTelemetryMessage = converterBytesEmHarpiaTelemetryMessage((byte[]) object);
+            harpiaTelemetryMessage = converterBytesEmHarpiaTelemetryMessage((byte[]) object);
             atualizarUltimaComunicacaoEquipamento(harpiaTelemetryMessage.getSerial());
-            mensagem = converterHarpiaTelemetryMessageEmMensagem(harpiaTelemetryMessage);
         } catch (Exception e) {
             gerenciadorDaAplicacao.tentarDesligarAAplicacao();
             throw new RuntimeException(e);
+        }
+
+        Mensagem mensagem;
+        try {
+            mensagem = converterHarpiaTelemetryMessageEmMensagem(harpiaTelemetryMessage);
+        } catch (Exception e) {
+            processarFallback(harpiaTelemetryMessage, e);
+            return;
         }
 
         try {
@@ -78,23 +85,23 @@ public class TelemetriaObserver implements Observer {
         loggerFacade.info("Mensagem processada com sucesso.");
     }
 
-    private void processarFallback(Mensagem mensagem, Exception e) {
+    private void processarFallback(Object object, Exception e) {
         try {
             loggerFacade.warn("Erro ao processar mensagem.");
-            enviarRequestCallback(mensagem, e);
+            enviarRequestCallback(object, e);
         } catch (Exception ex) {
             gerenciadorDaAplicacao.tentarDesligarAAplicacao();
             throw new RuntimeException(ex);
         }
     }
 
-    private void enviarRequestCallback(Mensagem mensagem, Exception e) {
+    private void enviarRequestCallback(Object object, Exception e) {
         loggerFacade.info("Iniciando fallback");
         fallbackGateway.enviarFallback(new FallbackDto("Microsserviço de telemetria",
                 LocalDateTime.now(),
                 e.getMessage(),
                 e.getCause(),
-                mensagem)
+                object)
         );
         loggerFacade.info("Fallback enviado com sucesso.");
     }
