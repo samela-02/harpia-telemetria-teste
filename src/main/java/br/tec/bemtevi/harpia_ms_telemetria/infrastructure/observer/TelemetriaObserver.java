@@ -47,7 +47,6 @@ public class TelemetriaObserver implements Observer {
         HarpiaTelemetryMessage harpiaTelemetryMessage;
         try {
             harpiaTelemetryMessage = serializationFacade.fromSnakeCaseBytes((byte[]) object, HarpiaTelemetryMessage.class);
-            equipamentoService.atualizarDtUltimaAtualizacao(harpiaTelemetryMessage.getSerial());
         } catch (Exception e) {
             gerenciadorDaAplicacao.tentarDesligarAAplicacao();
             throw new RuntimeException(e);
@@ -55,6 +54,7 @@ public class TelemetriaObserver implements Observer {
 
         Mensagem mensagem;
         try {
+            equipamentoService.atualizarDtUltimaAtualizacao(harpiaTelemetryMessage.getSerial());
             mensagem = harpiaAntiCorruptionLayer.fromHarpiaTelemetryMessage(harpiaTelemetryMessage);
         } catch (Exception e) {
             processarFallback(harpiaTelemetryMessage, e);
