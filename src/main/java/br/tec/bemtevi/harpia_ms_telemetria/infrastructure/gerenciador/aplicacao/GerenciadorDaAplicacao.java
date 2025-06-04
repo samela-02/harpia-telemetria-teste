@@ -36,7 +36,7 @@ public class GerenciadorDaAplicacao {
     }
 
     protected void shutdown() {
-        loggerFacade.info("As tentativas excederam a quantidade máxima. A aplicação será desligada.");
+        loggerFacade.info("As tentativas atingiram a quantidade máxima. A aplicação será desligada.");
         try {
             ((ConfigurableApplicationContext) applicationContext).close();
         } catch (Exception e) {
