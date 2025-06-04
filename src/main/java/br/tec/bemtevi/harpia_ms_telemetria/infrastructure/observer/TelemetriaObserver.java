@@ -49,7 +49,7 @@ public class TelemetriaObserver implements Observer {
             harpiaTelemetryMessage = serializationFacade.fromSnakeCaseBytes((byte[]) object, HarpiaTelemetryMessage.class);
         } catch (Exception e) {
             gerenciadorDaAplicacao.tentarDesligarAAplicacao();
-            throw new RuntimeException(e);
+            throw new RuntimeException("Não foi possível processar a mensagem.", e);
         }
 
         Mensagem mensagem;
@@ -79,6 +79,7 @@ public class TelemetriaObserver implements Observer {
             enviarRequestCallback(object, e);
         } catch (Exception ex) {
             gerenciadorDaAplicacao.tentarDesligarAAplicacao();
+            e.printStackTrace(System.err);
             throw new RuntimeException(ex);
         }
     }
