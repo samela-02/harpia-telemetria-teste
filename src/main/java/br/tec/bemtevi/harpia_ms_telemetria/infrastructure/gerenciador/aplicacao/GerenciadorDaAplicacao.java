@@ -25,17 +25,17 @@ public class GerenciadorDaAplicacao {
 
     public void tentarDesligarAAplicacao() {
         loggerFacade.info("Tentativa de shutdown da aplicação recebida.");
+        informacoesDoShutdown.incrementarTentativa();
+        informacoesDoShutdown.atualizarDataDaUltimaTentativa();
         loggerFacade.info(String.format("Quantidade de tentativas realizadas: %s.", informacoesDoShutdown.getTentativas()));
-        if (informacoesDoShutdown.getTentativas() > MAXIMO_TENTATIVAS) {
+        if (informacoesDoShutdown.getTentativas() == MAXIMO_TENTATIVAS) {
             shutdown();
             return;
         }
-        informacoesDoShutdown.incrementarTentativa();
-        informacoesDoShutdown.atualizarDataDaUltimaTentativa();
         loggerFacade.info("Quantidade máxima de tentativas não atingida. A aplicação não será desligada.");
     }
 
-    private void shutdown() {
+    protected void shutdown() {
         loggerFacade.info("As tentativas excederam a quantidade máxima. A aplicação será desligada.");
         try {
             ((ConfigurableApplicationContext) applicationContext).close();
