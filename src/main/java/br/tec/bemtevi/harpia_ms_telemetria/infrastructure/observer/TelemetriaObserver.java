@@ -44,6 +44,7 @@ public class TelemetriaObserver implements Observer {
         this.fallbackGateway = fallbackGateway;
         this.gerenciadorDaAplicacao = gerenciadorDaAplicacao;
         this.fallbackServiceName = fallbackServiceName;
+        loggerFacade.info(String.format("Serviço identificado como %s no fallback.", this.fallbackServiceName));
     }
 
     @Override
