@@ -1,5 +1,11 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.observer;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.ProcessarMensagemUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.ProcessarMensagemUseCaseDefeituoso;
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.ProcessarMensagemUseCaseFake;
@@ -20,10 +26,6 @@ import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.facade.Slf4jLoggerFaca
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.gerenciador.aplicacao.GerenciadorDaAplicacao;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.gerenciador.aplicacao.GerenciadorDaAplicacaoFake;
 import br.tec.bemtevi.harpia_ms_telemetria.testutils.TestUtils;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class TelemetriaObserverTest {
     private TelemetriaObserver telemetriaObserver;
@@ -44,7 +46,7 @@ class TelemetriaObserverTest {
         processarMensagemUseCase = new ProcessarMensagemUseCaseFake(null, null);
         fallbackGateway = new FallbackGatewayInMemory(null, null, null, null);
         gerenciadorDaAplicacao = new GerenciadorDaAplicacaoFake(loggerFacade, null);
-        telemetriaObserver = new TelemetriaObserver(loggerFacade, serializationFacade, harpiaAntiCorruptionLayer, equipamentoService, processarMensagemUseCase, fallbackGateway, gerenciadorDaAplicacao);
+        telemetriaObserver = new TelemetriaObserver(loggerFacade, serializationFacade, harpiaAntiCorruptionLayer, equipamentoService, processarMensagemUseCase, fallbackGateway, gerenciadorDaAplicacao, "teste");
     }
 
     @Test
@@ -58,7 +60,7 @@ class TelemetriaObserverTest {
     @Test
     void deveLancarCincoExcecoesEDesligarAAplicacaoAposAUltimaCasoUmaExcecaoSejaLancadaAntesDoProcessamentoDaMensagem() {
         serializationFacade = new SerializationFacadeDefeituoso();
-        telemetriaObserver = new TelemetriaObserver(loggerFacade, serializationFacade, harpiaAntiCorruptionLayer, equipamentoService, processarMensagemUseCase, fallbackGateway, gerenciadorDaAplicacao);
+        telemetriaObserver = new TelemetriaObserver(loggerFacade, serializationFacade, harpiaAntiCorruptionLayer, equipamentoService, processarMensagemUseCase, fallbackGateway, gerenciadorDaAplicacao, "teste");
         boolean desligou = (boolean) TestUtils.getFieldFromClass("desligou", gerenciadorDaAplicacao);
         assertFalse(desligou);
         HarpiaTelemetryMessage harpiaTelemetryMessage = new HarpiaTelemetryMessage("id", "idInstituicao", null, null);
@@ -74,7 +76,7 @@ class TelemetriaObserverTest {
     @Test
     void deveFazerOFallbackCasoOAnticorruptionLayerQuebre() {
         harpiaAntiCorruptionLayer = new HarpiaAntiCorruptionLayerDefeituoso(null, null, null, null);
-        telemetriaObserver = new TelemetriaObserver(loggerFacade, serializationFacade, harpiaAntiCorruptionLayer, equipamentoService, processarMensagemUseCase, fallbackGateway, gerenciadorDaAplicacao);
+        telemetriaObserver = new TelemetriaObserver(loggerFacade, serializationFacade, harpiaAntiCorruptionLayer, equipamentoService, processarMensagemUseCase, fallbackGateway, gerenciadorDaAplicacao, "teste");
         boolean fezFallback = (boolean) TestUtils.getFieldFromClass("fezFallback", fallbackGateway);
         assertFalse(fezFallback);
         HarpiaTelemetryMessage harpiaTelemetryMessage = new HarpiaTelemetryMessage("id", "idInstituicao", null, null);
@@ -89,7 +91,7 @@ class TelemetriaObserverTest {
     @Test
     void deveFazerUmFallbackQuandoUmaExcecaoForLancadaDuranteOProcessamentoDaMensagem() {
         processarMensagemUseCase = new ProcessarMensagemUseCaseDefeituoso(null, null);
-        telemetriaObserver = new TelemetriaObserver(loggerFacade, serializationFacade, harpiaAntiCorruptionLayer, equipamentoService, processarMensagemUseCase, fallbackGateway, gerenciadorDaAplicacao);
+        telemetriaObserver = new TelemetriaObserver(loggerFacade, serializationFacade, harpiaAntiCorruptionLayer, equipamentoService, processarMensagemUseCase, fallbackGateway, gerenciadorDaAplicacao, "teste");
         boolean fezFallback = (boolean) TestUtils.getFieldFromClass("fezFallback", fallbackGateway);
         assertFalse(fezFallback);
         HarpiaTelemetryMessage harpiaTelemetryMessage = new HarpiaTelemetryMessage("id", "idInstituicao", null, null);
@@ -105,7 +107,7 @@ class TelemetriaObserverTest {
     void deveLancarCincoExcecoesEDesligarAAplicacaoQuandoOFallbackNaoPuderSerFeito() {
         fallbackGateway = new FallbackGatewayDefeituoso(null, null, null, null);
         processarMensagemUseCase = new ProcessarMensagemUseCaseDefeituoso(null, null);
-        telemetriaObserver = new TelemetriaObserver(loggerFacade, serializationFacade, harpiaAntiCorruptionLayer, equipamentoService, processarMensagemUseCase, fallbackGateway, gerenciadorDaAplicacao);
+        telemetriaObserver = new TelemetriaObserver(loggerFacade, serializationFacade, harpiaAntiCorruptionLayer, equipamentoService, processarMensagemUseCase, fallbackGateway, gerenciadorDaAplicacao, "teste");
         boolean desligou = (boolean) TestUtils.getFieldFromClass("desligou", gerenciadorDaAplicacao);
         assertFalse(desligou);
         HarpiaTelemetryMessage harpiaTelemetryMessage = new HarpiaTelemetryMessage("id", "idInstituicao", null, null);
