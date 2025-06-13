@@ -1,5 +1,10 @@
 package br.tec.bemtevi.harpia_ms_telemetria.infrastructure.observer;
 
+import java.time.LocalDateTime;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import br.tec.bemtevi.harpia_ms_telemetria.application.usecase.ProcessarMensagemUseCase;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.facade.LoggerFacade;
 import br.tec.bemtevi.harpia_ms_telemetria.domain.facade.SerializationFacade;
@@ -11,9 +16,6 @@ import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.dto.Fal
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.adapter.output.gateway.FallbackGateway;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.anticorruptionlayer.HarpiaAntiCorruptionLayer;
 import br.tec.bemtevi.harpia_ms_telemetria.infrastructure.gerenciador.aplicacao.GerenciadorDaAplicacao;
-import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
 
 @Component(value = "TelemetriaObserver")
 public class TelemetriaObserver implements Observer {
@@ -24,6 +26,7 @@ public class TelemetriaObserver implements Observer {
     private final ProcessarMensagemUseCase processarMensagemUseCase;
     private final FallbackGateway fallbackGateway;
     private final GerenciadorDaAplicacao gerenciadorDaAplicacao;
+    private final String fallbackServiceName;
 
     public TelemetriaObserver(LoggerFacade loggerFacade,
                               SerializationFacade serializationFacade,
@@ -31,7 +34,8 @@ public class TelemetriaObserver implements Observer {
                               EquipamentoService equipamentoService,
                               ProcessarMensagemUseCase processarMensagemUseCase,
                               FallbackGateway fallbackGateway,
-                              GerenciadorDaAplicacao gerenciadorDaAplicacao) {
+                              GerenciadorDaAplicacao gerenciadorDaAplicacao,
+                              @Value("${fallback.service-name}") String fallbackServiceName) {
         this.loggerFacade = loggerFacade;
         this.serializationFacade = serializationFacade;
         this.harpiaAntiCorruptionLayer = harpiaAntiCorruptionLayer;
@@ -39,6 +43,8 @@ public class TelemetriaObserver implements Observer {
         this.processarMensagemUseCase = processarMensagemUseCase;
         this.fallbackGateway = fallbackGateway;
         this.gerenciadorDaAplicacao = gerenciadorDaAplicacao;
+        this.fallbackServiceName = fallbackServiceName;
+        loggerFacade.info(String.format("Serviço identificado como %s no fallback.", this.fallbackServiceName));
     }
 
     @Override
@@ -86,7 +92,7 @@ public class TelemetriaObserver implements Observer {
 
     private void enviarRequestCallback(Object object, Exception e) {
         loggerFacade.info("Iniciando fallback");
-        fallbackGateway.enviarFallback(new FallbackDto("Microsserviço de telemetria",
+        fallbackGateway.enviarFallback(new FallbackDto(fallbackServiceName,
                 LocalDateTime.now(),
                 e.getMessage(),
                 e.getCause(),

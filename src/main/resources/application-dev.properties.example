@@ -40,4 +40,5 @@ grpc.api-key=
 
 ### Fallback
 fallback.url=
+fallback.service-name=
 ### Fallback
