@@ -14,7 +14,7 @@ pipeline {
         stage('Clonar Repositório') {
             steps {
                 dir('harpia-ms-telemetria') {
-                    withCredentials([string(credentialsId: 'npm-auth-token', variable: 'GIT_TOKEN')]) {
+                    withCredentials([string(credentialsId: 'github-token', variable: 'GIT_TOKEN')]) {
                         sh '''
                             echo "Clonando o repositório..."
                             git clone https://${GIT_TOKEN}:x-oauth-basic@${GIT_REPO#https://} -b ${GIT_BRANCH} .
