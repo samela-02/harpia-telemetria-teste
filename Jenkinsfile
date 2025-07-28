@@ -7,7 +7,7 @@ pipeline {
         DEPLOY_SERVER  = "192.168.1.161"
         DEPLOY_PATH    = "/tivic/harpia-ms-telemetria"
         SSH_CRED_ID    = "ssh-cred-id"               // Credencial SSH
-        ENV_CRED_ID    = "env-ms-telemetria"         // .env como Secret File
+        ENV_CRED_ID    = "harpia-ms-telemetria-env"         // .env como Secret File
         CERT_CLIENT_ID = "cert-client-p12"           // client.p12 como Secret File
         CERT_JKS_ID    = "cert-rabbit-jks"           // rabbit_truststore.jks como Secret File
     }
