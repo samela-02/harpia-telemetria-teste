@@ -6,10 +6,10 @@ pipeline {
         DEPLOY_USER    = "tivic"
         DEPLOY_SERVER  = "192.168.1.161"
         DEPLOY_PATH    = "/tivic/harpia-ms-telemetria"
-        SSH_CRED_ID    = "ssh-cred-id"               // Credencial SSH
-        ENV_CRED_ID    = "harpia-ms-telemetria-env"         // .env como Secret File
-        CERT_CLIENT_ID = "cert-client-p12"           // client.p12 como Secret File
-        CERT_JKS_ID    = "cert-rabbit-jks"           // rabbit_truststore.jks como Secret File
+        SSH_CRED_ID    = "ssh-cred-id"             // Credencial SSH configurada no Jenkins
+        ENV_CRED_ID    = "harpia-ms-telemetria-env"       // Secret file com o .env
+        CERT_CLIENT_ID = "cert-client-p12"         // Secret file do client.p12
+        CERT_JKS_ID    = "cert-rabbit-jks"         // Secret file do rabbit_truststore.jks
     }
 
     stages {
@@ -28,8 +28,9 @@ pipeline {
                     sh '''
                       echo ">> Copiando certificados para pasta local ./certs"
                       mkdir -p certs
-                      cp $CLIENT_CERT certs/client.p12
-                      cp $JKS_CERT certs/rabbit_truststore.jks
+                      cp "$CLIENT_CERT" certs/client.p12
+                      cp "$JKS_CERT" certs/rabbit_truststore.jks
+                      chmod 600 certs/client.p12 certs/rabbit_truststore.jks
                     '''
                 }
             }
