@@ -6,10 +6,10 @@ pipeline {
         DEPLOY_USER    = "tivic"
         DEPLOY_SERVER  = "192.168.1.161"
         DEPLOY_PATH    = "/tivic/harpia-ms-telemetria"
-        SSH_CRED_ID    = "ssh-cred-id"             // Credencial SSH configurada no Jenkins
-        ENV_CRED_ID    = "harpia-ms-telemetria-env"       // Secret file com o .env
-        CERT_CLIENT_ID = "cert-client-p12"         // Secret file do client.p12
-        CERT_JKS_ID    = "cert-rabbit-jks"         // Secret file do rabbit_truststore.jks
+        SSH_CRED_ID    = "ssh-cred-id"
+        ENV_CRED_ID    = "harpia-ms-telemetria-env"
+        CERT_CLIENT_ID = "cert-client-p12"
+        CERT_JKS_ID    = "cert-rabbit-jks"
     }
 
     stages {
@@ -19,29 +19,29 @@ pipeline {
             }
         }
 
-       stage('Preparar Certificados') {
-    steps {
-        withCredentials([
-            file(credentialsId: env.CERT_CLIENT_ID, variable: 'CLIENT_CERT'),
-            file(credentialsId: env.CERT_JKS_ID, variable: 'JKS_CERT')
-        ]) {
-            sh '''
-              echo ">> Copiando certificados para pasta local ./build_certs"
-              mkdir -p build_certs
-              cp "$CLIENT_CERT" build_certs/client.p12
-              cp "$JKS_CERT" build_certs/rabbit_truststore.jks
-              chmod 600 build_certs/*.*
-            '''
+        stage('Preparar Certificados ZIP') {
+            steps {
+                withCredentials([
+                    file(credentialsId: env.CERT_CLIENT_ID, variable: 'CLIENT_CERT'),
+                    file(credentialsId: env.CERT_JKS_ID, variable: 'JKS_CERT')
+                ]) {
+                    sh '''
+                        echo ">> Gerando ZIP dos certificados..."
+                        mkdir -p build_certs
+                        cp "$CLIENT_CERT" build_certs/client.p12
+                        cp "$JKS_CERT" build_certs/rabbit_truststore.jks
+                        chmod 600 build_certs/*
+                        cd build_certs && zip ../certs.zip * && cd ..
+                    '''
+                }
+            }
         }
-    }
-}
-
 
         stage('Build Docker Image') {
             steps {
                 sh '''
-                  echo ">> Iniciando build da imagem do microserviço..."
-                  docker build -t $DOCKER_IMAGE .
+                    echo ">> Buildando imagem Docker do harpia-ms-telemetria..."
+                    docker build -t $DOCKER_IMAGE .
                 '''
             }
         }
@@ -50,22 +50,36 @@ pipeline {
             steps {
                 sshagent([env.SSH_CRED_ID]) {
                     sh '''
-                      echo ">> Exportando imagem para servidor remoto..."
-                      docker save $DOCKER_IMAGE | gzip | ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_SERVER "gunzip | docker load"
+                        echo ">> Enviando imagem Docker para o servidor remoto..."
+                        docker save $DOCKER_IMAGE | gzip | ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_SERVER "gunzip | docker load"
                     '''
                 }
             }
         }
 
-        stage('Copiar .env para Servidor') {
+        stage('Enviar .env para Servidor') {
             steps {
                 withCredentials([file(credentialsId: env.ENV_CRED_ID, variable: 'ENV_FILE')]) {
                     sshagent([env.SSH_CRED_ID]) {
                         sh '''
-                          echo ">> Enviando .env para servidor remoto..."
-                          scp -o StrictHostKeyChecking=no $ENV_FILE $DEPLOY_USER@$DEPLOY_SERVER:$DEPLOY_PATH/.env
+                            echo ">> Enviando .env para o servidor remoto..."
+                            ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_SERVER "mkdir -p $DEPLOY_PATH"
+                            scp -o StrictHostKeyChecking=no $ENV_FILE $DEPLOY_USER@$DEPLOY_SERVER:$DEPLOY_PATH/.env
                         '''
                     }
+                }
+            }
+        }
+
+        stage('Enviar Certificados ZIP') {
+            steps {
+                sshagent([env.SSH_CRED_ID]) {
+                    sh '''
+                        echo ">> Enviando certificados ZIP para o servidor remoto..."
+                        ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_SERVER "mkdir -p $DEPLOY_PATH"
+                        scp -o StrictHostKeyChecking=no certs.zip $DEPLOY_USER@$DEPLOY_SERVER:$DEPLOY_PATH/certs.zip
+                        ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_SERVER "cd $DEPLOY_PATH && unzip -o certs.zip && rm certs.zip"
+                    '''
                 }
             }
         }
@@ -74,11 +88,11 @@ pipeline {
             steps {
                 sshagent([env.SSH_CRED_ID]) {
                     sh '''
-                      echo ">> Executando docker-compose no servidor remoto..."
-                      ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_SERVER "
-                        cd $DEPLOY_PATH &&
-                        docker-compose up -d
-                      "
+                        echo ">> Subindo aplicação com docker-compose..."
+                        ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_SERVER "
+                            cd $DEPLOY_PATH &&
+                            docker-compose up -d
+                        "
                     '''
                 }
             }
@@ -87,10 +101,10 @@ pipeline {
 
     post {
         success {
-            echo "✅ Pipeline do microserviço concluído com sucesso!"
+            echo "✅ Pipeline do microserviço harpia-ms-telemetria concluído com sucesso!"
         }
         failure {
-            echo "❌ Falha no pipeline do microserviço!"
+            echo "❌ Falha no pipeline do microserviço harpia-ms-telemetria!"
         }
     }
 }
