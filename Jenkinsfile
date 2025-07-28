@@ -2,54 +2,36 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "harpia-ms-telemetria:latest"
-        DEPLOY_USER = "tivic"
-        DEPLOY_SERVER = "192.168.1.161"
-        DEPLOY_PATH = "/tivic/harpia-ms-telemetria"
-        GIT_REPO = "https://github.com/tivic-pdi/harpia-ms-telemetria.git"
-        GIT_BRANCH = "deploy"
+        DOCKER_IMAGE   = "harpia-ms-telemetria:latest"
+        DEPLOY_USER    = "tivic"
+        DEPLOY_SERVER  = "192.168.1.161"
+        DEPLOY_PATH    = "/tivic/harpia-ms-telemetria"
+        SSH_CRED_ID    = "ssh-cred-id"           // Credencial SSH configurada no Jenkins
+        ENV_CRED_ID    = "env-ms-telemetria"     // Secret file com o .env para o microserviço
     }
 
     stages {
-        stage('Clonar Repositório') {
+        stage('Checkout') {
             steps {
-                dir('harpia-ms-telemetria') {
-                    withCredentials([string(credentialsId: 'github-token', variable: 'GIT_TOKEN')]) {
-                        sh '''
-                            echo "Clonando o repositório..."
-                            git clone https://${GIT_TOKEN}:x-oauth-basic@${GIT_REPO#https://} -b ${GIT_BRANCH} .
-                        '''
-                    }
-                }
+                checkout scm
             }
         }
 
-        stage('Copiar .env') {
-            steps {
-                withCredentials([file(credentialsId: 'harpia-ms-telemetria-env', variable: 'ENV_FILE')]) {
-                    sh '''
-                        echo "Copiando .env para o repositório..."
-                        cp $ENV_FILE harpia-ms-telemetria/.env
-                    '''
-                }
-            }
-        }
-
-        stage('Build da Imagem Docker') {
+        stage('Build Docker Image') {
             steps {
                 sh '''
-                    echo "Iniciando build da imagem do microserviço..."
-                    docker build -t $DOCKER_IMAGE ./harpia-ms-telemetria
+                  echo ">> Iniciando build da imagem do microserviço..."
+                  docker build -t $DOCKER_IMAGE .
                 '''
             }
         }
 
         stage('Enviar Imagem para Servidor') {
             steps {
-                sshagent(['ssh-cred-id']) {
+                sshagent([env.SSH_CRED_ID]) {
                     sh '''
-                        echo "Enviando imagem para o servidor remoto..."
-                        docker save $DOCKER_IMAGE | bzip2 | ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_SERVER "bunzip2 | docker load"
+                      echo ">> Exportando imagem para servidor remoto..."
+                      docker save $DOCKER_IMAGE | gzip | ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_SERVER "gunzip | docker load"
                     '''
                 }
             }
@@ -57,11 +39,11 @@ pipeline {
 
         stage('Copiar .env para Servidor') {
             steps {
-                withCredentials([file(credentialsId: 'harpia-ms-telemetria-env', variable: 'ENV_FILE')]) {
-                    sshagent(['ssh-cred-id']) {
+                withCredentials([file(credentialsId: env.ENV_CRED_ID, variable: 'ENV_FILE')]) {
+                    sshagent([env.SSH_CRED_ID]) {
                         sh '''
-                            echo "Copiando .env para o servidor remoto..."
-                            scp -o StrictHostKeyChecking=no $ENV_FILE $DEPLOY_USER@$DEPLOY_SERVER:$DEPLOY_PATH/.env
+                          echo ">> Enviando .env para servidor remoto..."
+                          scp -o StrictHostKeyChecking=no $ENV_FILE $DEPLOY_USER@$DEPLOY_SERVER:$DEPLOY_PATH/.env
                         '''
                     }
                 }
@@ -70,12 +52,13 @@ pipeline {
 
         stage('Deploy Remoto via docker-compose') {
             steps {
-                sshagent(['ssh-cred-id']) {
+                sshagent([env.SSH_CRED_ID]) {
                     sh '''
-                        echo "Subindo o serviço no servidor remoto..."
-                        ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_SERVER "
+                      echo ">> Executando docker-compose no servidor remoto..."
+                      ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_SERVER "
                         cd $DEPLOY_PATH &&
-                        docker-compose up -d"
+                        docker-compose up -d
+                      "
                     '''
                 }
             }
@@ -84,7 +67,7 @@ pipeline {
 
     post {
         success {
-            echo "✅ Deploy do microserviço harpia-ms-telemetria concluído com sucesso!"
+            echo "✅ Pipeline do microserviço concluído com sucesso!"
         }
         failure {
             echo "❌ Falha no pipeline do microserviço!"
