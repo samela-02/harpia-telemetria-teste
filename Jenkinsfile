@@ -19,22 +19,23 @@ pipeline {
             }
         }
 
-        stage('Preparar Certificados') {
-            steps {
-                withCredentials([
-                    file(credentialsId: env.CERT_CLIENT_ID, variable: 'CLIENT_CERT'),
-                    file(credentialsId: env.CERT_JKS_ID, variable: 'JKS_CERT')
-                ]) {
-                    sh '''
-                      echo ">> Copiando certificados para pasta local ./certs"
-                      mkdir -p certs
-                      cp "$CLIENT_CERT" certs/client.p12
-                      cp "$JKS_CERT" certs/rabbit_truststore.jks
-                      chmod 600 certs/client.p12 certs/rabbit_truststore.jks
-                    '''
-                }
-            }
+       stage('Preparar Certificados') {
+    steps {
+        withCredentials([
+            file(credentialsId: env.CERT_CLIENT_ID, variable: 'CLIENT_CERT'),
+            file(credentialsId: env.CERT_JKS_ID, variable: 'JKS_CERT')
+        ]) {
+            sh '''
+              echo ">> Copiando certificados para pasta local ./build_certs"
+              mkdir -p build_certs
+              cp "$CLIENT_CERT" build_certs/client.p12
+              cp "$JKS_CERT" build_certs/rabbit_truststore.jks
+              chmod 600 build_certs/*.*
+            '''
         }
+    }
+}
+
 
         stage('Build Docker Image') {
             steps {
