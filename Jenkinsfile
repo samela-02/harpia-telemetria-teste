@@ -60,10 +60,11 @@ pipeline {
                             echo ">> Enviando certificados ZIP para o servidor remoto..."
                             scp -o StrictHostKeyChecking=no $CERTS_ZIP $DEPLOY_USER@$DEPLOY_SERVER:$DEPLOY_PATH/certs.zip
 
-                            echo ">> Extraindo certificados no servidor remoto..."
+                            echo ">> Extraindo certificados na pasta 'certs/' do servidor remoto..."
                             ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_SERVER "
                                 cd $DEPLOY_PATH &&
-                                unzip -o certs.zip &&
+                                mkdir -p certs &&
+                                unzip -o certs.zip -d certs &&
                                 rm certs.zip
                             "
                         '''
