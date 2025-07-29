@@ -8,7 +8,7 @@ pipeline {
         DEPLOY_PATH    = "/tivic/harpia-ms-telemetria"
         SSH_CRED_ID    = "ssh-cred-id"
         ENV_CRED_ID    = "harpia-ms-telemetria-env"
-        CERTS_ZIP_ID   = "certs-zip" // mesmo ID usado no harpia-ms-deteccao
+        CERTS_ZIP_ID   = "certs-deteccao-zip" // mesmo ID usado no harpia-ms-deteccao
     }
 
     stages {
